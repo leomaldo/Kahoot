@@ -50,7 +50,7 @@ namespace Cliente
             {
                 string mensaje = "1/";
                 // Enviamos al servidor el codigo
-                byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
 
                 //Recibimos la respuesta del servidor
@@ -63,7 +63,7 @@ namespace Cliente
             {
                 string mensaje = "2/";
                 // Enviamos al servidor el codigo
-                byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
 
                 //Recibimos la respuesta del servidor
@@ -77,7 +77,7 @@ namespace Cliente
             {
                 string mensaje = "3/";
                 // Enviamos al servidor el nombre tecleado
-                byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
 
                 //Recibimos la respuesta del servidor
@@ -93,7 +93,7 @@ namespace Cliente
             //Login
             string mensaje = "4/" + ID.Text + "/" + Contraseña.Text;
             // Enviamos al servidor el nombre y contraseña tecleados
-            byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
 
             //Recibimos la respuesta del servidor de si se ha entrado o no
@@ -108,7 +108,7 @@ namespace Cliente
             //Registro
             string mensaje = "5/" + ID.Text + "/" + Contraseña.Text;
             // Enviamos al servidor el nombre y contraseña tecleados
-            byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
 
             //Recibimos la respuesta del servidor de si se ha creado correctamente o no
@@ -123,7 +123,7 @@ namespace Cliente
             //Mensaje de desconexión
             string mensaje = "0/";
 
-            byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
 
             // Nos desconectamos
