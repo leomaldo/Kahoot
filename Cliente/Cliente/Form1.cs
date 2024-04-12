@@ -24,7 +24,7 @@ namespace Cliente
         private void button1_Click(object sender, EventArgs e)
         {
             IPAddress direc = IPAddress.Parse("192.168.56.102");
-            IPEndPoint ipep = new IPEndPoint(direc, 9050);
+            IPEndPoint ipep = new IPEndPoint(direc, 9052);
 
 
             //Creamos el socket 
@@ -73,7 +73,7 @@ namespace Cliente
                 MessageBox.Show("El jugador con más puntos es:" + mensaje);
 
             }
-            else
+            else if (Preguntas.Checked)
             {
                 string mensaje = "3/";
                 // Enviamos al servidor el nombre tecleado
@@ -85,6 +85,19 @@ namespace Cliente
                 server.Receive(msg2);
                 mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
                 MessageBox.Show("La partida con menos preguntas correctas es la número:" + mensaje);
+            }
+            else if (listaconectados.Checked)
+            {
+                string mensaje = "6/";
+                // Enviamos al servidor el nombre tecleado
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+
+                //Recibimos la respuesta del servidor
+                byte[] msg2 = new byte[80];
+                server.Receive(msg2);
+                mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
+                MessageBox.Show("La lista de conectados es:" + mensaje);
             }
         }
 
@@ -130,6 +143,11 @@ namespace Cliente
             this.BackColor = Color.Gray;
             server.Shutdown(SocketShutdown.Both);
             server.Close();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

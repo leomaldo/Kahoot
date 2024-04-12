@@ -40,13 +40,15 @@
             this.JugadorPuntos = new System.Windows.Forms.RadioButton();
             this.Preguntas = new System.Windows.Forms.RadioButton();
             this.button5 = new System.Windows.Forms.Button();
+            this.listaconectados = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(64, 56);
+            this.button1.Location = new System.Drawing.Point(43, 36);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 49);
+            this.button1.Size = new System.Drawing.Size(80, 32);
             this.button1.TabIndex = 0;
             this.button1.Text = "CONECTAR";
             this.button1.UseVisualStyleBackColor = true;
@@ -54,9 +56,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(64, 304);
+            this.button2.Location = new System.Drawing.Point(43, 198);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(147, 49);
+            this.button2.Size = new System.Drawing.Size(98, 32);
             this.button2.TabIndex = 1;
             this.button2.Text = "DESCONECTAR";
             this.button2.UseVisualStyleBackColor = true;
@@ -64,9 +67,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(235, 166);
+            this.button3.Location = new System.Drawing.Point(157, 108);
+            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(120, 49);
+            this.button3.Size = new System.Drawing.Size(80, 32);
             this.button3.TabIndex = 2;
             this.button3.Text = "Login";
             this.button3.UseVisualStyleBackColor = true;
@@ -74,9 +78,10 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(436, 166);
+            this.button4.Location = new System.Drawing.Point(291, 108);
+            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(120, 49);
+            this.button4.Size = new System.Drawing.Size(80, 32);
             this.button4.TabIndex = 3;
             this.button4.Text = "Registrarme";
             this.button4.UseVisualStyleBackColor = true;
@@ -85,41 +90,46 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(380, 22);
+            this.label1.Location = new System.Drawing.Point(253, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 20);
+            this.label1.Size = new System.Drawing.Size(21, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "ID:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(349, 94);
+            this.label2.Location = new System.Drawing.Point(233, 61);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(96, 20);
+            this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Contraseña:";
             // 
             // ID
             // 
-            this.ID.Location = new System.Drawing.Point(313, 54);
+            this.ID.Location = new System.Drawing.Point(209, 35);
+            this.ID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ID.Name = "ID";
-            this.ID.Size = new System.Drawing.Size(176, 26);
+            this.ID.Size = new System.Drawing.Size(119, 20);
             this.ID.TabIndex = 5;
             // 
             // Contraseña
             // 
-            this.Contraseña.Location = new System.Drawing.Point(313, 117);
+            this.Contraseña.Location = new System.Drawing.Point(209, 76);
+            this.Contraseña.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Contraseña.Name = "Contraseña";
-            this.Contraseña.Size = new System.Drawing.Size(176, 26);
+            this.Contraseña.Size = new System.Drawing.Size(119, 20);
             this.Contraseña.TabIndex = 7;
             // 
             // MaxPuntuacion
             // 
             this.MaxPuntuacion.AutoSize = true;
-            this.MaxPuntuacion.Location = new System.Drawing.Point(359, 250);
+            this.MaxPuntuacion.Location = new System.Drawing.Point(239, 162);
+            this.MaxPuntuacion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaxPuntuacion.Name = "MaxPuntuacion";
-            this.MaxPuntuacion.Size = new System.Drawing.Size(312, 24);
+            this.MaxPuntuacion.Size = new System.Drawing.Size(209, 17);
             this.MaxPuntuacion.TabIndex = 8;
             this.MaxPuntuacion.TabStop = true;
             this.MaxPuntuacion.Text = "Dime lo máximos puntos en una partida";
@@ -128,9 +138,10 @@
             // JugadorPuntos
             // 
             this.JugadorPuntos.AutoSize = true;
-            this.JugadorPuntos.Location = new System.Drawing.Point(363, 299);
+            this.JugadorPuntos.Location = new System.Drawing.Point(242, 194);
+            this.JugadorPuntos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.JugadorPuntos.Name = "JugadorPuntos";
-            this.JugadorPuntos.Size = new System.Drawing.Size(261, 24);
+            this.JugadorPuntos.Size = new System.Drawing.Size(176, 17);
             this.JugadorPuntos.TabIndex = 9;
             this.JugadorPuntos.TabStop = true;
             this.JugadorPuntos.Text = "Dime el jugador con más puntos";
@@ -139,9 +150,10 @@
             // Preguntas
             // 
             this.Preguntas.AutoSize = true;
-            this.Preguntas.Location = new System.Drawing.Point(364, 348);
+            this.Preguntas.Location = new System.Drawing.Point(243, 226);
+            this.Preguntas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Preguntas.Name = "Preguntas";
-            this.Preguntas.Size = new System.Drawing.Size(368, 24);
+            this.Preguntas.Size = new System.Drawing.Size(247, 17);
             this.Preguntas.TabIndex = 10;
             this.Preguntas.TabStop = true;
             this.Preguntas.Text = "Dime la partida con menos preguntas correctas";
@@ -149,19 +161,33 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(334, 420);
+            this.button5.Location = new System.Drawing.Point(223, 273);
+            this.button5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(163, 37);
+            this.button5.Size = new System.Drawing.Size(109, 24);
             this.button5.TabIndex = 11;
             this.button5.Text = "ENVIAR";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // listaconectados
+            // 
+            this.listaconectados.AutoSize = true;
+            this.listaconectados.Location = new System.Drawing.Point(243, 249);
+            this.listaconectados.Name = "listaconectados";
+            this.listaconectados.Size = new System.Drawing.Size(122, 17);
+            this.listaconectados.TabIndex = 12;
+            this.listaconectados.TabStop = true;
+            this.listaconectados.Text = "Lista de Conectados";
+            this.listaconectados.UseVisualStyleBackColor = true;
+            this.listaconectados.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 532);
+            this.ClientSize = new System.Drawing.Size(519, 346);
+            this.Controls.Add(this.listaconectados);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.Preguntas);
             this.Controls.Add(this.JugadorPuntos);
@@ -174,6 +200,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -195,6 +222,7 @@
         private System.Windows.Forms.RadioButton JugadorPuntos;
         private System.Windows.Forms.RadioButton Preguntas;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.RadioButton listaconectados;
     }
 }
 
