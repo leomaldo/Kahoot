@@ -10,6 +10,9 @@
 //prueba
 //15:36 11_4
 
+//Estructura necesaria para acceso excluyente
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 struct ConexionBD {
 	const char *servidor;
 	const char *usuario;
@@ -199,14 +202,14 @@ int Pon ( char *nombre[20], int socket) {
 //Funcion que le pasas como parametro una variable donde guarda el numero de conectados que hay con sus respectivos nombres
 void DameConectados ( char conectados[300]) {
 	//pone en conectados los nombres de todos los conectados separados por "/"
-	// 3/juan/maria/guille
+	// 3/juan/maria/guille	 
 	sprintf (conectados, "%d", miLista.num);
 	int i;
 	for (i=0; i< miLista.num; i++)
 	{
 		sprintf (conectados, "%s/%s",conectados, miLista.conectados[i].nombre);
 	}
-	printf("%s\n", conectados);
+	printf("%s\n", conectados);	
 }
 
 /*int DamePosicion (ListaConectados *lista, char nombre [20]) {*/
@@ -329,6 +332,7 @@ void *handleClientRequest (void *arg) {
 		
 	}else if (code == 4) {
 		//variable = 1;
+		
 		char  *usuario = strtok(NULL, "/");
 		
 		char *contrasena = strtok(NULL, "/");
@@ -345,9 +349,9 @@ void *handleClientRequest (void *arg) {
 		
 	}else if (code==6){
 		char conectados_string [300];
-			
+		pthread_mutex_lock( &mutex);	
 		DameConectados( conectados_string);
-		
+		pthread_mutex_unlock( &mutex);
 		sprintf(response, "%s", conectados_string);
 		//sprintf(response, conectados);
 	}else if (code == 0){
@@ -365,11 +369,15 @@ void *handleClientRequest (void *arg) {
 				j++;
 			}
 		}
+		pthread_mutex_lock( &mutex);
 		int resp_eli = Eliminar ( j);
+		pthread_mutex_unlock( &mutex);
 	}
 	
 	//write(*clientSocket, response, strlen(response));
+	pthread_mutex_lock( &mutex);
 	write(miLista.conectados[posicion - 1].socket, response, strlen(response));
+	pthread_mutex_unlock( &mutex);
 	}
 }
 
@@ -398,13 +406,7 @@ int main() {
 		return 1;
 	}
 	
-	printf("Conexión a la base de datos establecida correctamente.\n");	
-	
-	
-	
-	
-	
-	
+	printf("Conexión a la base de datos establecida correctamente.\n");		
 	
 	int serverSocket;
 	//int clientSocket;
@@ -438,7 +440,7 @@ int main() {
 		printf("%d \n", clientSocket);
 		//sockets[i]= clientSocket;
 		miLista.conectados[i].socket = clientSocket;
-			printf("el socekt en el for del main es %d \n", miLista.conectados[i].socket);
+			printf("el socket en el for del main es %d \n", miLista.conectados[i].socket);
 		
 	//		handleClientRequest(clientSocket, conn);
 	//10/4	pthread_create (&thread, NULL,  &handleClientRequest,(void *)&sockets[i]);
