@@ -20,18 +20,18 @@ struct ConexionBD {
 	const char *base_datos;
 };
 
-// Funci贸n para conectar a la base de datos utilizando la estructura de conexi贸n
+// Funci髇 para conectar a la base de datos utilizando la estructura de conexi髇
 MYSQL *conectarBD(struct ConexionBD *conexion) {
-	MYSQL *conn = mysql_init(NULL); // Inicializar el objeto de conexi贸n
+	MYSQL *conn = mysql_init(NULL); // Inicializar el objeto de conexi髇
 	
-	// Establecer la conexi贸n a la base de datos
+	// Establecer la conexi髇 a la base de datos
 	if (!mysql_real_connect(conn, conexion->servidor, conexion->usuario, conexion->contrasena, conexion->base_datos, 0, NULL, 0)) {
 		fprintf(stderr, "Error al conectar a la base de datos: %s\n", mysql_error(conn));
 		mysql_close(conn);
 		return NULL; // Devolver NULL si hay un error
 	}
 	
-	return conn; // Devolver el objeto de conexi贸n si la conexi贸n fue exitosa
+	return conn; // Devolver el objeto de conexi髇 si la conexi髇 fue exitosa
 }
 
 
@@ -83,7 +83,7 @@ char* JugadorMaxPtsTotales(MYSQL *conn) {
 	strcpy(jugador, row[0]);
 	
 	mysql_free_result(resultado);
-    printf("%s",jugador);
+	printf("%s",jugador);
 	char* jugadorNombre = strdup(jugador); // Duplicar la cadena para evitar problemas de memoria
 	return jugadorNombre;;
 }
@@ -184,7 +184,7 @@ int verificarCredenciales(MYSQL *conn, const char *usuario, const char *contrase
 //funcion que pone los conectados en el vector de conectados de la lista de conectados
 // int Pon (ListaConectados *lista, char *nombre[20], int socket) { ------------- //int Pon (ListaConectados *lista, char nombre[20], int socket) {
 int Pon ( char *nombre[20], int socket) {
-	//a瘛ぅ nuevo conectado. Retoirna 0 si ok y -1 si la lista esta llena
+	//a\U00061925 nuevo conectado. Retoirna 0 si ok y -1 si la lista esta llena
 	
 	if (miLista.num == 100)
 	{
@@ -213,7 +213,7 @@ void DameConectados ( char conectados[300]) {
 }
 
 /*int DamePosicion (ListaConectados *lista, char nombre [20]) {*/
-	//devuelve la posicion o -1 si no esta en la lista
+//devuelve la posicion o -1 si no esta en la lista
 /*	int i= 0;*/
 /*	int encontrado = 0;*/
 /*	while ((i < lista->num) && (encontrado == 0))*/
@@ -242,21 +242,21 @@ void DameConectados ( char conectados[300]) {
 //Funcion que elimina a un usuario cuando este se desconecta
 //int Eliminar ( char *nombre[20], int position) {
 int Eliminar ( int position) {
-//int pos = DamePosicion (nombre);
-/*	if (pos==-1)*/
-/*	{*/
-/*		return -1;*/
-/*	}*/
+	//int pos = DamePosicion (nombre);
+	/*	if (pos==-1)*/
+	/*	{*/
+	/*		return -1;*/
+	/*	}*/
 	//else 
 	//{
-		int i;
-		for (i = position; i< miLista.num-1;i++)
-		{
-			strcpy(miLista.conectados[i].nombre , miLista.conectados[i+1].nombre);
-			miLista.conectados[i].socket = miLista.conectados[i+1].socket;
-		}
-		miLista.num--;
-		return 0;
+	int i;
+	for (i = position; i< miLista.num-1;i++)
+	{
+		strcpy(miLista.conectados[i].nombre , miLista.conectados[i+1].nombre);
+		miLista.conectados[i].socket = miLista.conectados[i+1].socket;
+	}
+	miLista.num--;
+	return 0;
 	//}
 	
 }
@@ -274,9 +274,9 @@ void *handleClientRequest (void *arg) {
 	//miLista.conectados[posicion].socket;
 	int clientSocket = miLista.conectados[posicion - 1].socket;
 	//int *clientSocket = &miLista.conectados[posicion].socket;
-/*	printf("la variable posicion: %d \n", posicion);*/
-/*	printf("hola, el socket es: %d\n",miLista.conectados[posicion - 1].socket);*/
-/*	printf("la variable *clientsocket vale: %d \n", clientSocket);*/
+	/*	printf("la variable posicion: %d \n", posicion);*/
+	/*	printf("hola, el socket es: %d\n",miLista.conectados[posicion - 1].socket);*/
+	/*	printf("la variable *clientsocket vale: %d \n", clientSocket);*/
 	char request[512];
 	char response[512];
 	//saber si una persona se ha registrado o logueado
@@ -292,92 +292,93 @@ void *handleClientRequest (void *arg) {
 		}
 		
 		request[ret] = '\0';
-	int code = atoi(strtok(request, "/"));
-
-	struct ConexionBD conexion = {
-		.servidor = "localhost",
-			.usuario = "root",
-			.contrasena = "mysql",
-			.base_datos = "Kahoot"
-	};
-
-	MYSQL *conn = conectarBD(&conexion);
-	if (conn == NULL) {
-		// Si hay un error en la conexi贸n, salir del programa
-		break;
-	}	
-	if (code == 2) {
-		char* res = JugadorMaxPtsTotales(conn);
-		sprintf(response, "%s", res);
-	} else if (code == 1) {
-		int res2= PtsDeLaPartidaConMasPts(conn);
-		sprintf(response, "%d", res2);
-	} else if (code == 3) {
-		int res3 = encontrarPartidaMenosCorrectas(conn);
-		sprintf(response, "%d", res3);
-	}else if (code == 5) {
-		//variable = 0;
-		char *usuario = strtok(NULL, "/");
+		int code = atoi(strtok(request, "/"));
 		
+		struct ConexionBD conexion = {
+			.servidor = "localhost",
+				.usuario = "root",
+				.contrasena = "mysql",
+				.base_datos = "Kahoot"
+		};
 		
-		
-		char *contrasena = strtok(NULL, "/");
-		
-		registro(conn, usuario, contrasena);
-		
-		sprintf(response, "Registro exitoso para usuario: %s", usuario);
-		
-		int respuesta = Pon( &usuario, clientSocket);
-		printf("el valor que retorna la funcion Pon es: %d\n", respuesta);
-		
-	}else if (code == 4) {
-		//variable = 1;
-		
-		char  *usuario = strtok(NULL, "/");
-		
-		char *contrasena = strtok(NULL, "/");
-		
-		// Verificar las credenciales en la base de datos
-		if (verificarCredenciales(conn, usuario, contrasena)) {
-			sprintf(response, "Inicio de sesi贸n exitoso para usuario: %s", usuario);
-		}else {
-			sprintf(response, "Credenciales incorrectas");
-		}
-		//int respuesta = Pon( &miLista, &usuario, miLista.conectados[posicion -1].socket);
-		int respuesta = Pon( &usuario, clientSocket);
-		printf("el valor que retorna la funcion Pon es: %d\n", respuesta);
-		
-	}else if (code==6){
-		char conectados_string [300];
-		pthread_mutex_lock( &mutex);	
-		DameConectados( conectados_string);
-		pthread_mutex_unlock( &mutex);
-		sprintf(response, "%s", conectados_string);
-		//sprintf(response, conectados);
-	}else if (code == 0){
-		printf("mensaje de desconexion victor\n");
-		int j = 0;
-		int encontrado=0;
-		while ((j< miLista.num) && (encontrado == 0))
-		{
-			if (clientSocket == miLista.conectados[j].socket)
-			{
-				encontrado = 1;
+		MYSQL *conn = conectarBD(&conexion);
+		if (conn == NULL) {
+			// Si hay un error en la conexi髇, salir del programa
+			break;
+		}	
+		if (code == 2) {
+			char* res = JugadorMaxPtsTotales(conn);
+			sprintf(response, "%s", res);
+		} else if (code == 1) {
+			int res2= PtsDeLaPartidaConMasPts(conn);
+			sprintf(response, "%d", res2);
+		} else if (code == 3) {
+			int res3 = encontrarPartidaMenosCorrectas(conn);
+			sprintf(response, "%d", res3);
+		}else if (code == 5) {
+			//variable = 0;
+			char *usuario = strtok(NULL, "/");
+			
+			
+			
+			char *contrasena = strtok(NULL, "/");
+			
+			registro(conn, usuario, contrasena);
+			
+			sprintf(response, "Registro exitoso para usuario: %s", usuario);
+			
+			int respuesta = Pon( &usuario, clientSocket);
+			printf("el valor que retorna la funcion Pon es: %d\n", respuesta);
+			
+		}else if (code == 4) {
+			//variable = 1;
+			
+			char  *usuario = strtok(NULL, "/");
+			
+			char *contrasena = strtok(NULL, "/");
+			
+			// Verificar las credenciales en la base de datos
+			if (verificarCredenciales(conn, usuario, contrasena)) {
+				sprintf(response, "Inicio de sesi髇 exitoso para usuario: %s", usuario);
+			}else {
+				sprintf(response, "Credenciales incorrectas");
 			}
-			else 
+			//int respuesta = Pon( &miLista, &usuario, miLista.conectados[posicion -1].socket);
+			int respuesta = Pon( &usuario, clientSocket);
+			printf("el valor que retorna la funcion Pon es: %d\n", respuesta);
+			
+		}else if (code==6){
+			char conectados_string [300];
+			//	pthread_mutex_lock( &mutex);	
+			DameConectados( conectados_string);
+			//	pthread_mutex_unlock( &mutex);
+			sprintf(response, "%s", conectados_string);
+			//sprintf(response, conectados);
+		}else if (code == 0){
+			printf("mensaje de desconexion victor\n");
+			int j = 0;
+			printf("socket para eliminar: %d \n", clientSocket);
+			int encontrado=0;
+			while ((j< miLista.num) && (encontrado == 0))
 			{
-				j++;
+				if (clientSocket == miLista.conectados[j].socket)
+				{
+					encontrado = 1;
+				}
+				else 
+				{
+					j++;
+				}
 			}
+			//pthread_mutex_lock( &mutex);
+			int resp_eli = Eliminar ( j);
+			//	pthread_mutex_unlock( &mutex);
 		}
+		
+		//write(*clientSocket, response, strlen(response));
 		pthread_mutex_lock( &mutex);
-		int resp_eli = Eliminar ( j);
+		write(miLista.conectados[posicion - 1].socket, response, strlen(response));
 		pthread_mutex_unlock( &mutex);
-	}
-	
-	//write(*clientSocket, response, strlen(response));
-	pthread_mutex_lock( &mutex);
-	write(miLista.conectados[posicion - 1].socket, response, strlen(response));
-	pthread_mutex_unlock( &mutex);
 	}
 }
 
@@ -399,14 +400,14 @@ int main() {
 			.base_datos = "Kahoot"
 	};
 	
-	// Conectar a la base de datos utilizando la estructura de conexi贸n
+	// Conectar a la base de datos utilizando la estructura de conexi髇
 	MYSQL *conn = conectarBD(&conexion);
 	if (conn == NULL) {
-		// Si hay un error en la conexi贸n, salir del programa
+		// Si hay un error en la conexi髇, salir del programa
 		return 1;
 	}
 	
-	printf("Conexi贸n a la base de datos establecida correctamente.\n");		
+	printf("Conexi髇 a la base de datos establecida correctamente.\n");		
 	
 	int serverSocket;
 	//int clientSocket;
@@ -440,14 +441,14 @@ int main() {
 		printf("%d \n", clientSocket);
 		//sockets[i]= clientSocket;
 		miLista.conectados[i].socket = clientSocket;
-			printf("el socket en el for del main es %d \n", miLista.conectados[i].socket);
+		printf("el socket en el for del main es %d \n", miLista.conectados[i].socket);
 		
-	//		handleClientRequest(clientSocket, conn);
-	//10/4	pthread_create (&thread, NULL,  &handleClientRequest,(void *)&sockets[i]);
+		//		handleClientRequest(clientSocket, conn);
+		//10/4	pthread_create (&thread, NULL,  &handleClientRequest,(void *)&sockets[i]);
 		//10/4_15:53 pthread_create (&thread, NULL,  &handleClientRequest,(void *)&i);
 		pthread_create (&thread, NULL,  &handleClientRequest,&i);
 		printf("%d \n", i);
-	//	close(clientSocket);
+		//	close(clientSocket);
 		i++;
 		
 	}

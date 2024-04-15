@@ -16,11 +16,88 @@ namespace Cliente
     public partial class Form1 : Form
     {
         Socket server;
+        private Label labelKahoot;
+        private Label labelPreparados;
+        private System.Windows.Forms.Timer timerAnimacion2;
+        private bool aumentando = true;
+        private int maxSize = 75;
+        private int minSize = 40;
+        private int step = 1; // Reducir la velocidad de la animación
+
         public Form1()
         {
             InitializeComponent();
+            this.BackColor = Color.FromArgb(220, 255, 220);
+            InicializarComponentes();
+
+            Registrarse registrarse = new Registrarse();
+            registrarse.ShowDialog();
         }
-      
+
+        private void InicializarComponentes()
+        {
+            // Crear y configurar el label "KAHOOT"
+            labelKahoot = new Label
+            {
+                Text = "KAHOOT",
+                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Verdana", minSize, FontStyle.Bold),
+                ForeColor = Color.Blue
+            };
+            labelKahoot.Location = new Point(26, 157); // Centrar el label
+
+            // Crear y configurar el label de la frase "¿Estáis preparados?"
+            labelPreparados = new Label
+            {
+                Text = "¿Estáis preparados?",
+                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Arial", 20, FontStyle.Bold),
+                ForeColor = Color.Purple
+            };
+            labelPreparados.Location = new Point(113,358); // Centrar el label
+
+            // Agregar los labels al formulario
+            this.Controls.Add(labelKahoot);
+            this.Controls.Add(labelPreparados);
+
+            // Crear y configurar el temporizador
+            timerAnimacion = new System.Windows.Forms.Timer();
+            timerAnimacion.Interval = 50; // Intervalo de tiempo más largo para una animación más lenta
+            timerAnimacion.Tick += TimerAnimacion_Tick;
+            timerAnimacion.Start();
+        }
+
+        private void TimerAnimacion_Tick(object sender, EventArgs e)
+        {
+            // Ajustar el tamaño del texto en cada tick del temporizador
+            if (aumentando)
+            {
+                if (labelKahoot.Font.Size < maxSize)
+                {
+                    labelKahoot.Font = new Font(labelKahoot.Font.FontFamily, labelKahoot.Font.Size + step, FontStyle.Bold);
+                }
+                else
+                {
+                    aumentando = false;
+                }
+            }
+            else
+            {
+                if (labelKahoot.Font.Size > minSize)
+                {
+                    labelKahoot.Font = new Font(labelKahoot.Font.FontFamily, labelKahoot.Font.Size - step, FontStyle.Bold);
+                }
+                else
+                {
+                    aumentando = true;
+                }
+            }
+        }
+
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             IPAddress direc = IPAddress.Parse("192.168.56.102");
@@ -146,6 +223,39 @@ namespace Cliente
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void oPCIONESToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rEGISTRARMEINICIARSESIÓNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            Registrarse registrarse = new Registrarse();
+            registrarse.ShowDialog(); 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void jUGARPARTIDAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Partida partida = new Partida();
+            partida.ShowDialog();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
 
         }
