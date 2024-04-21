@@ -245,10 +245,10 @@ void *handleClientRequest (void *arg) {
 		int code = atoi(strtok(request, "/"));
 		
 		struct ConexionBD conexion = {
-			.servidor = "localhost",
+			.servidor = "shiva2.upc.es",
 				.usuario = "root",
 				.contrasena = "mysql",
-				.base_datos = "Kahoot"
+				.base_datos = "MG5_Kahoot"
 		};
 		
 		MYSQL *conn = conectarBD(&conexion);
@@ -361,10 +361,10 @@ int main() {
 	
 	//estructura base de datos
 	struct ConexionBD conexion = {
-		.servidor = "localhost",
+		.servidor = "shiva2.upc.es",
 			.usuario = "root",
 			.contrasena = "mysql",
-			.base_datos = "Kahoot"
+			.base_datos = "MG5_Kahoot"
 	};
 	
 	// Conectar a la base de datos utilizando la estructura de conexión
@@ -376,13 +376,14 @@ int main() {
 	
 	printf("Conexión a la base de datos establecida correctamente.\n");		
 	int serverSocket;
+	int puerto = 50020;
 	struct sockaddr_in serverAddr, clientAddr;
 	socklen_t addrLen = sizeof(struct sockaddr_in);
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 	memset(&serverAddr, 0, sizeof(serverAddr));
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	serverAddr.sin_port = htons(9052); //9052
+	serverAddr.sin_port = htons(puerto); //9052
 	bind(serverSocket, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
 	listen(serverSocket, 3);
 	

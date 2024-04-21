@@ -23,15 +23,96 @@ namespace Cliente
         private int maxSize = 75;
         private int minSize = 40;
         private int step = 1; // Reducir la velocidad de la animación
+      
+        private Thread atender;
 
+        List<Peticion> formularios = new List<Peticion>();
+       
         public Form1()
         {
             InitializeComponent();
             this.BackColor = Color.FromArgb(220, 255, 220);
             InicializarComponentes();
 
-            Registrarse registrarse = new Registrarse();
-            registrarse.ShowDialog();
+           
+            //Registrarse registrarse = new Registrarse(server);
+            //registrarse.ShowDialog();
+
+           
+        }
+
+      
+      
+        private void AtenderServidor()
+        {
+            while (true)
+            {
+                //Recibimos mensaje del servidor
+                byte[] msg2 = new byte[80];
+                server.Receive(msg2);
+                string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
+                int codigo = Convert.ToInt32(trozos[0]);
+                string mensaje;
+
+                int nform;
+              
+
+                    // Mostrar el mensaje en función de su identificador
+                    switch (codigo)
+                    {
+                        case 0:
+                        // Actualizar el Label de la lista de conectados
+                        mensaje = trozos[1].Split('\0')[0];
+
+                        //Haz tu lo que no me dejas hacer a mi
+                        contLbl.Invoke(new Action(() =>
+                        {
+                            contLbl.Text = mensaje;
+                        }));
+                        break;
+                        case 1:
+                        // Mostrar la máxima puntuación
+                        nform = Convert.ToInt32(trozos[1]);
+                        mensaje = trozos[2].Split('\0')[0];
+                        formularios[nform].TomaRespuesta1(mensaje);
+
+                        break;
+                        case 2:
+                        // Mostrar el jugador con más puntos
+                        nform = Convert.ToInt32(trozos[1]);
+                        mensaje = trozos[2].Split('\0')[0];
+                        formularios[nform].TomaRespuesta2(mensaje);
+                            break;
+                        case 3:
+                        // Mostrar la partida con menos preguntas correctas
+                        nform = Convert.ToInt32(trozos[1]);
+                        mensaje = trozos[2].Split('\0')[0];
+                        formularios[nform].TomaRespuesta3(mensaje);
+
+                        break;
+                        case 4:
+                        // Mostrar el resultado del inicio de sesión
+                        nform = Convert.ToInt32(trozos[1]);
+                        mensaje = trozos[2].Split('\0')[0];
+                        MessageBox.Show(mensaje);
+                       
+                            break;
+                        case 5:
+                        // Mostrar el resultado del registro
+                        nform = Convert.ToInt32(trozos[1]);
+                        mensaje = trozos[2].Split('\0')[0];
+                        MessageBox.Show(mensaje);
+
+                        break;
+                      
+                        default:
+                        // Mostrar un mensaje de error para identificadores desconocidos
+                        MessageBox.Show("Mensaje no reconocido del servidor: ");
+                        break;
+
+                    }
+                
+            }
         }
 
         private void InicializarComponentes()
@@ -68,7 +149,6 @@ namespace Cliente
             timerAnimacion.Tick += TimerAnimacion_Tick;
             timerAnimacion.Start();
         }
-
         private void TimerAnimacion_Tick(object sender, EventArgs e)
         {
             // Ajustar el tamaño del texto en cada tick del temporizador
@@ -111,7 +191,9 @@ namespace Cliente
                 server.Connect(ipep);//Intentamos conectar el socket
                 this.BackColor = Color.Cyan;
                 MessageBox.Show("Conexión establecida correctamente");
-
+                ThreadStart ts = delegate { AtenderServidor(); };
+                atender = new Thread(ts);
+                atender.Start();
             }
             catch (SocketException ex)
             {
@@ -121,93 +203,7 @@ namespace Cliente
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            if (MaxPuntuacion.Checked)
-            {
-                string mensaje = "1/";
-                // Enviamos al servidor el codigo
-                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-                server.Send(msg);
-
-                //Recibimos la respuesta del servidor
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("La máxima puntuación es: " + mensaje);
-            }
-            else if (JugadorPuntos.Checked)
-            {
-                string mensaje = "2/";
-                // Enviamos al servidor el codigo
-                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-                server.Send(msg);
-
-                //Recibimos la respuesta del servidor
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("El jugador con más puntos es:" + mensaje);
-
-            }
-            else if (Preguntas.Checked)
-            {
-                string mensaje = "3/";
-                // Enviamos al servidor el nombre tecleado
-                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-                server.Send(msg);
-
-                //Recibimos la respuesta del servidor
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("La partida con menos preguntas correctas es la número:" + mensaje);
-            }
-            else if (listaconectados.Checked)
-            {
-                string mensaje = "6/";
-                // Enviamos al servidor el nombre tecleado
-                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-                server.Send(msg);
-
-                //Recibimos la respuesta del servidor
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("La lista de conectados es:" + mensaje);
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            //Login
-            string mensaje = "4/" + ID.Text + "/" + Contraseña.Text;
-            // Enviamos al servidor el nombre y contraseña tecleados
-            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-            server.Send(msg);
-
-            //Recibimos la respuesta del servidor de si se ha entrado o no
-            byte[] msg2 = new byte[80];
-            server.Receive(msg2);
-            mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-            MessageBox.Show(mensaje);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            //Registro
-            string mensaje = "5/" + ID.Text + "/" + Contraseña.Text;
-            // Enviamos al servidor el nombre y contraseña tecleados
-            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-            server.Send(msg);
-
-            //Recibimos la respuesta del servidor de si se ha creado correctamente o no
-            byte[] msg2 = new byte[80];
-            server.Receive(msg2);
-            mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-            MessageBox.Show(mensaje);
-        }
-
+       
         private void button2_Click(object sender, EventArgs e)
         {
             //Mensaje de desconexión
@@ -217,47 +213,40 @@ namespace Cliente
             server.Send(msg);
 
             // Nos desconectamos
+            atender.Abort();
             this.BackColor = Color.Gray;
             server.Shutdown(SocketShutdown.Both);
             server.Close();
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void oPCIONESToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void rEGISTRARMEINICIARSESIÓNToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            Registrarse registrarse = new Registrarse();
+            Registrarse registrarse = new Registrarse(server);
             registrarse.ShowDialog(); 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+      
         private void jUGARPARTIDAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Partida partida = new Partida();
             partida.ShowDialog();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+      
+        private void pETICIÓNToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ThreadStart ts = delegate { PonerEnMarchaFormulario(); };
+            Thread T = new Thread(ts);
+            T.Start();
 
         }
-
-        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        private void PonerEnMarchaFormulario()
         {
-
+            int cont = formularios.Count;
+            Peticion f = new Peticion(cont, server);
+            formularios.Add(f);
+            f.ShowDialog();
         }
     }
 }

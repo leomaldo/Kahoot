@@ -19,6 +19,13 @@
 -- Table structure for table `jugadores`
 --
 
+
+DROP DATABASE IF EXISTS MG5_Kahoot;
+CREATE DATABASE MG5_Kahoot;
+
+USE MG5_Kahoot;
+
+
 DROP TABLE IF EXISTS `jugadores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -81,7 +88,10 @@ DROP TABLE IF EXISTS `preguntas`;
 CREATE TABLE `preguntas` (
   `ID_pregunta` int(11) NOT NULL AUTO_INCREMENT,
   `pregunta` text NOT NULL,
-  `respuesta` text NOT NULL,
+  `respuesta_correcta` text NOT NULL,
+  `respuesta_incorrecta_1` text NOT NULL,
+  `respuesta_incorrecta_2` text NOT NULL,
+  `respuesta_incorrecta_3` text NOT NULL,
   PRIMARY KEY (`ID_pregunta`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -92,7 +102,7 @@ CREATE TABLE `preguntas` (
 
 LOCK TABLES `preguntas` WRITE;
 /*!40000 ALTER TABLE `preguntas` DISABLE KEYS */;
-INSERT INTO `preguntas` VALUES (1,'¿Cuál es la capital de Francia?','París'),(2,'¿Cuánto es 2 + 2?','4'),(3,'¿En qué continente está Ecuador?','América');
+INSERT INTO `preguntas` VALUES (1,'¿Cuál es la capital de Francia?','París','Berlín','Marsella','Lyon'),(2,'¿Cuánto es 2 + 2?','4','5','3','8'),(3,'¿En qué continente está Ecuador?','América','Europa','Asia','África');
 /*!40000 ALTER TABLE `preguntas` ENABLE KEYS */;
 UNLOCK TABLES;
 

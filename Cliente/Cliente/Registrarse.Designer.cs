@@ -55,7 +55,7 @@
             this.ID.Size = new System.Drawing.Size(23, 16);
             this.ID.TabIndex = 1;
             this.ID.Text = "ID:";
-            this.ID.Click += new System.EventHandler(this.label2_Click);
+
             // 
             // textBox1
             // 
@@ -88,6 +88,7 @@
             this.Registrarme.TabIndex = 5;
             this.Registrarme.Text = "Registrarme";
             this.Registrarme.UseVisualStyleBackColor = true;
+            this.Registrarme.Click += new System.EventHandler(this.Registrarme_Click);
             // 
             // Iniciarsesion
             // 
@@ -97,6 +98,7 @@
             this.Iniciarsesion.TabIndex = 6;
             this.Iniciarsesion.Text = "Iniciar Sesión";
             this.Iniciarsesion.UseVisualStyleBackColor = true;
+            this.Iniciarsesion.Click += new System.EventHandler(this.Iniciarsesion_Click);
             // 
             // Registrarse
             // 
