@@ -180,8 +180,9 @@ namespace Cliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            IPAddress direc = IPAddress.Parse("192.168.56.102");
-            IPEndPoint ipep = new IPEndPoint(direc, 9052);
+            int puerto = 50020;
+            IPAddress direc = IPAddress.Parse("10.4.119.5");
+            IPEndPoint ipep = new IPEndPoint(direc, puerto);
 
 
             //Creamos el socket 
@@ -248,5 +249,6 @@ namespace Cliente
             formularios.Add(f);
             f.ShowDialog();
         }
+        
     }
 }
