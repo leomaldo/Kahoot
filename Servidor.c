@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <mysql/mysql.h>
 #include <pthread.h>
-#include <my_global.h>
+/*#include <my_global.h>*/
 //Estructura necesaria para acceso excluyente
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
@@ -25,7 +25,7 @@ MYSQL *conectarBD(struct ConexionBD *conexion) {
 	MYSQL *conn = mysql_init(NULL); // Inicializar el objeto de conexión
 	
 	// Establecer la conexión a la base de datos
-	if (!mysql_real_connect(conn, conexion->servidor, conexion->usuario, conexion->contrasena, conexion->base_datos, 0, NULL, 0)) {
+	if (!mysql_real_connect(conn, "shiva2.upc.es", "root", "mysql", "MG5_Kahoot", 0, NULL, 0)) {
 		fprintf(stderr, "Error al conectar a la base de datos: %s\n", mysql_error(conn));
 		mysql_close(conn);
 		return NULL; // Devolver NULL si hay un error
@@ -315,6 +315,13 @@ void *handleClientRequest (void *arg) {
 /*			DameConectados( conectados_string);*/
 /*			pthread_mutex_unlock( &mutex);*/
 			
+		//}
+/*		if (code !=0)*/
+/*		{*/
+			
+/*			printf ("Respuesta: %s\n", response);*/
+			//Enviamos respuesta
+/*			write (miLista.conectados[posicion_vector].socket,response, strlen(response));*/
 		}
 		else if (code == 0){
 			printf("mensaje de desconexion victor\n");
@@ -346,9 +353,10 @@ void *handleClientRequest (void *arg) {
 				write(miLista.conectados[j].socket, notificacion, strlen(notificacion));
 		}
 		pthread_mutex_lock( &mutex);
-		write(miLista.conectados[posicion - 1].socket, response, strlen(response));
+		write(miLista.conectados[posicion_vector].socket, response, strlen(response));
 		pthread_mutex_unlock( &mutex);		
 	}
+	close(miLista.conectados[posicion_vector].socket); 
 }
 
 struct thread_info {    /* Used as argument to thread_start() */

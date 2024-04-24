@@ -16,6 +16,8 @@ namespace Cliente
     public partial class Form1 : Form
     {
         Socket server;
+        Thread atender;
+
         private Label labelKahoot;
         private Label labelPreparados;
         private System.Windows.Forms.Timer timerAnimacion2;
@@ -24,7 +26,7 @@ namespace Cliente
         private int minSize = 40;
         private int step = 1; // Reducir la velocidad de la animación
       
-        private Thread atender;
+        //private Thread atender;
 
         List<Peticion> formularios = new List<Peticion>();
        
@@ -36,13 +38,9 @@ namespace Cliente
 
            
             //Registrarse registrarse = new Registrarse(server);
-            //registrarse.ShowDialog();
-
-           
+            //registrarse.ShowDialog
         }
 
-      
-      
         private void AtenderServidor()
         {
             while (true)
@@ -55,7 +53,6 @@ namespace Cliente
                 string mensaje;
 
                 int nform;
-              
 
                     // Mostrar el mensaje en función de su identificador
                     switch (codigo)
@@ -111,7 +108,6 @@ namespace Cliente
                         break;
 
                     }
-                
             }
         }
 
@@ -249,6 +245,23 @@ namespace Cliente
             formularios.Add(f);
             f.ShowDialog();
         }
-        
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Mensaje de desconexión
+            string mensaje = "0/";
+
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+            server.Send(msg);
+
+            // Nos desconectamos
+            atender.Abort();
+            this.BackColor = Color.Gray;
+            server.Shutdown(SocketShutdown.Both);
+            server.Close();
+
+        }
+
+       
     }
 }

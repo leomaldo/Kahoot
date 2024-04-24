@@ -19,15 +19,8 @@ namespace Cliente
             InitializeComponent();
             this.BackColor = Color.FromArgb(180, 255, 220);
             this.server= server;
-        }
-
-        private void Registrarse_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        }  
       
-
         private void Registrarme_Click(object sender, EventArgs e)
         {
             //Registro

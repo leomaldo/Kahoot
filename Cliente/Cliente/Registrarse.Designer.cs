@@ -114,7 +114,6 @@
             this.Controls.Add(this.label1);
             this.Name = "Registrarse";
             this.Text = "Form2";
-            this.Load += new System.EventHandler(this.Registrarse_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

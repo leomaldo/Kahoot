@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Cliente
 {
@@ -27,7 +27,7 @@ namespace Cliente
         {
             if (MaxPuntuacion.Checked)
             {
-                string mensaje = "1/";
+                string mensaje = "1/"+ nForm;
                 // Enviamos al servidor el codigo
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
@@ -35,7 +35,7 @@ namespace Cliente
             }
             else if (JugadorPuntos.Checked)
             {
-                string mensaje = "2/";
+                string mensaje = "2/" + nForm;
                 // Enviamos al servidor el codigo
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
@@ -43,14 +43,14 @@ namespace Cliente
             }
             else if (Preguntas.Checked)
             {
-                string mensaje = "3/";
+                string mensaje = "3/" + nForm;
                 // Enviamos al servidor el nombre tecleado
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
             }
             else if (listaconectados.Checked)
             {
-                string mensaje = "6/";
+                string mensaje = "6/" + nForm;
                 // Enviamos al servidor el nombre tecleado
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
