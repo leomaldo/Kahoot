@@ -3,8 +3,7 @@ Kahoot
 
 Version1 generada por Leo
 Version1 verificada por Mohamed
-Version1 comunicada por Víctor
-URL : https://drive.google.com/file/d/1pLBWeaTWDTOhmJzyiVnUkHW2gg4jCkNd/view?usp=sharing
+Version1 comunicada por Víctor URL: https://drive.google.com/file/d/1pLBWeaTWDTOhmJzyiVnUkHW2gg4jCkNd/view?usp=sharing
 
 Version2 generada por Mohamed y Víctor
 Version2 verificada por Leo
@@ -14,4 +13,4 @@ THREADS Y LISTA CONECTADOS URL: https://drive.google.com/file/d/1vShPPEFMgcnuHBz
 
 Version3 generada por Mohamed
 Version3 verificado por Víctor
-Versión3 comunicada por Leo
+Versión3 comunicada por Leo URL: https://drive.google.com/file/d/1qZaj9S-oZK_ssItErF3VN7UuA1jdXyqB/view?usp=drive_link
