@@ -36,7 +36,8 @@ namespace Cliente
         {
             if (MaxPuntuacion.Checked)
             {
-                string mensaje = "1/"+ nForm;
+
+                string mensaje = "1/"+ nForm.ToString();
                 // Enviamos al servidor el codigo
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
@@ -47,7 +48,7 @@ namespace Cliente
             }
             else if (JugadorPuntos.Checked)
             {
-                string mensaje = "2/" + nForm;
+                string mensaje = "2/" + nForm.ToString();
                 // Enviamos al servidor el codigo
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
@@ -55,7 +56,7 @@ namespace Cliente
             }
             else if (Preguntas.Checked)
             {
-                string mensaje = "3/" + nForm;
+                string mensaje = "3/" + nForm.ToString();
                 // Enviamos al servidor el nombre tecleado
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
@@ -69,8 +70,10 @@ namespace Cliente
             numForm.Text = nForm.ToString();
 
         }
-       
 
-        
+        private void Peticion_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -95,14 +95,14 @@ namespace Cliente
                         case 4:
                             // Mostrar el resultado del inicio de sesión
                             
-                            mensaje = trozos[2].Split('\0')[1];
+                            mensaje = trozos[1];
                             MessageBox.Show(mensaje);
 
                             break;
                         case 5:
                             // Mostrar el resultado del registro
-                           
-                            mensaje = trozos[2].Split('\0')[1];
+
+                            mensaje = trozos[1];
                             MessageBox.Show(mensaje);
 
                             break;
@@ -117,6 +117,7 @@ namespace Cliente
                 catch
                 {
                     MessageBox.Show("Te has desconectaado");
+                    break;
                 }
             }
         }

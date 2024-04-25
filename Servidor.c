@@ -58,7 +58,7 @@ typedef struct {
 } Jugador;
 
 //funcion que devuelve el jugador con mas puntos totales
-char* JugadorMaxPtsTotales(MYSQL *conn) {
+int JugadorMaxPtsTotales(MYSQL *conn, char nombre [20]) {
 	MYSQL_RES *resultado;
 	MYSQL_ROW row;
 	int err;
@@ -79,12 +79,12 @@ char* JugadorMaxPtsTotales(MYSQL *conn) {
 		return NULL;
 	}
 	
-	strcpy(jugador, row[0]);
+	strcpy(nombre, row[0]);
 	
 	mysql_free_result(resultado);
 	//printf("%s",jugador);
-	char* jugadorNombre = strdup(jugador); // Duplicar la cadena para evitar problemas de memoria
-	return jugadorNombre;;
+// = strdup(jugador); // Duplicar la cadena para evitar problemas de memoria
+	return 0;
 }
 
 //funcion que devuelve los puntos de la partida que mas puntos tienen
@@ -242,6 +242,7 @@ void *handleClientRequest (void *arg) {
 		}
 		
 		request[ret] = '\0';
+		printf("Recibo: %s ", request);
 		int code = atoi(strtok(request, "/"));
 		
 		struct ConexionBD conexion = {
@@ -257,8 +258,9 @@ void *handleClientRequest (void *arg) {
 			break;
 		}	
 		if (code == 2) {
-			char* res = JugadorMaxPtsTotales(conn);
-			sprintf(response, "2/%s", res);
+			char nombre [20];
+			int res = JugadorMaxPtsTotales(conn, nombre);
+			sprintf(response, "2/%s", nombre);
 		} else if (code == 1) {
 			int res2= PtsDeLaPartidaConMasPts(conn);
 			sprintf(response, "1/%d", res2);
@@ -321,7 +323,8 @@ void *handleClientRequest (void *arg) {
 		{
 			printf ("Respuesta: %s\n", response);
 			//Enviamos respuesta
-			write (miLista.conectados[posicion_vector].socket,response, strlen(response));
+			write (miLista.conectados[posicion - 1].socket,response, strlen(response));
+			//write (miLista.conectados[posicion_vector].socket,response, strlen(response
 		}
 		else if (code == 0){
 			printf("mensaje de desconexion victor\n");
