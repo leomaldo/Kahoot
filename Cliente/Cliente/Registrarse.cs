@@ -24,7 +24,7 @@ namespace Cliente
         private void Registrarme_Click(object sender, EventArgs e)
         {
             //Registro
-            string mensaje = "5/" + ID.Text + "/" + Contraseña.Text;
+            string mensaje = "5/" + textBox1.Text + "/" + textBox2.Text;
             // Enviamos al servidor el nombre y contraseña tecleados
             byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
@@ -33,7 +33,7 @@ namespace Cliente
         private void Iniciarsesion_Click(object sender, EventArgs e)
         {
             //Login
-            string mensaje = "4/" + ID.Text + "/" + Contraseña.Text;
+            string mensaje = "4/" + textBox1.Text + "/" + textBox2.Text;
             // Enviamos al servidor el nombre y contraseña tecleados
             byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);

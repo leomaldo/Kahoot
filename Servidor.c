@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <mysql/mysql.h>
 #include <pthread.h>
-/*#include <my_global.h>*/
+//#include <my_global.h>*/
 //Estructura necesaria para acceso excluyente
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
@@ -25,7 +25,7 @@ MYSQL *conectarBD(struct ConexionBD *conexion) {
 	MYSQL *conn = mysql_init(NULL); // Inicializar el objeto de conexión
 	
 	// Establecer la conexión a la base de datos
-	if (!mysql_real_connect(conn, "shiva2.upc.es", "root", "mysql", "MG5_Kahoot", 0, NULL, 0)) {
+	if (!mysql_real_connect(conn, "shiva2.upc.es", "root", "mysql","MG5_Kahoot", 0, NULL, 0)) {
 		fprintf(stderr, "Error al conectar a la base de datos: %s\n", mysql_error(conn));
 		mysql_close(conn);
 		return NULL; // Devolver NULL si hay un error
@@ -82,7 +82,7 @@ char* JugadorMaxPtsTotales(MYSQL *conn) {
 	strcpy(jugador, row[0]);
 	
 	mysql_free_result(resultado);
-	printf("%s",jugador);
+	//printf("%s",jugador);
 	char* jugadorNombre = strdup(jugador); // Duplicar la cadena para evitar problemas de memoria
 	return jugadorNombre;;
 }
@@ -113,7 +113,7 @@ int PtsDeLaPartidaConMasPts(MYSQL *conn) {
 		printf("No se encontraron partidas.\n");
 	}
 	mysql_free_result(result);
-	printf("%d",puntosMasPuntos);
+	//printf("%d",puntosMasPuntos);
 	
 	return puntosMasPuntos;
 }
@@ -152,11 +152,11 @@ void registro(MYSQL *conn, const char *usuario, const char *contrasena) {
 	char query[100];
 	sprintf(query, "INSERT INTO usuarios (usuario, contrasena) VALUES ('%s', '%s')", usuario, contrasena);
 	
-	if (mysql_query(conn, query)) {
-		fprintf(stderr, "Error al insertar datos: %s\n", mysql_error(conn));
-	} else {
-		printf("Registro exitoso para usuario: %s\n", usuario);
-	}
+/*	if (mysql_query(conn, query)) {*/
+/*		fprintf(stderr, "Error al insertar datos: %s\n", mysql_error(conn));*/
+/*	} else {*/
+/*		printf("Registro exitoso para usuario: %s\n", usuario);*/
+/*	}*/
 	// metemos este usuario en la lista de usuarios activos
 }
 
@@ -283,7 +283,7 @@ void *handleClientRequest (void *arg) {
 				for ( j=0; j< miLista.num; j++)
 					write(miLista.conectados[j].socket, notificacion, strlen(notificacion));
 			}
-			printf("el valor que retorna la funcion Pon es: %d\n", respuesta);	
+			//printf("el valor que retorna la funcion Pon es: %d\n", respuesta);	
 		}
 		else if (code == 4){
 			char  *usuario = strtok(NULL, "/");
@@ -307,7 +307,7 @@ void *handleClientRequest (void *arg) {
 			for ( j=0; j<miLista.num ; j++)
 				write(miLista.conectados[j].socket, notificacion, strlen(notificacion));
 		    }
-			printf("el valor que retorna la funcion Pon es: %d\n", respuesta);
+			//printf("el valor que retorna la funcion Pon es: %d\n", respuesta);
 		
 /*		else if (code==6){*/
 /*			char conectados_string [300];*/
@@ -316,12 +316,12 @@ void *handleClientRequest (void *arg) {
 /*			pthread_mutex_unlock( &mutex);*/
 			
 		//}
-/*		if (code !=0)*/
-/*		{*/
-			
-/*			printf ("Respuesta: %s\n", response);*/
+		}
+		if (code !=0)
+		{
+			printf ("Respuesta: %s\n", response);
 			//Enviamos respuesta
-/*			write (miLista.conectados[posicion_vector].socket,response, strlen(response));*/
+			write (miLista.conectados[posicion_vector].socket,response, strlen(response));
 		}
 		else if (code == 0){
 			printf("mensaje de desconexion victor\n");
@@ -351,10 +351,11 @@ void *handleClientRequest (void *arg) {
 			j=0;
 			for ( j=0; j<miLista.num ; j++)
 				write(miLista.conectados[j].socket, notificacion, strlen(notificacion));
-		}
-		pthread_mutex_lock( &mutex);
-		write(miLista.conectados[posicion_vector].socket, response, strlen(response));
-		pthread_mutex_unlock( &mutex);		
+        }
+/*		pthread_mutex_lock( &mutex);*/
+		//printf ("Respuesta: %s\n", response);
+/*		write(miLista.conectados[posicion_vector].socket, response, strlen(response));*/
+/*		pthread_mutex_unlock( &mutex);		*/
 	}
 	close(miLista.conectados[posicion_vector].socket); 
 }

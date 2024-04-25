@@ -25,11 +25,11 @@ namespace Cliente
         private int maxSize = 75;
         private int minSize = 40;
         private int step = 1; // Reducir la velocidad de la animación
-      
+        private bool atendercliente = true;
         //private Thread atender;
 
-        List<Peticion> formularios = new List<Peticion>();
-       
+        Peticion peticion = new Peticion();
+
         public Form1()
         {
             InitializeComponent();
@@ -43,71 +43,81 @@ namespace Cliente
 
         private void AtenderServidor()
         {
-            while (true)
+            while (atendercliente)
             {
-                //Recibimos mensaje del servidor
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
-                int codigo = Convert.ToInt32(trozos[0]);
-                string mensaje;
+                try
+                {                 
+                    //Recibimos mensaje del servidor
+                    byte[] msg2 = new byte[80];
+                    server.Receive(msg2);
+                    string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
+                    int codigo = Convert.ToInt32(trozos[0]);
+                    string mensaje;
 
-                int nform;
+                    int nform = 0;
+                    Peticion peticion = new Peticion(server);
 
                     // Mostrar el mensaje en función de su identificador
                     switch (codigo)
                     {
                         case 0:
-                        // Actualizar el Label de la lista de conectados
-                        mensaje = trozos[1].Split('\0')[0];
+                            // Actualizar el Label de la lista de conectados
+                            mensaje = trozos[1].Split('\0')[0];
 
-                        //Haz tu lo que no me dejas hacer a mi
-                        contLbl.Invoke(new Action(() =>
-                        {
-                            contLbl.Text = mensaje;
-                        }));
-                        break;
+                            //Haz tu lo que no me dejas hacer a mi
+                            contLbl.Invoke(new Action(() =>
+                            {
+                                contLbl.Text = mensaje;
+                            }));
+                            break;
                         case 1:
-                        // Mostrar la máxima puntuación
-                        nform = Convert.ToInt32(trozos[1]);
-                        mensaje = trozos[2].Split('\0')[0];
-                        formularios[nform].TomaRespuesta1(mensaje);
-
-                        break;
+                            // Mostrar la máxima puntuación
+                           
+                            mensaje = trozos[1].Split('\0')[0];
+                           
+                            
+                            MessageBox.Show("La máxima puntuación es: " + mensaje);
+                            break;
                         case 2:
-                        // Mostrar el jugador con más puntos
-                        nform = Convert.ToInt32(trozos[1]);
-                        mensaje = trozos[2].Split('\0')[0];
-                        formularios[nform].TomaRespuesta2(mensaje);
+                            // Mostrar el jugador con más puntos
+                            
+                            mensaje = trozos[1].Split('\0')[0];
+                          
+                            MessageBox.Show("El jugador con más puntos es: " + mensaje);
                             break;
                         case 3:
-                        // Mostrar la partida con menos preguntas correctas
-                        nform = Convert.ToInt32(trozos[1]);
-                        mensaje = trozos[2].Split('\0')[0];
-                        formularios[nform].TomaRespuesta3(mensaje);
-
-                        break;
+                            // Mostrar la partida con menos preguntas correctas
+                           
+                            mensaje = trozos[1].Split('\0')[0];
+                           
+                            MessageBox.Show("La partida con menos preguntas correctas es la número: " + mensaje);
+                            break;
                         case 4:
-                        // Mostrar el resultado del inicio de sesión
-                        nform = Convert.ToInt32(trozos[1]);
-                        mensaje = trozos[2].Split('\0')[0];
-                        MessageBox.Show(mensaje);
-                       
+                            // Mostrar el resultado del inicio de sesión
+                            
+                            mensaje = trozos[2].Split('\0')[1];
+                            MessageBox.Show(mensaje);
+
                             break;
                         case 5:
-                        // Mostrar el resultado del registro
-                        nform = Convert.ToInt32(trozos[1]);
-                        mensaje = trozos[2].Split('\0')[0];
-                        MessageBox.Show(mensaje);
+                            // Mostrar el resultado del registro
+                           
+                            mensaje = trozos[2].Split('\0')[1];
+                            MessageBox.Show(mensaje);
 
-                        break;
-                      
+                            break;
+
                         default:
-                        // Mostrar un mensaje de error para identificadores desconocidos
-                        MessageBox.Show("Mensaje no reconocido del servidor: ");
-                        break;
+                            // Mostrar un mensaje de error para identificadores desconocidos
+                            MessageBox.Show("Mensaje no reconocido del servidor: ");
+                            break;
 
                     }
+                }
+                catch
+                {
+                    MessageBox.Show("Te has desconectaado");
+                }
             }
         }
 
@@ -240,9 +250,9 @@ namespace Cliente
         }
         private void PonerEnMarchaFormulario()
         {
-            int cont = formularios.Count;
-            Peticion f = new Peticion(cont, server);
-            formularios.Add(f);
+            //int cont = formularios.Count;
+            Peticion f = new Peticion(/*cont,*/ server);
+            //formularios.Add(f);
             f.ShowDialog();
         }
 

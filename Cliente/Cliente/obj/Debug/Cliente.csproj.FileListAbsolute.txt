@@ -88,3 +88,17 @@ C:\share\v33\Cliente\Cliente\obj\Debug\Cliente.pdb
 C:\share\v33\Cliente\Cliente\bin\Debug\Cliente.exe.config
 C:\share\v33\Cliente\Cliente\bin\Debug\Cliente.exe
 C:\share\v33\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\share\Kahoot\Kahoot  (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.pdb

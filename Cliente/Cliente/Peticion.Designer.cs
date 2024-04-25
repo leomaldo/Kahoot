@@ -28,25 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listaconectados = new System.Windows.Forms.RadioButton();
             this.button5 = new System.Windows.Forms.Button();
             this.Preguntas = new System.Windows.Forms.RadioButton();
             this.JugadorPuntos = new System.Windows.Forms.RadioButton();
             this.MaxPuntuacion = new System.Windows.Forms.RadioButton();
             this.numForm = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // listaconectados
-            // 
-            this.listaconectados.AutoSize = true;
-            this.listaconectados.Location = new System.Drawing.Point(240, 252);
-            this.listaconectados.Margin = new System.Windows.Forms.Padding(4);
-            this.listaconectados.Name = "listaconectados";
-            this.listaconectados.Size = new System.Drawing.Size(151, 20);
-            this.listaconectados.TabIndex = 17;
-            this.listaconectados.TabStop = true;
-            this.listaconectados.Text = "Lista de Conectados";
-            this.listaconectados.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
@@ -111,7 +98,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.numForm);
-            this.Controls.Add(this.listaconectados);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.Preguntas);
             this.Controls.Add(this.JugadorPuntos);
@@ -124,8 +110,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.RadioButton listaconectados;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.RadioButton Preguntas;
         private System.Windows.Forms.RadioButton JugadorPuntos;
