@@ -25,7 +25,7 @@ MYSQL *conectarBD(struct ConexionBD *conexion) {
 	MYSQL *conn = mysql_init(NULL); // Inicializar el objeto de conexión
 	
 	// Establecer la conexión a la base de datos
-	if (!mysql_real_connect(conn, "shiva2.upc.es", "root", "mysql","MG5_Kahoot", 0, NULL, 0)) {
+	if (!mysql_real_connect(conn, /*"shiva2.upc.es"*/"localhost", "root", "mysql",/*"MG5_Kahoot"*/"Kahoot", 0, NULL, 0)) {
 		fprintf(stderr, "Error al conectar a la base de datos: %s\n", mysql_error(conn));
 		mysql_close(conn);
 		return NULL; // Devolver NULL si hay un error
@@ -146,7 +146,47 @@ int encontrarPartidaMenosCorrectas(MYSQL *conn) {
 		return -1;
 	}
 }
-
+int Invitar(char invitados[500], char nombre[25], char noDisponibles[500]) {
+	//invitados; nombre: quien invita
+	//Retorna numero de invitados --> Todo OK (+ notifica a los invitados (8/persona_que_le_ha_invitado*id_partida))
+	//       -1 --> Alguno de los usuarios invitados se ha desconectado (+nombres de los desconectados en noDisponibles)
+	
+	strcpy(noDisponibles,"\0");
+	int error = 0;
+	char *p = strtok(invitados,"/");
+	int numInvitados = 0;
+	while (p != NULL) {
+		int encontrado = 0;
+		int i = 0;
+		while ((i<miLista.num)&&(encontrado == 0)) {
+			if (strcmp(miLista.conectados[i].nombre,p) == 0) {
+				char invitacion[512];
+				sprintf(invitacion, "8/%s*%d*", nombre);
+				//Invitacion: 8/quien invita*id_partida
+				printf("Invitacion: %s\n",invitacion);
+				write(miLista.conectados[i].socket, invitacion, strlen(invitacion));
+				encontrado = 1;
+				numInvitados = numInvitados +1;
+			}
+			else
+				i = i + 1;
+		}
+		if (encontrado == 0){
+			error = -1;
+			sprintf(noDisponibles,"%s%s/",noDisponibles,p);
+			noDisponibles[strlen(noDisponibles)-1] = '\0';
+		}
+		p = strtok(NULL, "/");		
+	}
+	if(error == 0){
+		error = numInvitados;
+		pthread_mutex_lock(&mutex);
+		
+		pthread_mutex_unlock(&mutex);
+	}
+	
+	return error;
+}
 //funcion que registra en la base de datos a un usuario 
 void registro(MYSQL *conn, const char *usuario, const char *contrasena) {
 	char query[100];
@@ -244,12 +284,13 @@ void *handleClientRequest (void *arg) {
 		request[ret] = '\0';
 		printf("Recibo: %s ", request);
 		int code = atoi(strtok(request, "/"));
+		char usuario[512];
 		
 		struct ConexionBD conexion = {
-			.servidor = "shiva2.upc.es",
+			.servidor = /*"shiva2.upc.es"*/"localhost",
 				.usuario = "root",
 				.contrasena = "mysql",
-				.base_datos = "MG5_Kahoot"
+				.base_datos =/* "MG5_Kahoot"*/"Kahoot"
 		};
 		
 		MYSQL *conn = conectarBD(&conexion);
@@ -287,8 +328,43 @@ void *handleClientRequest (void *arg) {
 			}
 			//printf("el valor que retorna la funcion Pon es: %d\n", respuesta);	
 		}
+		else if (code ==  6) {
+			//Mensaje en peticion: 6/invitado1*invitado2*...
+			//Return en respuesta: 7/0 (Todo OK) ; 7/invitado_no_disponible1/... (si hay invitados que se han desconectado)
+			
+			char p = strtok(NULL, "/");
+			char invitados[500];
+			printf("Invitados: %s\n", invitados);
+			char noDisponibles[500];
+			strcpy(invitados, p);
+		    char respuesta[512];
+				int res = Invitar(invitados, usuario, noDisponibles);
+				printf("Resultado de invitar: %d\n",res);
+				
+				if (res == -1){
+					sprintf(respuesta,"7/%s",noDisponibles);
+				}
+				else{
+					strcpy(respuesta,"7/0");						 
+				}
+		//significa que todo ha ido bien
+				//Codigo 7 --> Respuesta a una invitacion de partida
+		}
+		else if (code ==  7) {
+			//Mensaje en peticion: 7/respuesta(SI/NO)/id_partida
+			//Mensaje en respuesta: -
+			
+			char p = strtok(NULL,"/");
+			char respuesta1[0];
+			strcpy(respuesta1,p);
+			printf("%s\n",respuesta1);
+			p = strtok(NULL,"/");
+			
+		   //mandar mensaje al que solicita de que ha aceptado o no
+			
+		}
 		else if (code == 4){
-			char  *usuario = strtok(NULL, "/");
+			char *usuario = strtok(NULL, "/");
 			char *contrasena = strtok(NULL, "/");
 			// Verificar las credenciales en la base de datos
 			if (verificarCredenciales(conn, usuario, contrasena)) {
@@ -373,10 +449,10 @@ int main() {
 	
 	//estructura base de datos
 	struct ConexionBD conexion = {
-		.servidor = "shiva2.upc.es",
+		.servidor =/* "shiva2.upc.es"*/"localhost",
 			.usuario = "root",
 			.contrasena = "mysql",
-			.base_datos = "MG5_Kahoot"
+			.base_datos ="Kahoot"
 	};
 	
 	// Conectar a la base de datos utilizando la estructura de conexión

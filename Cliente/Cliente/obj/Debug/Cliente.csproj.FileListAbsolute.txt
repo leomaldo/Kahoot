@@ -116,3 +116,4 @@ C:\2B\SO\TagV3\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
 C:\2B\SO\TagV3\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
 C:\2B\SO\TagV3\Cliente\Cliente\obj\Debug\Cliente.exe
 C:\2B\SO\TagV3\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\SHARE\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources

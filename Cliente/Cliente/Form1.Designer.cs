@@ -38,19 +38,20 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.contLbl = new System.Windows.Forms.Label();
+            this.USUARIOS = new System.Windows.Forms.DataGridView();
+            this.botonInvitar = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.USUARIOS)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.oPCIONESToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1048, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(932, 28);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -61,36 +62,36 @@
             this.jUGARPARTIDAToolStripMenuItem,
             this.pETICIÓNToolStripMenuItem});
             this.oPCIONESToolStripMenuItem.Name = "oPCIONESToolStripMenuItem";
-            this.oPCIONESToolStripMenuItem.Size = new System.Drawing.Size(114, 29);
+            this.oPCIONESToolStripMenuItem.Size = new System.Drawing.Size(93, 24);
             this.oPCIONESToolStripMenuItem.Text = "OPCIONES";
             // 
             // rEGISTRARMEINICIARSESIÓNToolStripMenuItem
             // 
             this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem.Name = "rEGISTRARMEINICIARSESIÓNToolStripMenuItem";
-            this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem.Size = new System.Drawing.Size(374, 34);
+            this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
             this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem.Text = "REGISTRARME / INICIAR SESIÓN";
             this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem.Click += new System.EventHandler(this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem_Click);
             // 
             // jUGARPARTIDAToolStripMenuItem
             // 
             this.jUGARPARTIDAToolStripMenuItem.Name = "jUGARPARTIDAToolStripMenuItem";
-            this.jUGARPARTIDAToolStripMenuItem.Size = new System.Drawing.Size(374, 34);
+            this.jUGARPARTIDAToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
             this.jUGARPARTIDAToolStripMenuItem.Text = "JUGAR PARTIDA";
             this.jUGARPARTIDAToolStripMenuItem.Click += new System.EventHandler(this.jUGARPARTIDAToolStripMenuItem_Click);
             // 
             // pETICIÓNToolStripMenuItem
             // 
             this.pETICIÓNToolStripMenuItem.Name = "pETICIÓNToolStripMenuItem";
-            this.pETICIÓNToolStripMenuItem.Size = new System.Drawing.Size(374, 34);
+            this.pETICIÓNToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
             this.pETICIÓNToolStripMenuItem.Text = "PETICIÓN";
             this.pETICIÓNToolStripMenuItem.Click += new System.EventHandler(this.pETICIÓNToolStripMenuItem_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(276, 726);
+            this.button2.Location = new System.Drawing.Point(245, 581);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(161, 78);
+            this.button2.Size = new System.Drawing.Size(143, 62);
             this.button2.TabIndex = 1;
             this.button2.Text = "DESCONECTAR";
             this.button2.UseVisualStyleBackColor = true;
@@ -98,10 +99,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(252, 55);
+            this.button1.Location = new System.Drawing.Point(224, 44);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(164, 70);
+            this.button1.Size = new System.Drawing.Size(146, 56);
             this.button1.TabIndex = 0;
             this.button1.Text = "CONECTAR";
             this.button1.UseVisualStyleBackColor = true;
@@ -112,17 +113,41 @@
             this.contLbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.contLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.contLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contLbl.Location = new System.Drawing.Point(698, 489);
+            this.contLbl.Location = new System.Drawing.Point(632, 198);
             this.contLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.contLbl.Name = "contLbl";
-            this.contLbl.Size = new System.Drawing.Size(221, 141);
+            this.contLbl.Size = new System.Drawing.Size(197, 113);
             this.contLbl.TabIndex = 14;
+            // 
+            // USUARIOS
+            // 
+            this.USUARIOS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.USUARIOS.Location = new System.Drawing.Point(457, 337);
+            this.USUARIOS.Name = "USUARIOS";
+            this.USUARIOS.RowHeadersWidth = 51;
+            this.USUARIOS.RowTemplate.Height = 24;
+            this.USUARIOS.Size = new System.Drawing.Size(372, 306);
+            this.USUARIOS.TabIndex = 15;
+            this.USUARIOS.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.USUARIOS_CellClick_1);
+            this.USUARIOS.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.USUARIOS_CellContentClick_1);
+            // 
+            // botonInvitar
+            // 
+            this.botonInvitar.Location = new System.Drawing.Point(611, 673);
+            this.botonInvitar.Name = "botonInvitar";
+            this.botonInvitar.Size = new System.Drawing.Size(90, 42);
+            this.botonInvitar.TabIndex = 16;
+            this.botonInvitar.Text = "Invitar";
+            this.botonInvitar.UseVisualStyleBackColor = true;
+            this.botonInvitar.Click += new System.EventHandler(this.botonInvitar_Click_1);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1048, 909);
+            this.ClientSize = new System.Drawing.Size(932, 727);
+            this.Controls.Add(this.botonInvitar);
+            this.Controls.Add(this.USUARIOS);
             this.Controls.Add(this.contLbl);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -133,6 +158,7 @@
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.USUARIOS)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,6 +175,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label contLbl;
+        private System.Windows.Forms.DataGridView USUARIOS;
+        private System.Windows.Forms.Button botonInvitar;
     }
 }
 
