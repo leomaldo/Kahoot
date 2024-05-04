@@ -14,14 +14,12 @@ namespace Cliente
     {
         string respuesta;
         string UsuEnv;
-        public Invitacion()
+        public Invitacion(string UsuEnv)
         {
             InitializeComponent();
+            this.UsuEnv = UsuEnv;
         }
-        public void SetUsuEnv(string U)
-        {
-            this.UsuEnv = U;
-        }
+      
         public string GetRespuesta()
         {
             return this.respuesta;
@@ -46,6 +44,11 @@ namespace Cliente
         {
             this.respuesta = "SI";
             this.Close();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

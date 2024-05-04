@@ -117,3 +117,63 @@ C:\2B\SO\TagV3\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
 C:\2B\SO\TagV3\Cliente\Cliente\obj\Debug\Cliente.exe
 C:\2B\SO\TagV3\Cliente\Cliente\obj\Debug\Cliente.pdb
 C:\SHARE\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\Users\victo\Downloads\Kahoot (3)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\SHARE\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\Users\mohal\OneDrive\Escritorio\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.pdb

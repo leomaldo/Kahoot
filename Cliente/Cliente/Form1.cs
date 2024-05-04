@@ -31,14 +31,14 @@ namespace Cliente
         string usuario;
         Peticion peticion = new Peticion();
         delegate void DelegadoParaEscribir(string[] conectados);
-        List<string> invitados= new List<string>();
+        List<string> invitados = new List<string>();
 
         public Form1()
         {
             InitializeComponent();
             this.BackColor = Color.FromArgb(220, 255, 220);
             InicializarComponentes();
-           
+
             //Registrarse registrarse = new Registrarse(server);
             //registrarse.ShowDialog
         }
@@ -48,28 +48,38 @@ namespace Cliente
             while (atendercliente)
             {
                 try
-                {                 
+                {
                     //Recibimos mensaje del servidor
                     byte[] msg2 = new byte[80];
                     server.Receive(msg2);
                     string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
                     int codigo = Convert.ToInt32(trozos[0]);
                     string mensaje;
-                   
+
+
+                    MessageBox.Show("codigoooo: " + codigo);  //para ver por que codigo entra
+
                     int nform = 0;
                     Peticion peticion = new Peticion(server);
-                   
 
-                   
+
+
                     switch (codigo)
                     {
+                        case -1:
+                            mensaje = trozos[1].Split('\0')[0];
+                            mensaje=mensaje.Substring(0,mensaje.Length - 1);
+                            string[] conectados = mensaje.Split('&');
+                            DelegadoParaEscribir delegado = new DelegadoParaEscribir(ListaConectados);
+                            USUARIOS.Invoke(delegado, new object[] { conectados });
+                            break;
                         case 0:
                             // Actualizar el Label de la lista de conectados
                             mensaje = trozos[1].Split('\0')[0];
-                            string[] conectados= trozos.Skip(1).ToArray();
-                            DelegadoParaEscribir delegado = new DelegadoParaEscribir(ListaConectados);
-                            USUARIOS.Invoke(delegado, new object[] { conectados });
-                           
+                            //string[] conectados= trozos.Skip(1).ToArray();
+                            //DelegadoParaEscribir delegado = new DelegadoParaEscribir(ListaConectados);
+                            //USUARIOS.Invoke(delegado, new object[] { conectados });
+
                             contLbl.Invoke(new Action(() =>
                             {
                                 contLbl.Text = mensaje;
@@ -78,57 +88,90 @@ namespace Cliente
                             break;
                         case 1:
                             // Mostrar la máxima puntuación
-                           
+
                             mensaje = trozos[1].Split('\0')[0];
-                           
-                            
+
                             MessageBox.Show("La máxima puntuación es: " + mensaje);
                             break;
                         case 2:
                             // Mostrar el jugador con más puntos
-                            
+
                             mensaje = trozos[1].Split('\0')[0];
-                          
+
                             MessageBox.Show("El jugador con más puntos es: " + mensaje);
                             break;
                         case 3:
                             // Mostrar la partida con menos preguntas correctas
-                           
+
                             mensaje = trozos[1].Split('\0')[0];
-                           
+
                             MessageBox.Show("La partida con menos preguntas correctas es la número: " + mensaje);
                             break;
                         case 4:
                             // Mostrar el resultado del inicio de sesión
-                            
-                            mensaje = trozos[1];
-                            MessageBox.Show(mensaje);
-                            string[] partesUsu = mensaje.Split(':');
-                             usuario = partesUsu[1].Trim();
-                           // AgregarValorUsuarios(usuario);
-                  
+
+                            mensaje = trozos[1].Split('\0')[0]; ;
+
+                            int num99 = 99;
+                            if (int.TryParse(mensaje, out int numero_mensaje))
+                            {
+                                if (numero_mensaje == num99)
+                                {
+                                    MessageBox.Show("Credenciales incorrectas");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Inicio de sesión exitoso para:" + mensaje);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Inicio de sesión exitoso para:" + mensaje);
+                            }
+                            //AgregarValorUsuarios(usuario);
+                            usuario=mensaje;
                             break;
                         case 5:
                             // Mostrar el resultado del registro
 
-                            mensaje = trozos[1];
-                            MessageBox.Show(mensaje);
-                            string[] partesUsuR = mensaje.Split(':');
-                            string usuarioR = partesUsuR[1].Trim();
-                            //AgregarValorUsuarios(usuarioR);
-                            
+                            mensaje = trozos[1].Split('\0')[0];
+                            // MessageBox.Show(mensaje);  --- comentado porque ahora no tiene sentido
+                            //string[] partesUsuR = mensaje.Split(':');
+
+                            //string usuarioR = partesUsuR[1].Trim(); -- esto hacia que petase y se fuese al catch y saliese te has desconectado
+
+                            MessageBox.Show("Registro exitoso para usuario: " + mensaje);
+                            usuario=mensaje;
+                            //AgregarValorUsuarios(mensaje);
+
                             break;
                         case 6: //Respuesta a la peticion de invitacion
-                           
-                             
+                            mensaje = trozos[1].Split('\0')[0];
+                            if (Convert.ToInt32(mensaje)==0)
+                            {
+                                MessageBox.Show("Invitación hecha correctamente");
+                            }
+                            else
+                                MessageBox.Show("Petición erronea, el usuario se ha desconectado");
+
                             break;
                         case 7://Notificación de invitacion a una partida
-                            Invitacion invitacion = new Invitacion();
-                            //invitacion.SetUsuEnv(/*split[0]*/); SE HACE UN SPLIT DEL MENSAJE RECIBIDO
+                            mensaje = trozos[1].Split('\0')[0];
+
+                            Invitacion invitacion = new Invitacion(mensaje);
                             invitacion.ShowDialog();
-                            string respuesta = "7/" + invitacion.GetRespuesta() + "/" +/* split[1] +*/ "\0";
+                            string respuesta = "7/" + invitacion.GetRespuesta() + "/" + mensaje + "\0";
                             byte[] msg = System.Text.Encoding.ASCII.GetBytes(respuesta);
                             server.Send(msg);
+                            break;
+                        case 8:
+                            mensaje = trozos[1].Split('\0')[0];
+                            if (Convert.ToInt32(mensaje)==1)
+                            {
+                                MessageBox.Show("Invitación aceptada");
+                            }
+                            else
+                                MessageBox.Show("Invitación rechazada");
                             break;
                         default:
                             // Mostrar un mensaje de error para identificadores desconocidos
@@ -167,7 +210,7 @@ namespace Cliente
                 Font = new Font("Arial", 20, FontStyle.Bold),
                 ForeColor = Color.Purple
             };
-            labelPreparados.Location = new Point(113,358); // Centrar el label
+            labelPreparados.Location = new Point(113, 358); // Centrar el label
 
             // Agregar los labels al formulario
             this.Controls.Add(labelKahoot);
@@ -210,8 +253,8 @@ namespace Cliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int puerto = 50020;
-            IPAddress direc = IPAddress.Parse("192.168.56.101");
+            int puerto = 9050;
+            IPAddress direc = IPAddress.Parse("192.168.56.102");
             IPEndPoint ipep = new IPEndPoint(direc, puerto);
 
 
@@ -234,7 +277,7 @@ namespace Cliente
             }
         }
 
-       
+
         private void button2_Click(object sender, EventArgs e)
         {
             //Mensaje de desconexión
@@ -254,17 +297,17 @@ namespace Cliente
         {
 
             Registrarse registrarse = new Registrarse(server);
-            registrarse.ShowDialog(); 
+            registrarse.ShowDialog();
         }
 
-      
+
         private void jUGARPARTIDAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Partida partida = new Partida();
             partida.ShowDialog();
         }
 
-      
+
         private void pETICIÓNToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ThreadStart ts = delegate { PonerEnMarchaFormulario(); };
@@ -295,10 +338,10 @@ namespace Cliente
             server.Close();
 
         }
-       
+
         public void ListaConectados(string[] conectados)
         {
-          
+
             USUARIOS.Visible = true;
             USUARIOS.ColumnCount = 1;
             USUARIOS.RowCount = conectados.Length;
@@ -306,18 +349,17 @@ namespace Cliente
             USUARIOS.RowHeadersVisible = false;
             USUARIOS.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             USUARIOS.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            USUARIOS.SelectAll();
 
             for (int i = 0; i < conectados.Length; i++)
             {
                 USUARIOS.Rows[i].Cells[0].Value = conectados[i];
             }
 
-           USUARIOS.Show();
+            USUARIOS.Show();
 
         }
-       
-      
+
+
         private void botonInvitar_Click_1(object sender, EventArgs e)
         {
             if (botonInvitar.Text == "Invitar")
@@ -332,16 +374,17 @@ namespace Cliente
                 botonInvitar.Text = "Invitar";
 
                 //si no se clica a nadie no hace nada y vuelve al estado inicial
-                if (invitados.Count != 0)
+                if (invitado != null)
                 {
                     //Construimos el mensaje
                     string mensaje = "6/";
-                    for (int i = 0; i < invitados.Count; i++)
-                    {
-                        mensaje = mensaje + invitados[i] + "/";
-                    }
+                    //for (int i = 0; i < invitados.Count; i++)
+                    //{
+                    //    mensaje = mensaje + invitados[i] + "/";
+                    //}
 
-                    mensaje = mensaje.Remove(mensaje.Length - 1);
+                    //mensaje = mensaje.Remove(mensaje.Length - 1);
+                    mensaje=mensaje+invitado+"/"+usuario;
 
                     //Lo enviamos por el socket (Codigo 6 --> Invitar a jugadores)
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
@@ -350,80 +393,83 @@ namespace Cliente
 
             }
         }
+        
 
         private void USUARIOS_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             //Solo funciona cuando se habilita la funcion de invitar con el boton invitarButton
-            if ((botonInvitar.Text == "Enviar\n Invitación") && (invitados.Count <= 3))
+            if ((botonInvitar.Text == "Enviar\n Invitación"))
             {
-                string invitado = USUARIOS.CurrentCell.Value.ToString();
+                 invitado = USUARIOS.CurrentCell.Value.ToString();
 
                 //Comprovamos que no somos nosotros mismos
                 if (invitado == usuario)
                     MessageBox.Show("No te puedes autoinvitar");
                 else
                 {
-                    //Comprovamos que no este ya en la lista para añadirlo
-                    int i = 0;
-                    bool encontrado = false;
-                    while ((i < invitados.Count) && (encontrado == false))
-                    {
-                        if (invitado == invitados[i])
-                            encontrado = true;
-                        else
-                            i = i + 1;
-                    }
-                    if (encontrado == true)
-                    {
-                        invitados.Remove(invitado);
-                        MessageBox.Show("Has eliminado a " + invitado);
-                    }
-                    else
-                    {
-                        invitados.Add(invitado);
-                        MessageBox.Show("Has añadido a " + invitado);
-                    }
+                    ////Comprovamos que no este ya en la lista para añadirlo
+                    //int i = 0;
+                    //bool encontrado = false;
+                    //while ((i < invitados.Count) && (encontrado == false))
+                    //{
+                    //    if (invitado == invitados[i])
+                    //        encontrado = true;
+                    //    else
+                    //        i = i + 1;
+                    //}
+                    //if (encontrado == true)
+                    //{
+                    //    invitados.Remove(invitado);
+                    //    MessageBox.Show("Has eliminado a " + invitado);
+                    //}
+                    //else
+                    //{
+                    //    invitados.Add(invitado);
+                    
+                    MessageBox.Show("Has añadido a " + invitado);
+                    //}
                 }
             }
-           
+
             USUARIOS.SelectAll();
         }
-
+        string invitado;
         private void USUARIOS_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             //Solo funciona cuando se habilita la funcion de invitar con el boton invitarButton
             if ((botonInvitar.Text == "Enviar\n Invitación") && (invitados.Count <= 3))
             {
-                string invitado = USUARIOS.CurrentCell.Value.ToString();
+                invitado = USUARIOS.CurrentCell.Value.ToString();
 
                 //Comprovamos que no somos nosotros mismos
                 if (invitado == usuario)
                     MessageBox.Show("No te puedes autoinvitar");
                 else
                 {
-                    //Comprovamos que no este ya en la lista para añadirlo
-                    int i = 0;
-                    bool encontrado = false;
-                    while ((i < invitados.Count) && (encontrado == false))
-                    {
-                        if (invitado == invitados[i])
-                            encontrado = true;
-                        else
-                            i = i + 1;
-                    }
-                    if (encontrado == true)
-                    {
-                        invitados.Remove(invitado);
-                        MessageBox.Show("Has eliminado a " + invitado);
-                    }
-                    else
-                    {
-                        invitados.Add(invitado);
-                        MessageBox.Show("Has añadido a " + invitado);
-                    }
+                    ////Comprovamos que no este ya en la lista para añadirlo
+                    //int i = 0;
+                    //bool encontrado = false;
+                    //while ((i < invitados.Count) && (encontrado == false))
+                    //{
+                    //    if (invitado == invitados[i])
+                    //        encontrado = true;
+                    //    else
+                    //        i = i + 1;
+                    //}
+                    //if (encontrado == true)
+                    //{
+                    //    invitados.Remove(invitado);
+                    //    MessageBox.Show("Has eliminado a " + invitado);
+                    //}
+                    //else
+                    //{
+                    //    invitados.Add(invitado);
+                   
+                    MessageBox.Show("Has añadido a " + invitado);
+                    //}
                 }
             }
-           
+
             USUARIOS.SelectAll();
         }
     }

@@ -7,7 +7,9 @@
 #include <stdio.h>
 #include <mysql/mysql.h>
 #include <pthread.h>
-//#include <my_global.h>*/
+//-----------------------------------
+/*#include <my_global.h>*/
+/*#include <cstdio>*/
 //Estructura necesaria para acceso excluyente
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
@@ -68,7 +70,8 @@ int JugadorMaxPtsTotales(MYSQL *conn, char nombre [20]) {
 	
 	if (err != 0) {
 		printf("Error al consultar datos de la base %u %s\n", mysql_errno(conn), mysql_error(conn));
-		return NULL;
+		//return NULL;
+			return -1;
 	}
 	resultado = mysql_store_result(conn);
 	
@@ -76,7 +79,8 @@ int JugadorMaxPtsTotales(MYSQL *conn, char nombre [20]) {
 	
 	if (row == NULL) {
 		printf("No se han obtenido datos en la consulta\n");
-		return NULL;
+		//return NULL;
+			return -1;
 	}
 	
 	strcpy(nombre, row[0]);
@@ -146,40 +150,36 @@ int encontrarPartidaMenosCorrectas(MYSQL *conn) {
 		return -1;
 	}
 }
-int Invitar(char invitados[500], char nombre[25], char noDisponibles[500]) {
+int Invitar(char invitado[500], char nombre[25]) {
 	//invitados; nombre: quien invita
 	//Retorna numero de invitados --> Todo OK (+ notifica a los invitados (8/persona_que_le_ha_invitado*id_partida))
 	//       -1 --> Alguno de los usuarios invitados se ha desconectado (+nombres de los desconectados en noDisponibles)
 	
-	strcpy(noDisponibles,"\0");
 	int error = 0;
-	char *p = strtok(invitados,"/");
-	int numInvitados = 0;
-	while (p != NULL) {
+	
+	
+	
 		int encontrado = 0;
 		int i = 0;
 		while ((i<miLista.num)&&(encontrado == 0)) {
-			if (strcmp(miLista.conectados[i].nombre,p) == 0) {
+			if (strcmp(miLista.conectados[i].nombre,invitado) == 0) {
 				char invitacion[512];
-				sprintf(invitacion, "8/%s*%d*", nombre);
-				//Invitacion: 8/quien invita*id_partida
+				sprintf(invitacion, "7/%s", nombre);
+				//Invitacion: 7/quien invita
 				printf("Invitacion: %s\n",invitacion);
 				write(miLista.conectados[i].socket, invitacion, strlen(invitacion));
 				encontrado = 1;
-				numInvitados = numInvitados +1;
 			}
 			else
 				i = i + 1;
 		}
 		if (encontrado == 0){
 			error = -1;
-			sprintf(noDisponibles,"%s%s/",noDisponibles,p);
-			noDisponibles[strlen(noDisponibles)-1] = '\0';
 		}
-		p = strtok(NULL, "/");		
-	}
+		
+	
 	if(error == 0){
-		error = numInvitados;
+		
 		pthread_mutex_lock(&mutex);
 		
 		pthread_mutex_unlock(&mutex);
@@ -218,7 +218,7 @@ int verificarCredenciales(MYSQL *conn, const char *usuario, const char *contrase
 }
 
 //funcion que pone los conectados en el vector de conectados de la lista de conectados
-int Pon ( char *nombre[20], int socket) {
+int AnadiraLista ( char *nombre[20], int socket) {
 	//a\U00061925 nuevo conectado. Retorna 0 si ok y -1 si la lista esta llena
 	
 	if (miLista.num == 100)
@@ -226,24 +226,27 @@ int Pon ( char *nombre[20], int socket) {
 		return -1;
 	}
 	else{
-		strcpy (miLista.conectados[miLista.num -1].nombre, *nombre);
-		miLista.conectados[miLista.num -1].socket = socket;
+		Conectado nuevoConectado;
+		strcpy (nuevoConectado.nombre, *nombre);
+		nuevoConectado.socket=socket;
+		miLista.conectados[miLista.num - 1]=nuevoConectado;
+		//printf("el nuevo conectado se ha guardado en esta posicion: %s\n", miLista.num);
+		miLista.num=miLista.num+1;
 		return 0;
-		printf("hola he entrado \n");
 	}
 }
 
 //Funcion que le pasas como parametro una variable donde guarda el numero de conectados que hay con sus respectivos nombres
-void DameConectados ( char conectados[300]) {
-	//pone en conectados los nombres de todos los conectados separados por "/"
-	// 3/juan/maria/guille	 
-	sprintf (conectados, "%d", miLista.num);
-	int i;
-	for (i=0; i< miLista.num; i++)
-	{
-		sprintf (conectados, "%s/%s",conectados, miLista.conectados[i].nombre);
-	}
-	printf("%s\n", conectados);	
+void DameConectados(char conectados[300]) {
+	// Pone en conectados los nombres de todos los conectados separados por "/"
+	// 3/juan/maria/guillestrcpy(list, "\0");
+
+	strcpy(conectados, "\0");
+		int i;
+		for(i=0; i< miLista.num; i++)
+			sprintf(conectados, "%s%s&", conectados, miLista.conectados[i].nombre);
+		conectados[strlen(conectados)-1]='\0';
+	
 }
 
 //Funcion que elimina a un usuario cuando este se desconecta
@@ -259,7 +262,26 @@ int Eliminar ( int position) {
 	posicion_vector--;
 	return 0;
 }
-
+void NotificarNuevaListaConectados(){
+	
+	char lista[512]={0};
+	char notificacion[512];
+	
+	//pthread_mutex_lock(&mutex);
+    DameConectados(lista);
+	//pthread_mutex_unlock(&mutex);
+	
+	
+		sprintf(notificacion,"-1/%s",lista);
+		
+	//Envia actualización a todos los sockets
+	int j;
+	for (j=0;j<miLista.num;j++){
+		write(miLista.conectados[j].socket,notificacion,strlen(notificacion));
+		printf("nombres lista conectados: %s\n", miLista.conectados[j].nombre);
+	}
+	
+}
 //Funcion principal del programa donde determinamos que es lo que ha pedido el cliente
 void *handleClientRequest (void *arg) {
 	
@@ -267,6 +289,7 @@ void *handleClientRequest (void *arg) {
 	int *s;
 	s= (int *) arg;
 	posicion= *s;
+	printf("valor posicion que es lo que se le pasa a handlerequest: %d\n",posicion);
 	miLista.num = posicion;
 	int clientSocket = miLista.conectados[posicion - 1].socket;
 	char request[512];
@@ -284,7 +307,7 @@ void *handleClientRequest (void *arg) {
 		request[ret] = '\0';
 		printf("Recibo: %s ", request);
 		int code = atoi(strtok(request, "/"));
-		char usuario[512];
+		char nombre[512];
 		
 		struct ConexionBD conexion = {
 			.servidor = /*"shiva2.upc.es"*/"localhost",
@@ -308,44 +331,45 @@ void *handleClientRequest (void *arg) {
 		} else if (code == 3) {
 			int res3 = encontrarPartidaMenosCorrectas(conn);
 			sprintf(response, "3/%d", res3);
-		}else if (code == 5) {
-			//variable = 0;
+		}else if (code == 5) {// registrarse
+
 			char *usuario = strtok(NULL, "/");
 			char *contrasena = strtok(NULL, "/");
 			registro(conn, usuario, contrasena);
-			sprintf(response, "5/Registro exitoso para usuario: %s", usuario);
-			int respuesta = Pon( &usuario, clientSocket);
-			if (respuesta ==0)
-			{
-				char conectados_string [300];
-				DameConectados( conectados_string);			
-				//notificar a todos los clientes conectados
-				char notificacion [20];
-				sprintf (notificacion, "0/%s" , conectados_string);
-				int j=0;
-				for ( j=0; j< miLista.num; j++)
-					write(miLista.conectados[j].socket, notificacion, strlen(notificacion));
-			}
-			//printf("el valor que retorna la funcion Pon es: %d\n", respuesta);	
+			sprintf(response, "5/%s", usuario);
+						
+			pthread_mutex_lock(&mutex); 
+			int respuesta = AnadiraLista( &usuario, clientSocket);
+			
+			NotificarNuevaListaConectados();
+			pthread_mutex_unlock(&mutex);
 		}
+			
+			
+		
+		
 		else if (code ==  6) {
 			//Mensaje en peticion: 6/invitado1*invitado2*...
 			//Return en respuesta: 7/0 (Todo OK) ; 7/invitado_no_disponible1/... (si hay invitados que se han desconectado)
 			
+				
 			char p = strtok(NULL, "/");
-			char invitados[500];
-			printf("Invitados: %s\n", invitados);
-			char noDisponibles[500];
-			strcpy(invitados, p);
+			//char p = strtok(NULL, "/");
+			char invitado[500];
+			strcpy(invitado, p);
+			char p2= strtok(NULL, "/");
+			
+			printf("Invitado: %s\n", invitado);
+	
 		    char respuesta[512];
-				int res = Invitar(invitados, usuario, noDisponibles);
+				int res = Invitar(invitado, p2);
 				printf("Resultado de invitar: %d\n",res);
 				
 				if (res == -1){
-					sprintf(respuesta,"7/%s",noDisponibles);
+					sprintf(respuesta,"6/-1");
 				}
 				else{
-					strcpy(respuesta,"7/0");						 
+					strcpy(respuesta,"6/0");						 
 				}
 		//significa que todo ha ido bien
 				//Codigo 7 --> Respuesta a una invitacion de partida
@@ -354,46 +378,46 @@ void *handleClientRequest (void *arg) {
 			//Mensaje en peticion: 7/respuesta(SI/NO)/id_partida
 			//Mensaje en respuesta: -
 			
-			char p = strtok(NULL,"/");
-			char respuesta1[0];
-			strcpy(respuesta1,p);
-			printf("%s\n",respuesta1);
+		    char p = strtok(NULL,"/");
+			char respuesta[3];
+			strcpy(respuesta,p);
+			printf("%s\n",respuesta);
 			p = strtok(NULL,"/");
+			if (strcmp(respuesta,"NO")==0){
+				sprintf(response, "8/1");
+			}
+			else
+				sprintf(response, "8/-1");
 			
 		   //mandar mensaje al que solicita de que ha aceptado o no
 			
 		}
-		else if (code == 4){
+		else if (code == 4){ //iniciar_Sesion
 			char *usuario = strtok(NULL, "/");
 			char *contrasena = strtok(NULL, "/");
+			printf("Invitado: %s\n", usuario);
+			strcpy(nombre, usuario);
+			printf("Invitado: %s\n", usuario);
+			printf("Invitado: %s\n", nombre);
 			// Verificar las credenciales en la base de datos
 			if (verificarCredenciales(conn, usuario, contrasena)) {
-				sprintf(response, "4/Inicio de sesión exitoso para usuario: %s", usuario);
+				sprintf(response, "4/%s", nombre);
 			}
 			else {
-				sprintf(response, "4/Credenciales incorrectas");
+				sprintf(response, "4/99");
 			}
-			int respuesta = Pon( &usuario, clientSocket);
-		    if (respuesta ==0)
-			{
-			char conectados_string [300];
-			DameConectados( conectados_string);			
-			//notificar a todos los clientes conectados
-			char notificacion [20];
-			sprintf (notificacion, "0/%s" , conectados_string);
-			int j=0;
-			for ( j=0; j<miLista.num ; j++)
-				write(miLista.conectados[j].socket, notificacion, strlen(notificacion));
-		    }
-			//printf("el valor que retorna la funcion Pon es: %d\n", respuesta);
-		
-/*		else if (code==6){*/
-/*			char conectados_string [300];*/
-/*			pthread_mutex_lock( &mutex);*/
-/*			DameConectados( conectados_string);*/
-/*			pthread_mutex_unlock( &mutex);*/
+						
+			pthread_mutex_lock(&mutex); 
+			int respuesta = AnadiraLista( &usuario, clientSocket);
+		  
+			NotificarNuevaListaConectados();
+			pthread_mutex_unlock(&mutex);
 			
-		//}
+			
+			pthread_mutex_lock(&mutex); 
+			write (miLista.conectados[posicion - 1].socket,response, strlen(response));
+			pthread_mutex_unlock(&mutex);
+		
 		}
 		if (code !=0)
 		{
@@ -422,21 +446,20 @@ void *handleClientRequest (void *arg) {
 			int resp_eli = Eliminar ( j);
 			pthread_mutex_unlock( &mutex);
 			
-			char conectados_string [300];
-			DameConectados( conectados_string);
-			//notificar a todos los clientes conectados
-			char notificacion [20];
-			sprintf (notificacion, "0/%s" , conectados_string);			
-			j=0;
-			for ( j=0; j<miLista.num ; j++)
-				write(miLista.conectados[j].socket, notificacion, strlen(notificacion));
+			printf("numero de milista.num es: %d \n", miLista.num);
+			
+			pthread_mutex_lock( &mutex);
+			NotificarNuevaListaConectados();
+			pthread_mutex_unlock( &mutex);
         }
+/*		*/
 /*		pthread_mutex_lock( &mutex);*/
 		//printf ("Respuesta: %s\n", response);
 /*		write(miLista.conectados[posicion_vector].socket, response, strlen(response));*/
 /*		pthread_mutex_unlock( &mutex);		*/
 	}
 	close(miLista.conectados[posicion_vector].socket); 
+	//close(miLista.conectados[posicion -1].socket); 
 }
 
 struct thread_info {    /* Used as argument to thread_start() */
@@ -464,7 +487,7 @@ int main() {
 	
 	printf("Conexión a la base de datos establecida correctamente.\n");		
 	int serverSocket;
-	int puerto = 50020;
+	int puerto = 9050;
 	struct sockaddr_in serverAddr, clientAddr;
 	socklen_t addrLen = sizeof(struct sockaddr_in);
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
