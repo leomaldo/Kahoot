@@ -386,7 +386,13 @@ void *handleClientRequest (void *arg) {
 			pthread_mutex_unlock(&mutex);
 		}
 			
-			
+		if (code !=0)
+		{
+			printf ("Respuesta: %s\n", response);
+			//Enviamos respuesta
+			write (miLista.conectados[posicion - 1].socket,response, strlen(response));
+			//write (miLista.conectados[posicion_vector].socket,response, strlen(response
+		}
 		
 		
 		else if (code ==  6) {
@@ -411,10 +417,10 @@ void *handleClientRequest (void *arg) {
 				printf("Resultado de invitar: %d\n",res);
 				
 				if (res == -1){
-					sprintf(respuesta,"6/-1");
+					sprintf(response,"6/-1");
 				}
 				else{
-					strcpy(respuesta,"6/0");						 
+					sprintf(response,"6/0");						 
 				}
 		//significa que todo ha ido bien
 				//Codigo 7 --> Respuesta a una invitacion de partida
@@ -483,13 +489,7 @@ void *handleClientRequest (void *arg) {
 			EnviarComenzarPartida(invitados , Idpartida);
 			
 		}
-		if (code !=0)
-		{
-			printf ("Respuesta: %s\n", response);
-			//Enviamos respuesta
-			write (miLista.conectados[posicion - 1].socket,response, strlen(response));
-			//write (miLista.conectados[posicion_vector].socket,response, strlen(response
-		}
+		
 		else if (code == 0){
 			printf("mensaje de desconexion victor\n");
 			int j = 0;
@@ -521,19 +521,23 @@ void *handleClientRequest (void *arg) {
 			char *p1 = strtok(NULL, "/");
 			char mensaje[512];
 			strcpy (mensaje,p1);
+			char *c = strtok(NULL, "/");
+			char chat[512];
+			strcpy (chat,c);
 			char *u = strtok(NULL, "/");
 			char usuario[512];
 			strcpy(usuario,u);
-			
-			sprintf(response, "%s: %s", usuario, mensaje);
-			//no entiendo muy bien lo de el identificador y por eso he puesto 0
-			sprintf(response, "9/0/%s", response);
+			printf ("Recibo: %s de: %s\n", usuario, chat);
+			sprintf(response, "%s/%s/&s", mensaje, chat, usuario);
+			printf("%s\n",response);
+			sprintf(response, "9/%s", response);
 			int j;
 			for (j=0;j<miLista.num;j++)
 			{
 				write(miLista.conectados[j].socket,response,strlen(response));				
 			}
 		}
+		
 /*		*/
 /*		pthread_mutex_lock( &mutex);*/
 		//printf ("Respuesta: %s\n", response);

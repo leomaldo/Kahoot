@@ -60,12 +60,7 @@ namespace Cliente
                     string mensaje;
 
 
-                 
-
-                   
                     Peticion peticion = new Peticion(server);
-
-
 
                     switch (codigo)
                     {
@@ -173,13 +168,18 @@ namespace Cliente
                             else
                                 MessageBox.Show("Invitación rechazada");
                             break;
-                            case 9:
+                        case 9:
 
                             mensaje = trozos[1].Split('\0')[0];
                             
-                            Partida partida = new Partida(Convert.ToInt32(mensaje), server);
+                            Partida partida = new Partida(Convert.ToInt32(mensaje), server, usuario);
                             partida.ShowDialog();
                             break;
+                        case 10: //chat
+
+
+                            break;
+
                         default:
                             // Mostrar un mensaje de error para identificadores desconocidos
                             MessageBox.Show("Mensaje no reconocido del servidor: ");
@@ -428,6 +428,7 @@ namespace Cliente
                   
                     try
                     {
+                        
                         string mensaje = "6/" + invitado.ToString() + "/" + usuario.ToString()+"/"+numPartidas;
                         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                         server.Send(msg);
@@ -471,8 +472,8 @@ namespace Cliente
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                     server.Send(msg);
 
-                    // Partida partida = new Partida(numPartidas, server, usuario);
-                    Partida partida = new Partida(numPartidas, server);
+                    Partida partida = new Partida(numPartidas, server, usuario);
+                    //Partida partida = new Partida(numPartidas, server);
                     numPartidas++;
                     partida.ShowDialog();
                 }

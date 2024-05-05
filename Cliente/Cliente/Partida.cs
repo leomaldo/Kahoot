@@ -17,9 +17,9 @@ namespace Cliente
         int identificador;
 
         Socket server;
-      // string usuario;
+        string usuario;
         //public Partida(int identificador, Socket server, string usuario)
-        public Partida(int identificador, Socket server)// string usuario)
+        public Partida(int identificador, Socket server, string usuario)
         {
             this.identificador = identificador;
             InitializeComponent();
@@ -28,7 +28,7 @@ namespace Cliente
             ConfigurarOpcionesDeRespuesta();
             this.server = server;
             this.server = server;
-            //this .usuario = usuario;
+            this.usuario = usuario;
 
         }
         private void ConfigurarOpcionesDeRespuesta()
@@ -104,10 +104,15 @@ namespace Cliente
         private void boton_enviar_Click(object sender, EventArgs e)
         {
             string mensaje_cliente = textBox1.Text;
-            string mensaje = "10/" + mensaje_cliente.ToString(); // + "/" + usuario.ToString();
+            string mensaje = "10/" + mensaje_cliente.ToString() + "/" + usuario.ToString();
             // Enviamos al servidor el mensaje que ha escrito un cliente
             byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
+        }
+
+        private void Chat_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
