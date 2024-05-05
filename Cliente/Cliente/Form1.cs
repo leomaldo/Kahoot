@@ -11,14 +11,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Globalization;
 
 namespace Cliente
 {
+
     public partial class Form1 : Form
     {
+        int nForm_p;
         Socket server;
         Thread atender;
-
+        int numPartidas = 0;
         private Label labelKahoot;
         private Label labelPreparados;
         private System.Windows.Forms.Timer timerAnimacion2;
@@ -32,7 +35,7 @@ namespace Cliente
         Peticion peticion = new Peticion();
         delegate void DelegadoParaEscribir(string[] conectados);
         List<string> invitados = new List<string>();
-
+     
         public Form1()
         {
             InitializeComponent();
@@ -57,9 +60,9 @@ namespace Cliente
                     string mensaje;
 
 
-                    MessageBox.Show("codigoooo: " + codigo);  //para ver por que codigo entra
+                 
 
-                    int nform = 0;
+                   
                     Peticion peticion = new Peticion(server);
 
 
@@ -80,11 +83,7 @@ namespace Cliente
                             //DelegadoParaEscribir delegado = new DelegadoParaEscribir(ListaConectados);
                             //USUARIOS.Invoke(delegado, new object[] { conectados });
 
-                            contLbl.Invoke(new Action(() =>
-                            {
-                                contLbl.Text = mensaje;
-
-                            }));
+                          
                             break;
                         case 1:
                             // Mostrar la máxima puntuación
@@ -110,8 +109,10 @@ namespace Cliente
                         case 4:
                             // Mostrar el resultado del inicio de sesión
 
-                            mensaje = trozos[1].Split('\0')[0]; ;
+                            mensaje = trozos[1].Split('\0')[0]; 
 
+                            
+                            
                             int num99 = 99;
                             if (int.TryParse(mensaje, out int numero_mensaje))
                             {
@@ -135,10 +136,7 @@ namespace Cliente
                             // Mostrar el resultado del registro
 
                             mensaje = trozos[1].Split('\0')[0];
-                            // MessageBox.Show(mensaje);  --- comentado porque ahora no tiene sentido
-                            //string[] partesUsuR = mensaje.Split(':');
-
-                            //string usuarioR = partesUsuR[1].Trim(); -- esto hacia que petase y se fuese al catch y saliese te has desconectado
+                           
 
                             MessageBox.Show("Registro exitoso para usuario: " + mensaje);
                             usuario=mensaje;
@@ -157,7 +155,7 @@ namespace Cliente
                             break;
                         case 7://Notificación de invitacion a una partida
                             mensaje = trozos[1].Split('\0')[0];
-
+                            string Idpartida= trozos[2].Split('\0')[0];
                             Invitacion invitacion = new Invitacion(mensaje);
                             invitacion.ShowDialog();
                             string respuesta = "7/" + invitacion.GetRespuesta() + "/" + mensaje + "\0";
@@ -166,12 +164,21 @@ namespace Cliente
                             break;
                         case 8:
                             mensaje = trozos[1].Split('\0')[0];
+                            string inv = trozos[2].Split('\0')[0];
                             if (Convert.ToInt32(mensaje)==1)
                             {
                                 MessageBox.Show("Invitación aceptada");
+                                invitados.Add(inv);
                             }
                             else
                                 MessageBox.Show("Invitación rechazada");
+                            break;
+                            case 9:
+
+                            mensaje = trozos[1].Split('\0')[0];
+                            
+                            Partida partida = new Partida(Convert.ToInt32(mensaje), server);
+                            partida.ShowDialog();
                             break;
                         default:
                             // Mostrar un mensaje de error para identificadores desconocidos
@@ -253,7 +260,7 @@ namespace Cliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int puerto = 9050;
+            int puerto = 9051;
             IPAddress direc = IPAddress.Parse("192.168.56.102");
             IPEndPoint ipep = new IPEndPoint(direc, puerto);
 
@@ -299,14 +306,6 @@ namespace Cliente
             Registrarse registrarse = new Registrarse(server);
             registrarse.ShowDialog();
         }
-
-
-        private void jUGARPARTIDAToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Partida partida = new Partida();
-            partida.ShowDialog();
-        }
-
 
         private void pETICIÓNToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -378,17 +377,10 @@ namespace Cliente
                 {
                     //Construimos el mensaje
                     string mensaje = "6/";
-                    //for (int i = 0; i < invitados.Count; i++)
-                    //{
-                    //    mensaje = mensaje + invitados[i] + "/";
-                    //}
-
-                    //mensaje = mensaje.Remove(mensaje.Length - 1);
+                   
                     mensaje=mensaje+invitado+"/"+usuario;
 
-                    //Lo enviamos por el socket (Codigo 6 --> Invitar a jugadores)
-                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
-                    server.Send(msg);
+                  
                 }
 
             }
@@ -401,33 +393,16 @@ namespace Cliente
             if ((botonInvitar.Text == "Enviar\n Invitación"))
             {
                  invitado = USUARIOS.CurrentCell.Value.ToString();
-
+                MessageBox.Show("valor de invitado es: " + invitado);
                 //Comprovamos que no somos nosotros mismos
                 if (invitado == usuario)
-                    MessageBox.Show("No te puedes autoinvitar");
+                     MessageBox.Show("No te puedes autoinvitar1");
                 else
                 {
-                    ////Comprovamos que no este ya en la lista para añadirlo
-                    //int i = 0;
-                    //bool encontrado = false;
-                    //while ((i < invitados.Count) && (encontrado == false))
-                    //{
-                    //    if (invitado == invitados[i])
-                    //        encontrado = true;
-                    //    else
-                    //        i = i + 1;
-                    //}
-                    //if (encontrado == true)
-                    //{
-                    //    invitados.Remove(invitado);
-                    //    MessageBox.Show("Has eliminado a " + invitado);
-                    //}
-                    //else
-                    //{
-                    //    invitados.Add(invitado);
+                   
                     
                     MessageBox.Show("Has añadido a " + invitado);
-                    //}
+                   
                 }
             }
 
@@ -436,6 +411,7 @@ namespace Cliente
         string invitado;
         private void USUARIOS_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
+            
             //Solo funciona cuando se habilita la funcion de invitar con el boton invitarButton
             if ((botonInvitar.Text == "Enviar\n Invitación") && (invitados.Count <= 3))
             {
@@ -443,34 +419,64 @@ namespace Cliente
 
                 //Comprovamos que no somos nosotros mismos
                 if (invitado == usuario)
-                    MessageBox.Show("No te puedes autoinvitar");
+                {
+                    MessageBox.Show("No te puedes autoinvitar2");
+                   
+                }
                 else
                 {
-                    ////Comprovamos que no este ya en la lista para añadirlo
-                    //int i = 0;
-                    //bool encontrado = false;
-                    //while ((i < invitados.Count) && (encontrado == false))
-                    //{
-                    //    if (invitado == invitados[i])
-                    //        encontrado = true;
-                    //    else
-                    //        i = i + 1;
-                    //}
-                    //if (encontrado == true)
-                    //{
-                    //    invitados.Remove(invitado);
-                    //    MessageBox.Show("Has eliminado a " + invitado);
-                    //}
-                    //else
-                    //{
-                    //    invitados.Add(invitado);
-                   
-                    MessageBox.Show("Has añadido a " + invitado);
-                    //}
+                  
+                    try
+                    {
+                        string mensaje = "6/" + invitado.ToString() + "/" + usuario.ToString()+"/"+numPartidas;
+                        byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                        server.Send(msg);
+                       
+                    }
+                    catch
+                    {
+                        MessageBox.Show("mierda");
+                    }
                 }
             }
 
             USUARIOS.SelectAll();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //numForm.Text = nForm_p.ToString();
+        }
+
+        private void EmpezarPart_Click(object sender, EventArgs e)
+        {
+           
+            if (invitados == null)
+            {
+                MessageBox.Show("Invita a tus amigos para comenzar a jugar");
+            }
+            else
+            {
+                DialogResult resultado = MessageBox.Show("Quieres invitar a alguien más?", "Empezar", MessageBoxButtons.YesNo);
+                if (resultado == DialogResult.No)
+                {
+                    string mensaje = "8/";
+                    int i = 0;
+                    while (i<invitados.Count())
+                    {
+                        mensaje=mensaje+"&"+invitados[i].ToString();
+                        i++;
+                    }
+                     mensaje = mensaje+"/"+numPartidas;
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+                    server.Send(msg);
+
+                    // Partida partida = new Partida(numPartidas, server, usuario);
+                    Partida partida = new Partida(numPartidas, server);
+                    numPartidas++;
+                    partida.ShowDialog();
+                }
+            }
         }
     }
 }

@@ -150,21 +150,19 @@ int encontrarPartidaMenosCorrectas(MYSQL *conn) {
 		return -1;
 	}
 }
-int Invitar(char invitado[500], char nombre[25]) {
+int Invitar(char invitado[500], char nombre[25], char IDpartida[10]) {
 	//invitados; nombre: quien invita
 	//Retorna numero de invitados --> Todo OK (+ notifica a los invitados (8/persona_que_le_ha_invitado*id_partida))
 	//       -1 --> Alguno de los usuarios invitados se ha desconectado (+nombres de los desconectados en noDisponibles)
 	
 	int error = 0;
 	
-	
-	
 		int encontrado = 0;
 		int i = 0;
 		while ((i<miLista.num)&&(encontrado == 0)) {
 			if (strcmp(miLista.conectados[i].nombre,invitado) == 0) {
 				char invitacion[512];
-				sprintf(invitacion, "7/%s", nombre);
+				sprintf(invitacion, "7/%s/%s", nombre,IDpartida);
 				//Invitacion: 7/quien invita
 				printf("Invitacion: %s\n",invitacion);
 				write(miLista.conectados[i].socket, invitacion, strlen(invitacion));
@@ -282,6 +280,48 @@ void NotificarNuevaListaConectados(){
 	}
 	
 }
+int DameSocketConectado(char nombre[25]){
+	//Retorna -1 --> El usuario buscado no se ha encontrado conectado.
+	//Retorna nÃºmero socket--> Se ha encontrado el resultado conectado.
+	int i=0;
+	int encontrado=0;
+	while (i<miLista.num && !encontrado){
+		if (strcmp(miLista.conectados[i].nombre,nombre)==0)
+			encontrado=1;
+		else
+			i++;
+	}
+	if (encontrado==1)
+	{
+		return miLista.conectados[i].socket;
+	}
+	else 
+		return -1;
+}
+
+void EnviarComenzarPartida(char invitados[512], char Idpartida[100]) {
+	char *nombre = strtok(invitados, "&"); // Obtener el primer nombre
+	while (nombre != NULL) {
+		// Obtener el socket del usuario
+		int socket = DameSocketConectado(nombre);
+		if (socket != NULL) {
+			// Construir el mensaje
+			char mensaje[100];
+			
+			sprintf(mensaje, "9/%s", Idpartida);
+			
+			write(socket, mensaje, strlen(mensaje));
+			
+			printf("Mensaje enviado a %s\n", nombre);
+		} else {
+			printf("No se pudo obtener el socket para %s\n", nombre);
+		}
+		
+		// Obtener el siguiente nombre
+		nombre = strtok(NULL, "&");
+	}
+}
+
 //Funcion principal del programa donde determinamos que es lo que ha pedido el cliente
 void *handleClientRequest (void *arg) {
 	
@@ -334,6 +374,7 @@ void *handleClientRequest (void *arg) {
 		}else if (code == 5) {// registrarse
 
 			char *usuario = strtok(NULL, "/");
+			strcpy(nombre,usuario);
 			char *contrasena = strtok(NULL, "/");
 			registro(conn, usuario, contrasena);
 			sprintf(response, "5/%s", usuario);
@@ -353,16 +394,20 @@ void *handleClientRequest (void *arg) {
 			//Return en respuesta: 7/0 (Todo OK) ; 7/invitado_no_disponible1/... (si hay invitados que se han desconectado)
 			
 				
-			char p = strtok(NULL, "/");
+			char *p = strtok(NULL, "/");
 			//char p = strtok(NULL, "/");
-			char invitado[500];
+			char invitado[100];
 			strcpy(invitado, p);
-			char p2= strtok(NULL, "/");
-			
+			char *p2= strtok(NULL, "/");
+			char nomnre[100];
+			strcpy(nombre,p2);
+			char *p3= strtok(NULL, "/");
+			char IDpartida[10];
+			strcpy(IDpartida,p3);
 			printf("Invitado: %s\n", invitado);
 	
 		    char respuesta[512];
-				int res = Invitar(invitado, p2);
+				int res = Invitar(invitado, p2,IDpartida);
 				printf("Resultado de invitar: %d\n",res);
 				
 				if (res == -1){
@@ -378,17 +423,25 @@ void *handleClientRequest (void *arg) {
 			//Mensaje en peticion: 7/respuesta(SI/NO)/id_partida
 			//Mensaje en respuesta: -
 			
-		    char p = strtok(NULL,"/");
+		    char *p = strtok(NULL,"/");
 			char respuesta[3];
 			strcpy(respuesta,p);
+			char *p2 = strtok(NULL,"/");
+			char Invitador[100];
+			strcpy(Invitador,p2);
 			printf("%s\n",respuesta);
-			p = strtok(NULL,"/");
-			if (strcmp(respuesta,"NO")==0){
-				sprintf(response, "8/1");
+			printf("Invitador: %s\n", Invitador);
+		int socketInvitador = DameSocketConectado(Invitador);
+		char RespuestaInv[100];
+			if (strcmp(respuesta,"1")==0){
+				
+				sprintf(RespuestaInv, "8/1/%s",nombre);
+				write(socketInvitador, RespuestaInv, strlen(RespuestaInv));
 			}
-			else
-				sprintf(response, "8/-1");
-			
+			else{
+				sprintf(RespuestaInv, "8/-1/%s",nombre);
+			write(socketInvitador, RespuestaInv, strlen(RespuestaInv));
+			}
 		   //mandar mensaje al que solicita de que ha aceptado o no
 			
 		}
@@ -414,10 +467,21 @@ void *handleClientRequest (void *arg) {
 			pthread_mutex_unlock(&mutex);
 			
 			
-			pthread_mutex_lock(&mutex); 
-			write (miLista.conectados[posicion - 1].socket,response, strlen(response));
-			pthread_mutex_unlock(&mutex);
+/*			pthread_mutex_lock(&mutex); */
+/*			write (miLista.conectados[posicion - 1].socket,response, strlen(response));*/
+/*			pthread_mutex_unlock(&mutex);*/
 		
+		}
+		else if(code==8)
+		{
+			char *p = strtok(NULL, "/");
+			char invitados[512];
+			strcpy(invitados,p);
+			char *p2 = strtok(NULL, "/");
+			char Idpartida[100];
+			strcpy(Idpartida,p2);
+			EnviarComenzarPartida(invitados , Idpartida);
+			
 		}
 		if (code !=0)
 		{
@@ -452,6 +516,24 @@ void *handleClientRequest (void *arg) {
 			NotificarNuevaListaConectados();
 			pthread_mutex_unlock( &mutex);
         }
+		else if (code == 10)
+		{
+			char *p1 = strtok(NULL, "/");
+			char mensaje[512];
+			strcpy (mensaje,p1);
+			char *u = strtok(NULL, "/");
+			char usuario[512];
+			strcpy(usuario,u);
+			
+			sprintf(response, "%s: %s", usuario, mensaje);
+			//no entiendo muy bien lo de el identificador y por eso he puesto 0
+			sprintf(response, "9/0/%s", response);
+			int j;
+			for (j=0;j<miLista.num;j++)
+			{
+				write(miLista.conectados[j].socket,response,strlen(response));				
+			}
+		}
 /*		*/
 /*		pthread_mutex_lock( &mutex);*/
 		//printf ("Respuesta: %s\n", response);
@@ -487,7 +569,7 @@ int main() {
 	
 	printf("Conexión a la base de datos establecida correctamente.\n");		
 	int serverSocket;
-	int puerto = 9050;
+	int puerto = 9051;
 	struct sockaddr_in serverAddr, clientAddr;
 	socklen_t addrLen = sizeof(struct sockaddr_in);
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);

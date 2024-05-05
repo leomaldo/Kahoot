@@ -32,14 +32,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.oPCIONESToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.jUGARPARTIDAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pETICIÓNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerAnimacion = new System.Windows.Forms.Timer(this.components);
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.contLbl = new System.Windows.Forms.Label();
             this.USUARIOS = new System.Windows.Forms.DataGridView();
             this.botonInvitar = new System.Windows.Forms.Button();
+            this.EmpezarPart = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.USUARIOS)).BeginInit();
             this.SuspendLayout();
@@ -51,6 +50,7 @@
             this.oPCIONESToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(932, 28);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
@@ -59,7 +59,6 @@
             // 
             this.oPCIONESToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem,
-            this.jUGARPARTIDAToolStripMenuItem,
             this.pETICIÓNToolStripMenuItem});
             this.oPCIONESToolStripMenuItem.Name = "oPCIONESToolStripMenuItem";
             this.oPCIONESToolStripMenuItem.Size = new System.Drawing.Size(93, 24);
@@ -71,13 +70,6 @@
             this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
             this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem.Text = "REGISTRARME / INICIAR SESIÓN";
             this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem.Click += new System.EventHandler(this.rEGISTRARMEINICIARSESIÓNToolStripMenuItem_Click);
-            // 
-            // jUGARPARTIDAToolStripMenuItem
-            // 
-            this.jUGARPARTIDAToolStripMenuItem.Name = "jUGARPARTIDAToolStripMenuItem";
-            this.jUGARPARTIDAToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
-            this.jUGARPARTIDAToolStripMenuItem.Text = "JUGAR PARTIDA";
-            this.jUGARPARTIDAToolStripMenuItem.Click += new System.EventHandler(this.jUGARPARTIDAToolStripMenuItem_Click);
             // 
             // pETICIÓNToolStripMenuItem
             // 
@@ -102,27 +94,17 @@
             this.button1.Location = new System.Drawing.Point(224, 44);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(146, 56);
+            this.button1.Size = new System.Drawing.Size(147, 57);
             this.button1.TabIndex = 0;
             this.button1.Text = "CONECTAR";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // contLbl
-            // 
-            this.contLbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.contLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.contLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contLbl.Location = new System.Drawing.Point(632, 198);
-            this.contLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.contLbl.Name = "contLbl";
-            this.contLbl.Size = new System.Drawing.Size(197, 113);
-            this.contLbl.TabIndex = 14;
-            // 
             // USUARIOS
             // 
             this.USUARIOS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.USUARIOS.Location = new System.Drawing.Point(457, 337);
+            this.USUARIOS.Location = new System.Drawing.Point(548, 283);
+            this.USUARIOS.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.USUARIOS.Name = "USUARIOS";
             this.USUARIOS.RowHeadersWidth = 51;
             this.USUARIOS.RowTemplate.Height = 24;
@@ -133,22 +115,33 @@
             // 
             // botonInvitar
             // 
-            this.botonInvitar.Location = new System.Drawing.Point(611, 673);
+            this.botonInvitar.Location = new System.Drawing.Point(699, 601);
+            this.botonInvitar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.botonInvitar.Name = "botonInvitar";
-            this.botonInvitar.Size = new System.Drawing.Size(90, 42);
+            this.botonInvitar.Size = new System.Drawing.Size(91, 42);
             this.botonInvitar.TabIndex = 16;
             this.botonInvitar.Text = "Invitar";
             this.botonInvitar.UseVisualStyleBackColor = true;
             this.botonInvitar.Click += new System.EventHandler(this.botonInvitar_Click_1);
+            // 
+            // EmpezarPart
+            // 
+            this.EmpezarPart.Location = new System.Drawing.Point(658, 660);
+            this.EmpezarPart.Name = "EmpezarPart";
+            this.EmpezarPart.Size = new System.Drawing.Size(165, 38);
+            this.EmpezarPart.TabIndex = 17;
+            this.EmpezarPart.Text = "Empezar Partida";
+            this.EmpezarPart.UseVisualStyleBackColor = true;
+            this.EmpezarPart.Click += new System.EventHandler(this.EmpezarPart_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(932, 727);
+            this.Controls.Add(this.EmpezarPart);
             this.Controls.Add(this.botonInvitar);
             this.Controls.Add(this.USUARIOS);
-            this.Controls.Add(this.contLbl);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
@@ -156,6 +149,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.USUARIOS)).EndInit();
@@ -168,15 +162,14 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem oPCIONESToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rEGISTRARMEINICIARSESIÓNToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem jUGARPARTIDAToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pETICIÓNToolStripMenuItem;
         private System.Windows.Forms.Timer timerAnimación;
         private System.Windows.Forms.Timer timerAnimacion;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label contLbl;
         private System.Windows.Forms.DataGridView USUARIOS;
         private System.Windows.Forms.Button botonInvitar;
+        private System.Windows.Forms.Button EmpezarPart;
     }
 }
 

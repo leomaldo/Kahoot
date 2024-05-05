@@ -12,7 +12,7 @@ namespace Cliente
 {
     public partial class Invitacion : Form
     {
-        string respuesta;
+        int respuesta;
         string UsuEnv;
         public Invitacion(string UsuEnv)
         {
@@ -20,35 +20,31 @@ namespace Cliente
             this.UsuEnv = UsuEnv;
         }
       
-        public string GetRespuesta()
+        public int GetRespuesta()
         {
             return this.respuesta;
-        }
-      
-        private void Invitacion_Load(object sender, EventArgs e)
-        {
-            label1.Text = UsuEnv + " te ha invitado a una partida.\n ¿Deseas unirte?";
-        }
-        private void Invitacion_Load_1(object sender, EventArgs e)
-        {
-            label1.Text = UsuEnv + " te ha invitado a una partida.\n ¿Deseas unirte?";
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.respuesta = "NO";
+            this.respuesta = 0;
             this.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.respuesta = "SI";
+            this.respuesta = 1;
             this.Close();
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Invitacion_Load_2(object sender, EventArgs e)
+        {
+            label1.Text = UsuEnv + " te ha invitado a una partida.\n ¿Deseas unirte?";
         }
     }
 }

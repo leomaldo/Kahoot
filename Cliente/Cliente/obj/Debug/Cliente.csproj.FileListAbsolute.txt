@@ -177,3 +177,60 @@ C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Deb
 C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
 C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.exe
 C:\Users\leoma\Downloads\Kahoot (2)\Kahoot\Kahoot\Kahoot\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\Users\rafae\Source\Repos\Kahoot\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\telecos\so\version 4\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\telecos\so\version 4\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\telecos\so\version 4\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\telecos\so\version 4\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\SHARE\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\Users\rafae\Downloads\veresion_4_2.0\veresion_4_2.0\veresion_4_2.0\Cliente\Cliente\obj\Debug\Cliente.pdb

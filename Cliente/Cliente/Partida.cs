@@ -7,20 +7,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Cliente
 {
     public partial class Partida : Form
     {
-        public Partida()
+        int identificador;
+
+        Socket server;
+      // string usuario;
+        //public Partida(int identificador, Socket server, string usuario)
+        public Partida(int identificador, Socket server)// string usuario)
         {
+            this.identificador = identificador;
             InitializeComponent();
             this.BackColor = Color.FromArgb(220, 255, 220);
-          
+
             ConfigurarOpcionesDeRespuesta();
+            this.server = server;
+            this.server = server;
+            //this .usuario = usuario;
+
         }
         private void ConfigurarOpcionesDeRespuesta()
         {
+            Chat.Height = 200;
             // Configura cada panel como una opción de respuesta
             panelRespuesta1.Click += OpcionDeRespuesta_Click;
             panelRespuesta2.Click += OpcionDeRespuesta_Click;
@@ -86,6 +99,15 @@ namespace Cliente
         private void panelRespuesta1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void boton_enviar_Click(object sender, EventArgs e)
+        {
+            string mensaje_cliente = textBox1.Text;
+            string mensaje = "10/" + mensaje_cliente.ToString(); // + "/" + usuario.ToString();
+            // Enviamos al servidor el mensaje que ha escrito un cliente
+            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+            server.Send(msg);
         }
     }
 }
