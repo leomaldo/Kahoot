@@ -365,12 +365,18 @@ void *handleClientRequest (void *arg) {
 			char nombre [20];
 			int res = JugadorMaxPtsTotales(conn, nombre);
 			sprintf(response, "2/%s", nombre);
+			printf ("Respuesta: %s\n", response);
+			
 		} else if (code == 1) {
 			int res2= PtsDeLaPartidaConMasPts(conn);
 			sprintf(response, "1/%d", res2);
+			printf ("Respuesta: %s\n", response);
+			
 		} else if (code == 3) {
 			int res3 = encontrarPartidaMenosCorrectas(conn);
 			sprintf(response, "3/%d", res3);
+			printf ("Respuesta: %s\n", response);
+			
 		}else if (code == 5) {// registrarse
 
 			char *usuario = strtok(NULL, "/");
@@ -384,16 +390,8 @@ void *handleClientRequest (void *arg) {
 			
 			NotificarNuevaListaConectados();
 			pthread_mutex_unlock(&mutex);
-		}
 			
-		if (code !=0)
-		{
-			printf ("Respuesta: %s\n", response);
-			//Enviamos respuesta
-			write (miLista.conectados[posicion - 1].socket,response, strlen(response));
-			//write (miLista.conectados[posicion_vector].socket,response, strlen(response
 		}
-		
 		
 		else if (code ==  6) {
 			//Mensaje en peticion: 6/invitado1*invitado2*...
@@ -422,6 +420,7 @@ void *handleClientRequest (void *arg) {
 				else{
 					sprintf(response,"6/0");						 
 				}
+				
 		//significa que todo ha ido bien
 				//Codigo 7 --> Respuesta a una invitacion de partida
 		}
@@ -459,7 +458,7 @@ void *handleClientRequest (void *arg) {
 			printf("Invitado: %s\n", usuario);
 			printf("Invitado: %s\n", nombre);
 			// Verificar las credenciales en la base de datos
-			if (verificarCredenciales(conn, usuario, contrasena)) {
+			if (verificarCredenciales(conn, nombre, contrasena)) {
 				sprintf(response, "4/%s", nombre);
 			}
 			else {
@@ -489,6 +488,34 @@ void *handleClientRequest (void *arg) {
 			EnviarComenzarPartida(invitados , Idpartida);
 			
 		}
+		else if (code == 10)
+		{
+			char *p1 = strtok(NULL, "/");
+			char mensaje[512];
+			strcpy (mensaje,p1);
+			char *u = strtok(NULL, "/");
+			char usuario[512];
+			strcpy(usuario,u);
+			char *i = strtok(NULL, "/");
+			char id[512];
+			strcpy(id,i);
+			char respuestachat[512];
+			sprintf(respuestachat, "10/%s/%s/%s", mensaje, usuario, id);
+			printf("%s\n",respuestachat);
+			int j;
+			for (j=0;j<miLista.num;j++)
+			{
+				write(miLista.conectados[j].socket,respuestachat,strlen(respuestachat));	
+				
+			}
+			
+		}
+		if (code !=0)
+		{
+			printf ("Respuesta: %s\n", response);
+			//Enviamos respuesta
+			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
+		}
 		
 		else if (code == 0){
 			printf("mensaje de desconexion victor\n");
@@ -515,28 +542,9 @@ void *handleClientRequest (void *arg) {
 			pthread_mutex_lock( &mutex);
 			NotificarNuevaListaConectados();
 			pthread_mutex_unlock( &mutex);
+			
+			
         }
-		else if (code == 10)
-		{
-			char *p1 = strtok(NULL, "/");
-			char mensaje[512];
-			strcpy (mensaje,p1);
-			char *c = strtok(NULL, "/");
-			char chat[512];
-			strcpy (chat,c);
-			char *u = strtok(NULL, "/");
-			char usuario[512];
-			strcpy(usuario,u);
-			printf ("Recibo: %s de: %s\n", usuario, chat);
-			sprintf(response, "%s/%s/&s", mensaje, chat, usuario);
-			printf("%s\n",response);
-			sprintf(response, "9/%s", response);
-			int j;
-			for (j=0;j<miLista.num;j++)
-			{
-				write(miLista.conectados[j].socket,response,strlen(response));				
-			}
-		}
 		
 /*		*/
 /*		pthread_mutex_lock( &mutex);*/

@@ -33,9 +33,9 @@
             this.panelRespuesta2 = new System.Windows.Forms.Panel();
             this.panelRespuesta3 = new System.Windows.Forms.Panel();
             this.panelRespuesta4 = new System.Windows.Forms.Panel();
-            this.Chat = new System.Windows.Forms.TextBox();
             this.boton_enviar = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Chat = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // Pregunta
@@ -78,16 +78,6 @@
             this.panelRespuesta4.Size = new System.Drawing.Size(195, 157);
             this.panelRespuesta4.TabIndex = 12;
             // 
-            // Chat
-            // 
-            this.Chat.Location = new System.Drawing.Point(270, 591);
-            this.Chat.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Chat.Multiline = true;
-            this.Chat.Name = "Chat";
-            this.Chat.Size = new System.Drawing.Size(404, 92);
-            this.Chat.TabIndex = 14;
-            this.Chat.TextChanged += new System.EventHandler(this.Chat_TextChanged);
-            // 
             // boton_enviar
             // 
             this.boton_enviar.Location = new System.Drawing.Point(686, 712);
@@ -108,14 +98,23 @@
             this.textBox1.Size = new System.Drawing.Size(404, 48);
             this.textBox1.TabIndex = 16;
             // 
+            // Chat
+            // 
+            this.Chat.FormattingEnabled = true;
+            this.Chat.ItemHeight = 20;
+            this.Chat.Location = new System.Drawing.Point(779, 221);
+            this.Chat.Name = "Chat";
+            this.Chat.Size = new System.Drawing.Size(230, 304);
+            this.Chat.TabIndex = 17;
+            // 
             // Partida
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1038, 811);
+            this.Controls.Add(this.Chat);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.boton_enviar);
-            this.Controls.Add(this.Chat);
             this.Controls.Add(this.panelRespuesta4);
             this.Controls.Add(this.panelRespuesta3);
             this.Controls.Add(this.panelRespuesta2);
@@ -136,8 +135,8 @@
         private System.Windows.Forms.Panel panelRespuesta2;
         private System.Windows.Forms.Panel panelRespuesta3;
         private System.Windows.Forms.Panel panelRespuesta4;
-        private System.Windows.Forms.TextBox Chat;
         private System.Windows.Forms.Button boton_enviar;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ListBox Chat;
     }
 }

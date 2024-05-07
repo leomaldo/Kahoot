@@ -18,7 +18,17 @@ namespace Cliente
 
         Socket server;
         string usuario;
-        //public Partida(int identificador, Socket server, string usuario)
+        List<string> mensajes = new List<string>();
+
+        public int GetId()
+        {
+            return this.identificador;
+        }
+        public void SetNuevoMensaje (string mensaje)
+        {
+            mensajes.Add(mensaje);
+            Chat.Items.Add(mensaje);
+        }
         public Partida(int identificador, Socket server, string usuario)
         {
             this.identificador = identificador;
@@ -104,10 +114,13 @@ namespace Cliente
         private void boton_enviar_Click(object sender, EventArgs e)
         {
             string mensaje_cliente = textBox1.Text;
-            string mensaje = "10/" + mensaje_cliente.ToString() + "/" + usuario.ToString();
+            string mensaje = "10/" + mensaje_cliente.ToString() + "/" + usuario.ToString() + "/" + identificador.ToString();
             // Enviamos al servidor el mensaje que ha escrito un cliente
             byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
+            string chat = usuario + " : " + mensaje_cliente;
+            Chat.Items.Add(chat);
+            mensajes.Add(chat);
         }
 
         private void Chat_TextChanged(object sender, EventArgs e)
