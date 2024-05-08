@@ -97,7 +97,7 @@ namespace Cliente
                         case 3:
                             // Mostrar la partida con menos preguntas correctas
 
-                            mensaje = trozos[1].Split('\0')[0];
+                             mensaje = trozos[1].Split('\0')[0];
 
                             MessageBox.Show("La partida con menos preguntas correctas es la número: " + mensaje);
                             break;
@@ -125,6 +125,8 @@ namespace Cliente
                                 MessageBox.Show("Inicio de sesión exitoso para:" + mensaje);
                             }
                             //AgregarValorUsuarios(usuario);
+                            
+                            
                             usuario=mensaje;
                             break;
                         case 5:
@@ -175,11 +177,10 @@ namespace Cliente
                             Partida partida = new Partida(Convert.ToInt32(mensaje), server, usuario);
                             partida.ShowDialog();
                             break;
-                        case 10: //chat
+                        case 10:
 
 
                             break;
-
                         default:
                             // Mostrar un mensaje de error para identificadores desconocidos
                             MessageBox.Show("Mensaje no reconocido del servidor: ");
@@ -260,8 +261,8 @@ namespace Cliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int puerto = 9051;
-            IPAddress direc = IPAddress.Parse("192.168.56.102");
+            int puerto = 50023;
+            IPAddress direc = IPAddress.Parse("10.4.119.5");
             IPEndPoint ipep = new IPEndPoint(direc, puerto);
 
 

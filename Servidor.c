@@ -27,7 +27,7 @@ MYSQL *conectarBD(struct ConexionBD *conexion) {
 	MYSQL *conn = mysql_init(NULL); // Inicializar el objeto de conexión
 	
 	// Establecer la conexión a la base de datos
-	if (!mysql_real_connect(conn, /*"shiva2.upc.es"*/"localhost", "root", "mysql",/*"MG5_Kahoot"*/"Kahoot", 0, NULL, 0)) {
+	if (!mysql_real_connect(conn, "shiva2.upc.es", "root", "mysql","MG5_Kahoot", 0, NULL, 0)) {
 		fprintf(stderr, "Error al conectar a la base de datos: %s\n", mysql_error(conn));
 		mysql_close(conn);
 		return NULL; // Devolver NULL si hay un error
@@ -350,10 +350,10 @@ void *handleClientRequest (void *arg) {
 		char nombre[512];
 		
 		struct ConexionBD conexion = {
-			.servidor = /*"shiva2.upc.es"*/"localhost",
+			.servidor = "shiva2.upc.es", //"localhost",
 				.usuario = "root",
 				.contrasena = "mysql",
-				.base_datos =/* "MG5_Kahoot"*/"Kahoot"
+				.base_datos = "MG5_Kahoot"//"Kahoot"
 		};
 		
 		MYSQL *conn = conectarBD(&conexion);
@@ -434,8 +434,9 @@ void *handleClientRequest (void *arg) {
 			char *p2 = strtok(NULL,"/");
 			char Invitador[100];
 			strcpy(Invitador,p2);
-			printf("%s\n",respuesta);
+			printf("Respuesta de invitación: %s\n",respuesta);
 			printf("Invitador: %s\n", Invitador);
+			printf("Después de invitador envío: %s\n", response);
 		int socketInvitador = DameSocketConectado(Invitador);
 		char RespuestaInv[100];
 			if (strcmp(respuesta,"1")==0){
@@ -499,9 +500,13 @@ void *handleClientRequest (void *arg) {
 			char *i = strtok(NULL, "/");
 			char id[512];
 			strcpy(id,i);
+			char respuesta[512];
 			char respuestachat[512];
-			sprintf(respuestachat, "10/%s/%s/%s", mensaje, usuario, id);
+			sprintf(respuesta, "10/%s/%s/%s", mensaje, usuario, id);
+			strcpy(response, respuesta);
+			sprintf(respuestachat, "%s/%s", usuario, mensaje);
 			printf("%s\n",respuestachat);
+			
 			int j;
 			for (j=0;j<miLista.num;j++)
 			{
@@ -566,10 +571,10 @@ int main() {
 	
 	//estructura base de datos
 	struct ConexionBD conexion = {
-		.servidor =/* "shiva2.upc.es"*/"localhost",
+		.servidor ="shiva2.upc.es", //"localhost",
 			.usuario = "root",
 			.contrasena = "mysql",
-			.base_datos ="Kahoot"
+			.base_datos ="MG5_Kahoot"
 	};
 	
 	// Conectar a la base de datos utilizando la estructura de conexión
@@ -581,14 +586,14 @@ int main() {
 	
 	printf("Conexión a la base de datos establecida correctamente.\n");		
 	int serverSocket;
-	int puerto = 9051;
+	int puerto = 50023;
 	struct sockaddr_in serverAddr, clientAddr;
 	socklen_t addrLen = sizeof(struct sockaddr_in);
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 	memset(&serverAddr, 0, sizeof(serverAddr));
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	serverAddr.sin_port = htons(puerto); //9052
+	serverAddr.sin_port = htons(puerto); //9052//50020
 	bind(serverSocket, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
 	listen(serverSocket, 3);
 	

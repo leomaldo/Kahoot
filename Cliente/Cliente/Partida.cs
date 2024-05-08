@@ -36,7 +36,7 @@ namespace Cliente
             this.BackColor = Color.FromArgb(220, 255, 220);
 
             ConfigurarOpcionesDeRespuesta();
-            this.server = server;
+            //this.server = server;
             this.server = server;
             this.usuario = usuario;
 
