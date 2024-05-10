@@ -264,3 +264,47 @@ C:\2B\SO\TagV4\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
 C:\2B\SO\TagV4\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
 C:\2B\SO\TagV4\Cliente\Cliente\obj\Debug\Cliente.exe
 C:\2B\SO\TagV4\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\telecos\so\V5__9_5\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\telecos\so\V5__9_5\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\telecos\so\V5__9_5\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\telecos\so\V5__9_5\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\SHARE\proyecto SO\proyecto SO\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\Users\leoma\Downloads\Kahoot (1)\Kahoot\Cliente\Cliente\obj\Debug\Cliente.pdb

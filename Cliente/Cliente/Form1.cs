@@ -15,12 +15,14 @@ using System.Globalization;
 
 namespace Cliente
 {
-
+    
     public partial class Form1 : Form
     {
+        string usuario;
         int nForm_p;
         Socket server;
         Thread atender;
+        ThreadStart ts;
         int numPartidas = 0;
         private Label labelKahoot;
         private Label labelPreparados;
@@ -31,11 +33,13 @@ namespace Cliente
         private int step = 1; // Reducir la velocidad de la animación
         private bool atendercliente = true;
         //private Thread atender;
-        string usuario;
+        
+        //string usuario;
         Peticion peticion = new Peticion();
         delegate void DelegadoParaEscribir(string[] conectados);
         List<string> invitados = new List<string>();
-     
+        List<Partida> partidas = new List<Partida>();
+
         public Form1()
         {
             InitializeComponent();
@@ -50,8 +54,8 @@ namespace Cliente
         {
             while (atendercliente)
             {
-                try
-                {
+                //try
+                //{
                     //Recibimos mensaje del servidor
                     byte[] msg2 = new byte[80];
                     server.Receive(msg2);
@@ -59,6 +63,8 @@ namespace Cliente
                     int codigo = Convert.ToInt32(trozos[0]);
                     string mensaje;
 
+                  
+                   // MessageBox.Show("El valor de usuario es: " + usuario);
 
                     Peticion peticion = new Peticion(server);
 
@@ -74,10 +80,8 @@ namespace Cliente
                         case 0:
                             // Actualizar el Label de la lista de conectados
                             mensaje = trozos[1].Split('\0')[0];
-                            //string[] conectados= trozos.Skip(1).ToArray();
-                            //DelegadoParaEscribir delegado = new DelegadoParaEscribir(ListaConectados);
-                            //USUARIOS.Invoke(delegado, new object[] { conectados });
-
+                        
+                            MessageBox.Show("Te has desconectado");
                           
                             break;
                         case 1:
@@ -125,7 +129,7 @@ namespace Cliente
                                 MessageBox.Show("Inicio de sesión exitoso para:" + mensaje);
                             }
                             //AgregarValorUsuarios(usuario);
-                            usuario=mensaje;
+                            usuario =mensaje;
                             break;
                         case 5:
                             // Mostrar el resultado del registro
@@ -150,7 +154,7 @@ namespace Cliente
                             break;
                         case 7://Notificación de invitacion a una partida
                             mensaje = trozos[1].Split('\0')[0];
-                            string Idpartida= trozos[2].Split('\0')[0];
+                            
                             Invitacion invitacion = new Invitacion(mensaje);
                             invitacion.ShowDialog();
                             string respuesta = "7/" + invitacion.GetRespuesta() + "/" + mensaje + "\0";
@@ -171,27 +175,13 @@ namespace Cliente
                         case 9:
 
                             mensaje = trozos[1].Split('\0')[0];
-                            
-                            Partida partida = new Partida(Convert.ToInt32(mensaje), server, usuario);
+                            Partida partida = new Partida(Convert.ToInt32(mensaje), server, usuario,ts,partidas);
+                            partidas.Add(partida);
                             partida.ShowDialog();
                             break;
-                        case 10: //chat
-
-
-                            break;
-
-                        default:
-                            // Mostrar un mensaje de error para identificadores desconocidos
-                            MessageBox.Show("Mensaje no reconocido del servidor: ");
-                            break;
-
+                       
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("Te has desconectaado");
-                    break;
-                }
+               
             }
         }
 
@@ -260,8 +250,8 @@ namespace Cliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int puerto = 9051;
-            IPAddress direc = IPAddress.Parse("192.168.56.102");
+            int puerto = 50023;
+            IPAddress direc = IPAddress.Parse("10.4.119.5");
             IPEndPoint ipep = new IPEndPoint(direc, puerto);
 
 
@@ -272,7 +262,7 @@ namespace Cliente
                 server.Connect(ipep);//Intentamos conectar el socket
                 this.BackColor = Color.Cyan;
                 MessageBox.Show("Conexión establecida correctamente");
-                ThreadStart ts = delegate { AtenderServidor(); };
+                 ts = delegate { AtenderServidor(); };
                 atender = new Thread(ts);
                 atender.Start();
             }
@@ -365,7 +355,7 @@ namespace Cliente
             {
                 //Iniciamos la recopilacion de invitados
                 MessageBox.Show("Haz click sobre los jugadores que quieras invitar");
-                botonInvitar.Text = "Enviar\n Invitación";
+                botonInvitar.Text="Invitando";
                 invitados = new List<string>();
             }
             else
@@ -390,10 +380,10 @@ namespace Cliente
         private void USUARIOS_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             //Solo funciona cuando se habilita la funcion de invitar con el boton invitarButton
-            if ((botonInvitar.Text == "Enviar\n Invitación"))
+            if ((botonInvitar.Text == "Invitando"))
             {
                  invitado = USUARIOS.CurrentCell.Value.ToString();
-                MessageBox.Show("valor de invitado es: " + invitado);
+               
                 //Comprovamos que no somos nosotros mismos
                 if (invitado == usuario)
                      MessageBox.Show("No te puedes autoinvitar1");
@@ -401,7 +391,7 @@ namespace Cliente
                 {
                    
                     
-                    MessageBox.Show("Has añadido a " + invitado);
+                    MessageBox.Show("Has enviado invitación a " + invitado);
                    
                 }
             }
@@ -413,7 +403,7 @@ namespace Cliente
         {
             
             //Solo funciona cuando se habilita la funcion de invitar con el boton invitarButton
-            if ((botonInvitar.Text == "Enviar\n Invitación") && (invitados.Count <= 3))
+            if ((botonInvitar.Text == "Invitando") && (invitados.Count <= 3))
             {
                 invitado = USUARIOS.CurrentCell.Value.ToString();
 
@@ -428,8 +418,8 @@ namespace Cliente
                   
                     try
                     {
-                        
-                        string mensaje = "6/" + invitado.ToString() + "/" + usuario.ToString()+"/"+numPartidas;
+
+                        string mensaje = "6/" + invitado.ToString() + "/" + usuario.ToString();
                         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                         server.Send(msg);
                        
@@ -451,6 +441,7 @@ namespace Cliente
 
         private void EmpezarPart_Click(object sender, EventArgs e)
         {
+            invitados.Add(usuario);
            
             if (invitados == null)
             {
@@ -468,14 +459,14 @@ namespace Cliente
                         mensaje=mensaje+"&"+invitados[i].ToString();
                         i++;
                     }
-                     mensaje = mensaje+"/"+numPartidas;
+                     //mensaje = mensaje+"/"+numPartidas;
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                     server.Send(msg);
 
-                    Partida partida = new Partida(numPartidas, server, usuario);
+                    //Partida partida = new Partida(numPartidas, server, usuario);
+                   // partida.add(partida); ---- he comentado esto para que no petase nose hasta que punto es util o no esto, si lo es no lo entiendo
                     //Partida partida = new Partida(numPartidas, server);
-                    numPartidas++;
-                    partida.ShowDialog();
+                    //partida.ShowDialog();
                 }
             }
         }

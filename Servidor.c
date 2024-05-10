@@ -150,7 +150,7 @@ int encontrarPartidaMenosCorrectas(MYSQL *conn) {
 		return -1;
 	}
 }
-int Invitar(char invitado[500], char nombre[25], char IDpartida[10]) {
+int Invitar(char invitado[500], char nombre[25]) {
 	//invitados; nombre: quien invita
 	//Retorna numero de invitados --> Todo OK (+ notifica a los invitados (8/persona_que_le_ha_invitado*id_partida))
 	//       -1 --> Alguno de los usuarios invitados se ha desconectado (+nombres de los desconectados en noDisponibles)
@@ -162,7 +162,7 @@ int Invitar(char invitado[500], char nombre[25], char IDpartida[10]) {
 		while ((i<miLista.num)&&(encontrado == 0)) {
 			if (strcmp(miLista.conectados[i].nombre,invitado) == 0) {
 				char invitacion[512];
-				sprintf(invitacion, "7/%s/%s", nombre,IDpartida);
+				sprintf(invitacion, "7/%s", nombre);
 				//Invitacion: 7/quien invita
 				printf("Invitacion: %s\n",invitacion);
 				write(miLista.conectados[i].socket, invitacion, strlen(invitacion));
@@ -299,8 +299,9 @@ int DameSocketConectado(char nombre[25]){
 		return -1;
 }
 
-void EnviarComenzarPartida(char invitados[512], char Idpartida[100]) {
-	char *nombre = strtok(invitados, "&"); // Obtener el primer nombre
+void EnviarComenzarPartida(char invitados[512], int Idpartida[100]) {
+	char *nombre = strtok(invitados, "&");// Obtener el primer nombre
+	Idpartida=Idpartida+1;
 	while (nombre != NULL) {
 		// Obtener el socket del usuario
 		int socket = DameSocketConectado(nombre);
@@ -308,7 +309,7 @@ void EnviarComenzarPartida(char invitados[512], char Idpartida[100]) {
 			// Construir el mensaje
 			char mensaje[100];
 			
-			sprintf(mensaje, "9/%s", Idpartida);
+			sprintf(mensaje, "9/%d", Idpartida);
 			
 			write(socket, mensaje, strlen(mensaje));
 			
@@ -334,8 +335,10 @@ void *handleClientRequest (void *arg) {
 	int clientSocket = miLista.conectados[posicion - 1].socket;
 	char request[512];
 	char response[512];
+	int contadorPartidas;
 	//saber si una persona se ha registrado o logueado
-	
+	printf("valor posicion -1:%d\n", posicion -1);
+	printf("valor posicion_vector:%d\n", posicion_vector);
 	while (1) {
 		int ret = read(miLista.conectados[posicion -1].socket, request, sizeof(request));
 		
@@ -350,10 +353,10 @@ void *handleClientRequest (void *arg) {
 		char nombre[512];
 		
 		struct ConexionBD conexion = {
-			.servidor = "shiva2.upc.es", //"localhost",
+			.servidor = "localhost", //"localhost","shiva2.upc.es"
 				.usuario = "root",
 				.contrasena = "mysql",
-				.base_datos = "MG5_Kahoot"//"Kahoot"
+				.base_datos = "MG5_Kahoot"
 		};
 		
 		MYSQL *conn = conectarBD(&conexion);
@@ -391,6 +394,7 @@ void *handleClientRequest (void *arg) {
 			NotificarNuevaListaConectados();
 			pthread_mutex_unlock(&mutex);
 			
+			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
 		}
 		
 		else if (code ==  6) {
@@ -405,13 +409,13 @@ void *handleClientRequest (void *arg) {
 			char *p2= strtok(NULL, "/");
 			char nomnre[100];
 			strcpy(nombre,p2);
-			char *p3= strtok(NULL, "/");
-			char IDpartida[10];
-			strcpy(IDpartida,p3);
+/*			char *p3= strtok(NULL, "/");*/
+/*			char IDpartida[10];*/
+/*			strcpy(IDpartida,p3);*/
 			printf("Invitado: %s\n", invitado);
 	
 		    char respuesta[512];
-				int res = Invitar(invitado, p2,IDpartida);
+				int res = Invitar(invitado, p2);
 				printf("Resultado de invitar: %d\n",res);
 				
 				if (res == -1){
@@ -472,7 +476,7 @@ void *handleClientRequest (void *arg) {
 			NotificarNuevaListaConectados();
 			pthread_mutex_unlock(&mutex);
 			
-			
+			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
 /*			pthread_mutex_lock(&mutex); */
 /*			write (miLista.conectados[posicion - 1].socket,response, strlen(response));*/
 /*			pthread_mutex_unlock(&mutex);*/
@@ -483,10 +487,11 @@ void *handleClientRequest (void *arg) {
 			char *p = strtok(NULL, "/");
 			char invitados[512];
 			strcpy(invitados,p);
-			char *p2 = strtok(NULL, "/");
-			char Idpartida[100];
-			strcpy(Idpartida,p2);
-			EnviarComenzarPartida(invitados , Idpartida);
+/*			char *p2 = strtok(NULL, "/");*/
+/*			char Idpartida[100];*/
+/*			strcpy(Idpartida,p2);*/
+			EnviarComenzarPartida(invitados , contadorPartidas);
+			contadorPartidas++;
 			
 		}
 		else if (code == 10)
@@ -510,18 +515,11 @@ void *handleClientRequest (void *arg) {
 			int j;
 			for (j=0;j<miLista.num;j++)
 			{
-				write(miLista.conectados[j].socket,respuestachat,strlen(respuestachat));	
-				
+				//write(miLista.conectados[j].socket,respuestachat,strlen(respuestachat));	
+				write(miLista.conectados[j].socket,respuesta,strlen(respuesta));	
 			}
 			
 		}
-		if (code !=0)
-		{
-			printf ("Respuesta: %s\n", response);
-			//Enviamos respuesta
-			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
-		}
-		
 		else if (code == 0){
 			printf("mensaje de desconexion victor\n");
 			int j = 0;
@@ -547,9 +545,17 @@ void *handleClientRequest (void *arg) {
 			pthread_mutex_lock( &mutex);
 			NotificarNuevaListaConectados();
 			pthread_mutex_unlock( &mutex);
+			sprintf(response, "0/%s", nombre);
 			
 			
-        }
+		}
+		if (code !=0 && code != 5 && code != 4 && code != 7 && code != 10)
+		{
+			printf ("Respuesta: %s\n", response);
+			//Enviamos respuesta
+			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
+		}
+		
 		
 /*		*/
 /*		pthread_mutex_lock( &mutex);*/
@@ -571,7 +577,7 @@ int main() {
 	
 	//estructura base de datos
 	struct ConexionBD conexion = {
-		.servidor ="shiva2.upc.es", //"localhost",
+		.servidor ="localhost", //"localhost","shiva2.upc.es"
 			.usuario = "root",
 			.contrasena = "mysql",
 			.base_datos ="MG5_Kahoot"
@@ -586,7 +592,7 @@ int main() {
 	
 	printf("Conexión a la base de datos establecida correctamente.\n");		
 	int serverSocket;
-	int puerto = 50023;
+	int puerto = 50023; //50023;
 	struct sockaddr_in serverAddr, clientAddr;
 	socklen_t addrLen = sizeof(struct sockaddr_in);
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
