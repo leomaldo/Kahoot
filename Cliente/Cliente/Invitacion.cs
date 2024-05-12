@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,9 +15,11 @@ namespace Cliente
     {
         int respuesta;
         string UsuEnv;
+     
         public Invitacion(string UsuEnv)
         {
             InitializeComponent();
+            this.BackColor = Color.FromArgb(180, 255, 220);
             this.UsuEnv = UsuEnv;
         }
       
@@ -44,6 +47,9 @@ namespace Cliente
 
         private void Invitacion_Load_2(object sender, EventArgs e)
         {
+            label1.ForeColor = Color.Blue;
+            label1.Font = new Font("Arial", 18); // Cambiar el tamaño de la fuente a 14 puntos
+            label1.AutoSize = true;
             label1.Text = UsuEnv + " te ha invitado a una partida.\n ¿Deseas unirte?";
         }
     }

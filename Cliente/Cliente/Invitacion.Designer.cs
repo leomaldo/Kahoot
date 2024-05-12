@@ -36,17 +36,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(370, 95);
+            this.label1.Location = new System.Drawing.Point(164, 70);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 20);
+            this.label1.Size = new System.Drawing.Size(0, 15);
             this.label1.TabIndex = 0;
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(247, 207);
+            this.button1.Location = new System.Drawing.Point(145, 177);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(64, 39);
             this.button1.TabIndex = 1;
             this.button1.Text = "SI";
             this.button1.UseVisualStyleBackColor = true;
@@ -54,9 +56,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(470, 207);
+            this.button2.Location = new System.Drawing.Point(306, 177);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(70, 39);
             this.button2.TabIndex = 2;
             this.button2.Text = "NO";
             this.button2.UseVisualStyleBackColor = true;
@@ -64,12 +67,13 @@
             // 
             // Invitacion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(600, 366);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Invitacion";
             this.Text = "Invitacion";
             this.Load += new System.EventHandler(this.Invitacion_Load_2);

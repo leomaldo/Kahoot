@@ -73,6 +73,12 @@
     <Compile Include="Invitacion.Designer.cs">
       <DependentUpon>Invitacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Jugadores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Jugadores.Designer.cs">
+      <DependentUpon>Jugadores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Partida.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Invitacion.resx">
       <DependentUpon>Invitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Jugadores.resx">
+      <DependentUpon>Jugadores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Partida.resx">
       <DependentUpon>Partida.cs</DependentUpon>

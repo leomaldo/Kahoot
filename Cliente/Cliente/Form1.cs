@@ -175,7 +175,8 @@ namespace Cliente
                         case 9:
 
                             mensaje = trozos[1].Split('\0')[0];
-                            Partida partida = new Partida(Convert.ToInt32(mensaje), server, usuario,ts,partidas);
+                            string jugadores= trozos[2].Split('\0')[0];
+                            Partida partida = new Partida(Convert.ToInt32(mensaje), server, usuario,ts,jugadores);
                             partidas.Add(partida);
                             partida.ShowDialog();
                             break;
@@ -250,28 +251,36 @@ namespace Cliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int puerto = 50023;
-            IPAddress direc = IPAddress.Parse("10.4.119.5");
-            IPEndPoint ipep = new IPEndPoint(direc, puerto);
+            if (button1.Text=="CONECTAR")
+            {
+                int puerto = 50023;
+                IPAddress direc = IPAddress.Parse("192.168.56.101");
+                IPEndPoint ipep = new IPEndPoint(direc, puerto);
 
 
-            //Creamos el socket 
-            server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
-            {
-                server.Connect(ipep);//Intentamos conectar el socket
-                this.BackColor = Color.Cyan;
-                MessageBox.Show("Conexión establecida correctamente");
-                 ts = delegate { AtenderServidor(); };
-                atender = new Thread(ts);
-                atender.Start();
+                //Creamos el socket 
+                server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                try
+                {
+                    server.Connect(ipep);//Intentamos conectar el socket
+                    MessageBox.Show("Conexión establecida correctamente");
+                    this.BackColor = Color.FromArgb(220, 255, 220);
+                    ts = delegate { AtenderServidor(); };
+                    atender = new Thread(ts);
+                    atender.Start();
+                }
+                catch (SocketException ex)
+                {
+                    //Si hay excepcion imprimimos error y salimos del programa con return 
+                    MessageBox.Show("No se ha podido conectar con el servidor");
+                    return;
+                }
+                Registrarse registrarse = new Registrarse(server);
+                registrarse.ShowDialog();
+                button1.Text="Cambiar de cuenta";
             }
-            catch (SocketException ex)
-            {
-                //Si hay excepcion imprimimos error y salimos del programa con return 
-                MessageBox.Show("No se ha podido conectar con el servidor");
-                return;
-            }
+            else
+                MessageBox.Show("Debees desconectarte para poder cambiar de cuenta");
         }
 
 
@@ -288,6 +297,7 @@ namespace Cliente
             this.BackColor = Color.Gray;
             server.Shutdown(SocketShutdown.Both);
             server.Close();
+            button1.Text="CONECTAR";
         }
 
         private void rEGISTRARMEINICIARSESIÓNToolStripMenuItem_Click(object sender, EventArgs e)
@@ -330,22 +340,30 @@ namespace Cliente
 
         public void ListaConectados(string[] conectados)
         {
-
+            // Mostrar el DataGridView
             USUARIOS.Visible = true;
+
+            // Establecer la cantidad de columnas y filas
             USUARIOS.ColumnCount = 1;
             USUARIOS.RowCount = conectados.Length;
-            USUARIOS.ColumnHeadersVisible = false;
+
+            // Ocultar los encabezados de las filas y las columnas
             USUARIOS.RowHeadersVisible = false;
+            USUARIOS.ColumnHeadersVisible = true;
+
+            // Establecer el encabezado de la columna
+            USUARIOS.Columns[0].HeaderText = "CONECTADOS:";
+
+            // Ajustar el tamaño de las columnas y filas para que muestren todo el contenido
             USUARIOS.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             USUARIOS.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
+            // Agregar los nombres de usuarios a las celdas
             for (int i = 0; i < conectados.Length; i++)
             {
                 USUARIOS.Rows[i].Cells[0].Value = conectados[i];
             }
-
             USUARIOS.Show();
-
         }
 
 

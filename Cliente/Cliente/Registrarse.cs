@@ -38,5 +38,10 @@ namespace Cliente
             byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
         }
+
+        private void Registrarse_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

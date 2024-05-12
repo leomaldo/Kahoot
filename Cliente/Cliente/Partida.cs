@@ -24,6 +24,10 @@ namespace Cliente
         List<string> mensajes = new List<string>();
         Thread atender;
         List<Partida> partidas=new List<Partida>();
+        string jugadores;
+
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        int tiempoRestante = 30;
         public int GetId()
         {
             return this.identificador;
@@ -33,12 +37,19 @@ namespace Cliente
              
             mensajes.Add(mensaje);
         }
-        public Partida(int identificador, Socket server, string usuario,ThreadStart ts, List<Partida> partidaList)
+        public Partida(int identificador, Socket server, string usuario,ThreadStart ts, string jugadores)
         {
-            this.identificador = identificador;
+            this.jugadores= jugadores;
             InitializeComponent();
+            this.identificador = identificador;
+            Jugadores FormJugadores=new Jugadores(jugadores);
+            FormJugadores.ShowDialog();
             this.BackColor = Color.FromArgb(220, 255, 220);
-            this.partidas= partidaList;
+        
+          
+            timer.Interval = 1000; // 1000 ms = 1 segundo
+            timer.Tick += Timer_Tick;
+            timer.Start(); // Iniciar el temporizador
             ConfigurarOpcionesDeRespuesta();
             //this.server = server;
             this.server = server;
@@ -48,7 +59,35 @@ namespace Cliente
             atender = new Thread(ts);
             atender.Start();
 
+            labelTiempoRestante.ForeColor = Color.Purple;
+
         }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            tiempoRestante--; // Decrementar el tiempo restante
+            if (tiempoRestante <= 0)
+            {
+                // Detener el temporizador
+                timer.Stop();
+
+                // Abrir el formulario de jugadores nuevamente
+                Jugadores formJugadores = new Jugadores(this.jugadores);
+                formJugadores.Show();
+
+                formJugadores.FormClosed += (s, args) =>
+                {
+                    // Volver a iniciar el temporizador cuando se cierre el formulario de jugadores
+                    tiempoRestante = 30;
+                    timer.Start();
+                };
+            }
+            else
+            {
+                // Actualizar la etiqueta de la cuenta regresiva
+                labelTiempoRestante.Text = $"Tiempo restante: {tiempoRestante} segundos";
+            }
+        }
+
         public void AtenderServidor()
         {
 
@@ -78,32 +117,16 @@ namespace Cliente
                             int id = Convert.ToInt32(trozos[3].Split('\0')[0]);
                             bool encontrado = false;
                             int i = 0;
-                            while (!encontrado && i < partidas.Count())
+                          
+               
+                            if (id==this.identificador)
                             {
-                                if (id == partidas[i].GetId())
-                                {
-                                    encontrado = true;
-                                }
-                                else
-                                    i++;
-                            }
-                            if (encontrado == true)
-                            {
-                                //comprobacion
-                                // estaba puesto justo debajo "partida" y he pusto "partidas" pk asi me dejaba. No entiendo mucho la diferencia entre partidas y partida pero creo qeu es con S la buena
-                                partidas[i].SetNuevoMensaje(mensaje);
+                               
+                                
                                 Escribirmensaje(mensaje);
                        
                             }
-                            if (encontrado == false)
-                            {
-                                MessageBox.Show("No ha encontrado el ID de la partida ");
-                                partidas[i].SetNuevoMensaje(mensaje);
-
-                            }
-                     
-                            
-
+                           
                     }
             }
 
@@ -126,33 +149,10 @@ namespace Cliente
                 Chat.Items.Add(mensaje);
             }
         }
-        private void AgregarMensajeConColor(string mensaje)
-        {
-            int indiceSeparador = mensaje.IndexOf(':');
-            if (indiceSeparador != -1)
-            {
-                string textoAntesDelSeparador = mensaje.Substring(0, indiceSeparador);
-                string textoDespuesDelSeparador = mensaje.Substring(indiceSeparador + 1);
-                if (textoAntesDelSeparador==usuario)
-                {
-                    // Agregar el texto antes del separador con un color específico
-                    Chat.Items.Add(new MensajeConColor(textoAntesDelSeparador + ":", Color.Red));
 
-                }
-                else
-                {
-                    // Agregar el texto antes del separador con un color específico
-                    Chat.Items.Add(new MensajeConColor(textoAntesDelSeparador + ":", Color.Blue));
-                }
-                // Agregar el texto después del separador sin color
-                Chat.Items.Add(new MensajeConColor(textoDespuesDelSeparador, Color.Black));
-            }
-            else
-            {
-                // Si no hay separador ":" en el mensaje, simplemente agregar el mensaje completo en negro
-                Chat.Items.Add(new MensajeConColor(mensaje, Color.Black));
-            }
-        }
+
+
+
         private void ConfigurarOpcionesDeRespuesta()
         {
             Chat.Height = 200;
@@ -239,20 +239,5 @@ namespace Cliente
            
         }
     }
-    public class MensajeConColor
-    {
-        public string Texto { get; set; }
-        public Color ColorTexto { get; set; }
-
-        public MensajeConColor(string texto, Color colorTexto)
-        {
-            Texto = texto;
-            ColorTexto = colorTexto;
-        }
-
-        public override string ToString()
-        {
-            return Texto;
-        }
-    }
+   
 }
