@@ -35,10 +35,12 @@ namespace Cliente
         //private Thread atender;
         
         //string usuario;
-        Peticion peticion = new Peticion();
+        //Peticion peticion = new Peticion();
         delegate void DelegadoParaEscribir(string[] conectados);
         List<string> invitados = new List<string>();
         List<Partida> partidas = new List<Partida>();
+        List<Peticion> formularios = new List<Peticion>();
+        List<Partida> formularios2 = new List<Partida>();
 
         public Form1()
         {
@@ -54,66 +56,69 @@ namespace Cliente
         {
             while (atendercliente)
             {
-                //try
-                //{
+               
                     //Recibimos mensaje del servidor
                     byte[] msg2 = new byte[80];
                     server.Receive(msg2);
                     string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
                     int codigo = Convert.ToInt32(trozos[0]);
-                    string mensaje;
+                    string mensaje = mensaje = trozos[1].Split('\0')[0];
+                    int nform;
 
-                  
-                   // MessageBox.Show("El valor de usuario es: " + usuario);
-
-                    Peticion peticion = new Peticion(server);
+               // Peticion peticion = new Peticion(nform,server);
 
                     switch (codigo)
                     {
                         case -1:
-                            mensaje = trozos[1].Split('\0')[0];
-                            mensaje=mensaje.Substring(0,mensaje.Length - 1);
+                        mensaje = trozos[1].Split('\0')[0];
+                        mensaje =mensaje.Substring(0,mensaje.Length - 1);
                             string[] conectados = mensaje.Split('&');
                             DelegadoParaEscribir delegado = new DelegadoParaEscribir(ListaConectados);
                             USUARIOS.Invoke(delegado, new object[] { conectados });
                             break;
                         case 0:
                             // Actualizar el Label de la lista de conectados
-                            mensaje = trozos[1].Split('\0')[0];
+                            
                         
                             MessageBox.Show("Te has desconectado");
                           
                             break;
                         case 1:
-                            // Mostrar la máxima puntuación
+                        // Mostrar la máxima puntuación
 
-                            mensaje = trozos[1].Split('\0')[0];
+                        nform = Convert.ToInt32(trozos[1]);
+                        mensaje = trozos[2].Split('\0')[0]; 
+                        formularios[nform].TomaRespuesta1(mensaje);
 
-                            MessageBox.Show("La máxima puntuación es: " + mensaje);
+                           // MessageBox.Show("La máxima puntuación es: " + mensaje);
                             break;
                         case 2:
-                            // Mostrar el jugador con más puntos
+                        // Mostrar el jugador con más puntos
 
-                            mensaje = trozos[1].Split('\0')[0];
+                        nform = Convert.ToInt32(trozos[1]);
+                        mensaje = trozos[2].Split('\0')[0];
+                        formularios[nform].TomaRespuesta2(mensaje);
 
-                            MessageBox.Show("El jugador con más puntos es: " + mensaje);
-                            break;
+                        //MessageBox.Show("El jugador con más puntos es: " + mensaje);
+                        break;
                         case 3:
-                            // Mostrar la partida con menos preguntas correctas
+                        // Mostrar la partida con menos preguntas correctas
 
-                            mensaje = trozos[1].Split('\0')[0];
+                        nform = Convert.ToInt32(trozos[1]);
+                        mensaje = trozos[2].Split('\0')[0];
+                        formularios[nform].TomaRespuesta3(mensaje);
 
-                            MessageBox.Show("La partida con menos preguntas correctas es la número: " + mensaje);
-                            break;
+                        //MessageBox.Show("La partida con menos preguntas correctas es la número: " + mensaje);
+                        break;
                         case 4:
-                            // Mostrar el resultado del inicio de sesión
+                        // Mostrar el resultado del inicio de sesión
 
-                            mensaje = trozos[1].Split('\0')[0]; 
+                        
+                        mensaje = trozos[1].Split('\0')[0];
 
+                        int num99 = 99;
                             
-                            
-                            int num99 = 99;
-                            if (int.TryParse(mensaje, out int numero_mensaje))
+                        if (int.TryParse(mensaje, out int numero_mensaje))
                             {
                                 if (numero_mensaje == num99)
                                 {
@@ -132,19 +137,19 @@ namespace Cliente
                             usuario =mensaje;
                             break;
                         case 5:
-                            // Mostrar el resultado del registro
+                        // Mostrar el resultado del registro
+                        mensaje = trozos[1].Split('\0')[0];
 
-                            mensaje = trozos[1].Split('\0')[0];
-                           
-
-                            MessageBox.Show("Registro exitoso para usuario: " + mensaje);
+                        MessageBox.Show("Registro exitoso para usuario: " + mensaje);
                             usuario=mensaje;
                             //AgregarValorUsuarios(mensaje);
 
                             break;
                         case 6: //Respuesta a la peticion de invitacion
-                            mensaje = trozos[1].Split('\0')[0];
-                            if (Convert.ToInt32(mensaje)==0)
+
+                        mensaje = trozos[1].Split('\0')[0];
+
+                        if (Convert.ToInt32(mensaje)==0)
                             {
                                 MessageBox.Show("Invitación hecha correctamente");
                             }
@@ -153,8 +158,7 @@ namespace Cliente
 
                             break;
                         case 7://Notificación de invitacion a una partida
-                            mensaje = trozos[1].Split('\0')[0];
-                            
+
                             Invitacion invitacion = new Invitacion(mensaje);
                             invitacion.ShowDialog();
                             string respuesta = "7/" + invitacion.GetRespuesta() + "/" + mensaje + "\0";
@@ -162,8 +166,10 @@ namespace Cliente
                             server.Send(msg);
                             break;
                         case 8:
-                            mensaje = trozos[1].Split('\0')[0];
-                            string inv = trozos[2].Split('\0')[0];
+
+                        mensaje = trozos[1].Split('\0')[0];
+                        string inv = trozos[2].Split('\0')[0];
+
                             if (Convert.ToInt32(mensaje)==1)
                             {
                                 MessageBox.Show("Invitación aceptada");
@@ -174,15 +180,14 @@ namespace Cliente
                             break;
                         case 9:
 
-                            mensaje = trozos[1].Split('\0')[0];
-                            string jugadores= trozos[2].Split('\0')[0];
-                            Partida partida = new Partida(Convert.ToInt32(mensaje), server, usuario,ts,jugadores);
-                            partidas.Add(partida);
-                            partida.ShowDialog();
+                        nform = Convert.ToInt32(trozos[1]);
+                        mensaje = trozos[2].Split('\0')[0];
+                        string jugadores = trozos[3].Split('\0')[0];
+                        Partida partida = new Partida(Convert.ToInt32(mensaje), server, usuario,ts,jugadores, nform);
+                        partidas.Add(partida);
+                        partida.ShowDialog();
                             break;
-                       
                     }
-               
             }
         }
 
@@ -247,16 +252,13 @@ namespace Cliente
             }
         }
 
-
-
         private void button1_Click(object sender, EventArgs e)
         {
             if (button1.Text=="CONECTAR")
             {
                 int puerto = 50023;
-                IPAddress direc = IPAddress.Parse("192.168.56.101");
+                IPAddress direc = IPAddress.Parse("192.168.56.102");
                 IPEndPoint ipep = new IPEndPoint(direc, puerto);
-
 
                 //Creamos el socket 
                 server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -280,9 +282,8 @@ namespace Cliente
                 button1.Text="Cambiar de cuenta";
             }
             else
-                MessageBox.Show("Debees desconectarte para poder cambiar de cuenta");
+                MessageBox.Show("Debes desconectarte para poder cambiar de cuenta");
         }
-
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -302,7 +303,6 @@ namespace Cliente
 
         private void rEGISTRARMEINICIARSESIÓNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             Registrarse registrarse = new Registrarse(server);
             registrarse.ShowDialog();
         }
@@ -312,13 +312,12 @@ namespace Cliente
             ThreadStart ts = delegate { PonerEnMarchaFormulario(); };
             Thread T = new Thread(ts);
             T.Start();
-
         }
         private void PonerEnMarchaFormulario()
         {
-            //int cont = formularios.Count;
-            Peticion f = new Peticion(/*cont,*/ server);
-            //formularios.Add(f);
+            int cont = formularios.Count;
+            Peticion f = new Peticion(cont, server);
+            formularios.Add(f);
             f.ShowDialog();
         }
 
@@ -329,13 +328,11 @@ namespace Cliente
 
             byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
-
             // Nos desconectamos
             atender.Abort();
             this.BackColor = Color.Gray;
             server.Shutdown(SocketShutdown.Both);
             server.Close();
-
         }
 
         public void ListaConectados(string[] conectados)
@@ -366,7 +363,6 @@ namespace Cliente
             USUARIOS.Show();
         }
 
-
         private void botonInvitar_Click_1(object sender, EventArgs e)
         {
             if (botonInvitar.Text == "Invitar")
@@ -385,15 +381,11 @@ namespace Cliente
                 {
                     //Construimos el mensaje
                     string mensaje = "6/";
-                   
+
                     mensaje=mensaje+invitado+"/"+usuario;
-
-                  
                 }
-
             }
         }
-        
 
         private void USUARIOS_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
@@ -407,58 +399,46 @@ namespace Cliente
                      MessageBox.Show("No te puedes autoinvitar1");
                 else
                 {
-                   
-                    
-                    MessageBox.Show("Has enviado invitación a " + invitado);
-                   
+                    MessageBox.Show("Has enviado invitacion a " + invitado);  
                 }
             }
-
             USUARIOS.SelectAll();
         }
         string invitado;
         private void USUARIOS_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            
             //Solo funciona cuando se habilita la funcion de invitar con el boton invitarButton
             if ((botonInvitar.Text == "Invitando") && (invitados.Count <= 3))
             {
                 invitado = USUARIOS.CurrentCell.Value.ToString();
-
                 //Comprovamos que no somos nosotros mismos
                 if (invitado == usuario)
                 {
                     MessageBox.Show("No te puedes autoinvitar2");
-                   
                 }
                 else
                 {
-                  
                     try
-                    {
-
+                    { 
                         string mensaje = "6/" + invitado.ToString() + "/" + usuario.ToString();
                         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-                        server.Send(msg);
-                       
+                        server.Send(msg); 
                     }
                     catch
                     {
-                        MessageBox.Show("mierda");
+                        MessageBox.Show("mal");
                     }
                 }
             }
-
             USUARIOS.SelectAll();
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //numForm.Text = nForm_p.ToString();
-        }
-
+        
         private void EmpezarPart_Click(object sender, EventArgs e)
         {
+            int cont = formularios2.Count;
+            Partida f2 = new Partida(cont, server);
+            formularios2.Add(f2);
+
             invitados.Add(usuario);
            
             if (invitados == null)
@@ -470,21 +450,15 @@ namespace Cliente
                 DialogResult resultado = MessageBox.Show("Quieres invitar a alguien más?", "Empezar", MessageBoxButtons.YesNo);
                 if (resultado == DialogResult.No)
                 {
-                    string mensaje = "8/";
+                    string mensaje = "8/"+ cont.ToString()+ "/";
                     int i = 0;
                     while (i<invitados.Count())
                     {
                         mensaje=mensaje+"&"+invitados[i].ToString();
                         i++;
                     }
-                     //mensaje = mensaje+"/"+numPartidas;
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                     server.Send(msg);
-
-                    //Partida partida = new Partida(numPartidas, server, usuario);
-                   // partida.add(partida); ---- he comentado esto para que no petase nose hasta que punto es util o no esto, si lo es no lo entiendo
-                    //Partida partida = new Partida(numPartidas, server);
-                    //partida.ShowDialog();
                 }
             }
         }

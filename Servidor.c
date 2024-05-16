@@ -318,7 +318,7 @@ int DameSocketConectado(char nombre[25]){
 		return -1;
 }
 
-void EnviarComenzarPartida(char invitados[512], int Idpartida[100]) {
+void EnviarComenzarPartida(int numForm, char invitados[512], int Idpartida[100]) {
 	char invitados_copia[strlen(invitados) + 1];
 	strcpy(invitados_copia, invitados);
 	char *nombre = strtok(invitados_copia, "&");// Obtener el primer nombre
@@ -329,7 +329,7 @@ void EnviarComenzarPartida(char invitados[512], int Idpartida[100]) {
 			// Construir el mensaje
 			char mensaje[100];
 			
-			sprintf(mensaje, "9/%d/%s", Idpartida,invitados);
+			sprintf(mensaje, "9/%d/%d/%s", numForm, Idpartida,invitados);
 			
 			write(socket, mensaje, strlen(mensaje));
 			
@@ -337,7 +337,6 @@ void EnviarComenzarPartida(char invitados[512], int Idpartida[100]) {
 		} else {
 			printf("No se pudo obtener el socket para %s\n", nombre);
 		}
-		
 		// Obtener el siguiente nombre
 		nombre = strtok(NULL, "&");
 	}
@@ -360,7 +359,6 @@ void enviarchat(char mensaje[125], int id)
 	}
 	if(encontrado==1)
 	{
-	 
 		char jugadores_copia[strlen(listapartidas.partida[i].jugadores) + 1];
 		strcpy(jugadores_copia, listapartidas.partida[i].jugadores);
 		char *nombre = strtok(jugadores_copia, "&");
@@ -375,15 +373,12 @@ void enviarchat(char mensaje[125], int id)
 			} else {
 				printf("No se pudo obtener el socket para %s\n", nombre);
 			}
-			
 			// Obtener el siguiente nombre
 			nombre = strtok(NULL, "&");
 		}
 	}
 	else
 	   printf("no encontrado");
-	
-	
 }
 //Funcion principal del programa donde determinamos que es lo que ha pedido el cliente
 void *handleClientRequest (void *arg) {
@@ -411,7 +406,9 @@ void *handleClientRequest (void *arg) {
 		
 		request[ret] = '\0';
 		printf("Recibo: %s ", request);
-		int code = atoi(strtok(request, "/"));
+		char *p = strtok (request, "/");
+		int code = atoi(p);
+		int numForm;
 		char nombre[512];
 		
 		struct ConexionBD conexion = {
@@ -426,21 +423,45 @@ void *handleClientRequest (void *arg) {
 			// Si hay un error en la conexión, salir del programa
 			break;
 		}	
-		if (code == 2) {
-			char nombre [20];
-			int res = JugadorMaxPtsTotales(conn, nombre);
-			sprintf(response, "2/%s", nombre);
-			printf ("Respuesta: %s\n", response);
-			
-		} else if (code == 1) {
+		if (code == 1) {
+			p = strtok (NULL, "/");
+			numForm = atoi(p);
 			int res2= PtsDeLaPartidaConMasPts(conn);
-			sprintf(response, "1/%d", res2);
+			sprintf(response, "1/%d/%d",numForm, res2);
+			printf ("Respuesta: %s\n", response);
+		}else if (code == 2) {
+			p = strtok (NULL, "/");
+			numForm = atoi(p);
+			int res = JugadorMaxPtsTotales(conn, nombre);
+			sprintf(response, "2/%d/%s",numForm, nombre);
 			printf ("Respuesta: %s\n", response);
 			
 		} else if (code == 3) {
+			p = strtok (NULL, "/");
+			numForm = atoi(p);
 			int res3 = encontrarPartidaMenosCorrectas(conn);
-			sprintf(response, "3/%d", res3);
+			sprintf(response, "3/%d/%d",numForm, res3);
 			printf ("Respuesta: %s\n", response);
+			
+		}else if (code == 4){ //iniciar_Sesion
+			char *usuario = strtok(NULL, "/");
+			char *contrasena = strtok(NULL, "/");
+			strcpy(nombre, usuario);
+			
+			// Verificar las credenciales en la base de datos
+			if (verificarCredenciales(conn, nombre, contrasena)) {
+				sprintf(response, "4/%s", nombre);
+				pthread_mutex_lock(&mutex); 
+				int respuesta = AnadiraLista( &usuario, clientSocket);
+				
+				NotificarNuevaListaConectados();
+				pthread_mutex_unlock(&mutex);
+			}
+			else 
+			{
+				strcpy(response, "4/99");
+			}
+			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
 			
 		}else if (code == 5) {// registrarse
 
@@ -462,8 +483,6 @@ void *handleClientRequest (void *arg) {
 		else if (code ==  6) {
 			//Mensaje en peticion: 6/invitado1*invitado2*...
 			//Return en respuesta: 7/0 (Todo OK) ; 7/invitado_no_disponible1/... (si hay invitados que se han desconectado)
-			
-				
 			char *p = strtok(NULL, "/");
 			//char p = strtok(NULL, "/");
 			char invitado[100];
@@ -471,29 +490,23 @@ void *handleClientRequest (void *arg) {
 			char *p2= strtok(NULL, "/");
 			char nomnre[100];
 			strcpy(nombre,p2);
-/*			char *p3= strtok(NULL, "/");*/
-/*			char IDpartida[10];*/
-/*			strcpy(IDpartida,p3);*/
 			printf("Invitado: %s\n", invitado);
-	
 		    char respuesta[512];
 				int res = Invitar(invitado, p2);
 				printf("Resultado de invitar: %d\n",res);
 				
 				if (res == -1){
-					sprintf(response,"6/-1");
+					strcpy(response,"6/-1");
 				}
 				else{
-					sprintf(response,"6/0");						 
+					strcpy(response,"6/0");					 
 				}
-				
 		//significa que todo ha ido bien
 				//Codigo 7 --> Respuesta a una invitacion de partida
 		}
 		else if (code ==  7) {
 			//Mensaje en peticion: 7/respuesta(SI/NO)/id_partida
 			//Mensaje en respuesta: -
-			
 		    char *p = strtok(NULL,"/");
 			char respuesta[3];
 			strcpy(respuesta,p);
@@ -511,55 +524,20 @@ void *handleClientRequest (void *arg) {
 				write(socketInvitador, RespuestaInv, strlen(RespuestaInv));
 			}
 			else{
-				sprintf(RespuestaInv, "8/-1/%s",nombre);
+				sprintf(RespuestaInv, "8/-1/%s", nombre);
 			write(socketInvitador, RespuestaInv, strlen(RespuestaInv));
 			}
 		   //mandar mensaje al que solicita de que ha aceptado o no
-			
-		}
-		else if (code == 4){ //iniciar_Sesion
-			char *usuario = strtok(NULL, "/");
-			char *contrasena = strtok(NULL, "/");
-		
-			strcpy(nombre, usuario);
-		
-			// Verificar las credenciales en la base de datos
-			if (verificarCredenciales(conn, nombre, contrasena)) {
-				sprintf(response, "4/%s", nombre);
-				pthread_mutex_lock(&mutex); 
-				int respuesta = AnadiraLista( &usuario, clientSocket);
-				
-				NotificarNuevaListaConectados();
-				pthread_mutex_unlock(&mutex);
-			}
-			else {
-				sprintf(response, "4/99");
-			}
-						
-			
-			
-			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
-/*			pthread_mutex_lock(&mutex); */
-/*			write (miLista.conectados[posicion - 1].socket,response, strlen(response));*/
-/*			pthread_mutex_unlock(&mutex);*/
-		
-		}
-		else if(code==8)
+		}else if(code==8)
 		{
 			char *p = strtok(NULL, "/");
+			numForm = atoi(p);
+			p = strtok (NULL, "/");
 			char invitados[512];
-			strcpy(invitados,p);
-			
-/*			char *p2 = strtok(NULL, "/");*/
-/*			char Idpartida[100];*/
-/*			strcpy(Idpartida,p2);*/
-/*			strcpy(listapartidas.partida[contadorPartidas].id,contadorPartidas);
-*/			
-		
+			strcpy(invitados,p);		
 			Partida partida=crearPartida(invitados);
-			EnviarComenzarPartida(partida.jugadores ,partida.id);
+			EnviarComenzarPartida(numForm, partida.jugadores ,partida.id);
 			contadorpartidas++;
-			
 		}
 		else if (code == 10)
 		{
@@ -579,7 +557,6 @@ void *handleClientRequest (void *arg) {
 			sprintf(respuestachat, "%s/%s", usuario, mensaje);
 			
 			enviarchat(respuesta,atoi(id));
-			
 		}
 		else if (code == 0){
 			int j = 0;
@@ -615,10 +592,8 @@ void *handleClientRequest (void *arg) {
 			//Enviamos respuesta
 			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
 		}
-		
 	}
-	close(miLista.conectados[posicion_vector].socket); 
-	//close(miLista.conectados[posicion -1].socket); 
+	close(miLista.conectados[posicion_vector].socket);  
 }
 
 struct thread_info {    /* Used as argument to thread_start() */

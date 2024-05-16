@@ -15,20 +15,13 @@ namespace Cliente
     {
         int nForm;
         Socket server;
-      
-        public Peticion()
-        {
-
-
-
-        }
         
         
-        public Peticion(/*int nForm,*/ Socket server)
+        public Peticion(int nForm,Socket server)
         {
             InitializeComponent();
             this.BackColor = Color.FromArgb(180, 255, 220);
-            //this.nForm = nForm;
+            this.nForm = nForm;
             this.server = server;
         }
 
@@ -65,15 +58,22 @@ namespace Cliente
            
         }
 
-        private void Peticion_Load(object sender, EventArgs e) 
+        public void TomaRespuesta1(string mensaje)
         {
-            numForm.Text = nForm.ToString();
-
+            MessageBox.Show("La máxima puntuación es: " + mensaje);
+        }
+        public void TomaRespuesta2(string mensaje)
+        {
+            MessageBox.Show("El jugador con más puntos es: " + mensaje);
+        }
+        public void TomaRespuesta3(string mensaje)
+        {
+            MessageBox.Show("La partida con menos preguntas correctas es la número: " + mensaje);
         }
 
-        private void Peticion_Load_1(object sender, EventArgs e)
+        private void Peticion_Load(object sender, EventArgs e)
         {
-
+            numForm.Text = nForm.ToString();
         }
     }
 }

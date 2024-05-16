@@ -18,7 +18,7 @@ namespace Cliente
     public partial class Partida : Form
     {
         int identificador;
-
+        int nForm;
         Socket server;
         string usuario;
         List<string> mensajes = new List<string>();
@@ -37,7 +37,12 @@ namespace Cliente
              
             mensajes.Add(mensaje);
         }
-        public Partida(int identificador, Socket server, string usuario,ThreadStart ts, string jugadores)
+        public Partida (int nForm, Socket server)
+        {
+            this.nForm = nForm;
+            this.server = server;
+        }
+        public Partida(int identificador, Socket server, string usuario,ThreadStart ts, string jugadores, int nForm)
         {
             this.jugadores= jugadores;
             InitializeComponent();
@@ -54,6 +59,7 @@ namespace Cliente
             //this.server = server;
             this.server = server;
             this.usuario = usuario;
+            this.nForm = nForm;
 
             ts = delegate { AtenderServidor(); };
             atender = new Thread(ts);
@@ -93,47 +99,37 @@ namespace Cliente
 
             while (true)
             {
-                //try
-                //{
-                    //Recibimos mensaje del servidor
-                    byte[] msg2 = new byte[80];
-                    server.Receive(msg2);
-                    string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
-                    int codigo = Convert.ToInt32(trozos[0]);
-                    string mensaje;
 
+                //Recibimos mensaje del servidor
+                byte[] msg2 = new byte[80];
+                server.Receive(msg2);
+                string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
+                int codigo = Convert.ToInt32(trozos[0]);
+                string mensaje = mensaje = trozos[1].Split('\0')[0];
+                // int nform;
 
-                    // MessageBox.Show("El valor de usuario es: " + usuario);
+                // MessageBox.Show("El valor de usuario es: " + usuario);
 
-                    Peticion peticion = new Peticion(server);
+                //Peticion peticion = new Peticion(server);
 
-                    if (codigo==10)
+                if (codigo == 10)
+                {
+
+                    //trozos = mensaje.Split('/');
+                    //nform = Convert.ToInt32(trozos[0]);
+                    //mensaje = trozos[1];
+                    //string usuario = trozos[2].Split('\0')[0];
+                    string usuarioEnvia = trozos[2].Split('\0')[0];
+                    mensaje = usuarioEnvia + " : " + mensaje;
+                    int id = Convert.ToInt32(trozos[3].Split('\0')[0]);
+                    bool encontrado = false;
+                    int i = 0;
+                    if (id == this.identificador)
                     {
-                        
-                            mensaje = trozos[1].Split('\0')[0];
-                            //string usuario = trozos[2].Split('\0')[0];
-                            string  usuarioEnvia = trozos[2].Split('\0')[0];
-                            mensaje = usuarioEnvia + " : " + mensaje;
-                            int id = Convert.ToInt32(trozos[3].Split('\0')[0]);
-                            bool encontrado = false;
-                            int i = 0;
-                          
-               
-                            if (id==this.identificador)
-                            {
-                               
-                                
-                                Escribirmensaje(mensaje);
-                       
-                            }
-                           
+                        Escribirmensaje(mensaje);
                     }
+                }
             }
-
-
-
-
-
         }
 
         public void Escribirmensaje(string mensaje)
@@ -149,9 +145,6 @@ namespace Cliente
                 Chat.Items.Add(mensaje);
             }
         }
-
-
-
 
         private void ConfigurarOpcionesDeRespuesta()
         {
@@ -210,7 +203,7 @@ namespace Cliente
 
         private void Partida_Load(object sender, EventArgs e)
         {
-
+            numForm.Text = nForm.ToString();
         }
 
         private void panelRespuesta2_Paint(object sender, PaintEventArgs e)
