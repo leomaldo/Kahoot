@@ -48,7 +48,6 @@
             this.Pregunta.Size = new System.Drawing.Size(74, 20);
             this.Pregunta.TabIndex = 0;
             this.Pregunta.Text = "Pregunta";
-            this.Pregunta.Click += new System.EventHandler(this.label1_Click);
             // 
             // panelRespuesta1
             // 

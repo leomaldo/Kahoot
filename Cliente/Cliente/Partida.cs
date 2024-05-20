@@ -182,8 +182,6 @@ namespace Cliente
             labelRespuesta4.Size = panelRespuesta4.Size;
             labelRespuesta4.Dock = DockStyle.Fill;
             panelRespuesta4.Controls.Add(labelRespuesta4);
-
-
         }
 
         private void OpcionDeRespuesta_Click(object sender, EventArgs e)
@@ -194,11 +192,6 @@ namespace Cliente
 
             // Aquí puedes hacer lo que necesites con la respuesta seleccionada
             MessageBox.Show($"Seleccionaste: {respuestaSeleccionada}");
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void Partida_Load(object sender, EventArgs e)

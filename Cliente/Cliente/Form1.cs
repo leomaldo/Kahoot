@@ -65,34 +65,34 @@ namespace Cliente
                     string mensaje = mensaje = trozos[1].Split('\0')[0];
                     int nform;
 
-               // Peticion peticion = new Peticion(nform,server);
+                // Peticion peticion = new Peticion(nform,server);
 
-                    switch (codigo)
-                    {
-                        case -1:
+                switch (codigo)
+                {
+                    case -1:
                         mensaje = trozos[1].Split('\0')[0];
-                        mensaje =mensaje.Substring(0,mensaje.Length - 1);
-                            string[] conectados = mensaje.Split('&');
-                            DelegadoParaEscribir delegado = new DelegadoParaEscribir(ListaConectados);
-                            USUARIOS.Invoke(delegado, new object[] { conectados });
-                            break;
-                        case 0:
-                            // Actualizar el Label de la lista de conectados
-                            
-                        
-                            MessageBox.Show("Te has desconectado");
-                          
-                            break;
-                        case 1:
+                        mensaje = mensaje.Substring(0, mensaje.Length - 1);
+                        string[] conectados = mensaje.Split('&');
+                        DelegadoParaEscribir delegado = new DelegadoParaEscribir(ListaConectados);
+                        USUARIOS.Invoke(delegado, new object[] { conectados });
+                        break;
+                    case 0:
+                        // Actualizar el Label de la lista de conectados
+
+
+                        MessageBox.Show("Te has desconectado");
+
+                        break;
+                    case 1:
                         // Mostrar la máxima puntuación
 
                         nform = Convert.ToInt32(trozos[1]);
-                        mensaje = trozos[2].Split('\0')[0]; 
+                        mensaje = trozos[2].Split('\0')[0];
                         formularios[nform].TomaRespuesta1(mensaje);
 
-                           // MessageBox.Show("La máxima puntuación es: " + mensaje);
-                            break;
-                        case 2:
+                        // MessageBox.Show("La máxima puntuación es: " + mensaje);
+                        break;
+                    case 2:
                         // Mostrar el jugador con más puntos
 
                         nform = Convert.ToInt32(trozos[1]);
@@ -101,7 +101,7 @@ namespace Cliente
 
                         //MessageBox.Show("El jugador con más puntos es: " + mensaje);
                         break;
-                        case 3:
+                    case 3:
                         // Mostrar la partida con menos preguntas correctas
 
                         nform = Convert.ToInt32(trozos[1]);
@@ -110,84 +110,85 @@ namespace Cliente
 
                         //MessageBox.Show("La partida con menos preguntas correctas es la número: " + mensaje);
                         break;
-                        case 4:
+                    case 4:
                         // Mostrar el resultado del inicio de sesión
 
-                        
+
                         mensaje = trozos[1].Split('\0')[0];
 
                         int num99 = 99;
-                            
+
                         if (int.TryParse(mensaje, out int numero_mensaje))
+                        {
+                            if (numero_mensaje == num99)
                             {
-                                if (numero_mensaje == num99)
-                                {
-                                    MessageBox.Show("Credenciales incorrectas");
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Inicio de sesión exitoso para:" + mensaje);
-                                }
+                                MessageBox.Show("Credenciales incorrectas");
                             }
                             else
                             {
                                 MessageBox.Show("Inicio de sesión exitoso para:" + mensaje);
                             }
-                            //AgregarValorUsuarios(usuario);
-                            usuario =mensaje;
-                            break;
-                        case 5:
+                        }
+                        else
+                        {
+                            MessageBox.Show("Inicio de sesión exitoso para:" + mensaje);
+                        }
+                        //AgregarValorUsuarios(usuario);
+                        usuario = mensaje;
+                        break;
+                    case 5:
                         // Mostrar el resultado del registro
                         mensaje = trozos[1].Split('\0')[0];
 
                         MessageBox.Show("Registro exitoso para usuario: " + mensaje);
-                            usuario=mensaje;
-                            //AgregarValorUsuarios(mensaje);
+                        usuario = mensaje;
+                        //AgregarValorUsuarios(mensaje);
 
-                            break;
-                        case 6: //Respuesta a la peticion de invitacion
+                        break;
+                    case 6: //Respuesta a la peticion de invitacion
 
                         mensaje = trozos[1].Split('\0')[0];
 
-                        if (Convert.ToInt32(mensaje)==0)
-                            {
-                                MessageBox.Show("Invitación hecha correctamente");
-                            }
-                            else
-                                MessageBox.Show("Petición erronea, el usuario se ha desconectado");
+                        if (Convert.ToInt32(mensaje) == 0)
+                        {
+                            MessageBox.Show("Invitación hecha correctamente");
+                        }
+                        else
+                            MessageBox.Show("Petición erronea, el usuario se ha desconectado");
 
-                            break;
-                        case 7://Notificación de invitacion a una partida
+                        break;
+                    case 7://Notificación de invitacion a una partida
 
-                            Invitacion invitacion = new Invitacion(mensaje);
-                            invitacion.ShowDialog();
-                            string respuesta = "7/" + invitacion.GetRespuesta() + "/" + mensaje + "\0";
-                            byte[] msg = System.Text.Encoding.ASCII.GetBytes(respuesta);
-                            server.Send(msg);
-                            break;
-                        case 8:
+                        Invitacion invitacion = new Invitacion(mensaje);
+                        invitacion.ShowDialog();
+                        string respuesta = "7/" + invitacion.GetRespuesta() + "/" + mensaje + "\0";
+                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(respuesta);
+                        server.Send(msg);
+                        break;
+                    case 8:
 
                         mensaje = trozos[1].Split('\0')[0];
                         string inv = trozos[2].Split('\0')[0];
 
-                            if (Convert.ToInt32(mensaje)==1)
-                            {
-                                MessageBox.Show("Invitación aceptada");
-                                invitados.Add(inv);
-                            }
-                            else
-                                MessageBox.Show("Invitación rechazada");
-                            break;
-                        case 9:
+                        if (Convert.ToInt32(mensaje) == 1)
+                        {
+                            MessageBox.Show("Invitación aceptada");
+                            invitados.Add(inv);
+                        }
+                        else
+                            MessageBox.Show("Invitación rechazada");
+                        break;
+                    case 9:
 
                         nform = Convert.ToInt32(trozos[1]);
                         mensaje = trozos[2].Split('\0')[0];
                         string jugadores = trozos[3].Split('\0')[0];
-                        Partida partida = new Partida(Convert.ToInt32(mensaje), server, usuario,ts,jugadores, nform);
-                        partidas.Add(partida);
-                        partida.ShowDialog();
-                            break;
-                    }
+                        Partida f2 = new Partida(Convert.ToInt32(mensaje), server, usuario, ts, jugadores, nform);
+                        formularios2.Add(f2);
+                        f2.ShowDialog();
+                        break;
+                
+                }
             }
         }
 
@@ -320,7 +321,7 @@ namespace Cliente
             formularios.Add(f);
             f.ShowDialog();
         }
-
+        
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Mensaje de desconexión
@@ -435,10 +436,7 @@ namespace Cliente
         
         private void EmpezarPart_Click(object sender, EventArgs e)
         {
-            int cont = formularios2.Count;
-            Partida f2 = new Partida(cont, server);
-            formularios2.Add(f2);
-
+            int cont = formularios2.Count();
             invitados.Add(usuario);
            
             if (invitados == null)
