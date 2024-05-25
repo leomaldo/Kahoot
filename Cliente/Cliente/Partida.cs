@@ -28,6 +28,18 @@ namespace Cliente
 
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         int tiempoRestante = 30;
+
+        // declaramos las preguntas y respuestas como variables globales.
+        string pregunta_db;
+        string respuesta_correcta ;
+        string resp_inc_1;
+        string resp_inc_2;
+        string resp_inc_3;
+
+        // Crear una instancia de la clase Random
+        Random random = new Random();
+
+
         public int GetId()
         {
             return this.identificador;
@@ -67,6 +79,17 @@ namespace Cliente
 
             labelTiempoRestante.ForeColor = Color.Purple;
 
+
+            //aqui queremos preguntar por una pregunta cualquiera a la base de datos
+            //string mensaje_cliente = textBox1.Text;
+            // Generar un número aleatorio entre 0 y 10
+            //int numero_random_primera_preg = random.Next(1, 4);
+            //string mensaje = "11/" + numero_random_primera_preg + identificador.ToString(); 
+            //// Enviamos al servidor el mensaje que ha escrito un cliente
+            //byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+            //server.Send(msg);
+            
+
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -91,9 +114,10 @@ namespace Cliente
             {
                 // Actualizar la etiqueta de la cuenta regresiva
                 labelTiempoRestante.Text = $"Tiempo restante: {tiempoRestante} segundos";
+
             }
         }
-
+        
         public void AtenderServidor()
         {
 
@@ -105,7 +129,7 @@ namespace Cliente
                 server.Receive(msg2);
                 string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
                 int codigo = Convert.ToInt32(trozos[0]);
-                string mensaje = mensaje = trozos[1].Split('\0')[0];
+               // string mensaje = mensaje = trozos[1].Split('\0')[0];
                 // int nform;
 
                 // MessageBox.Show("El valor de usuario es: " + usuario);
@@ -119,6 +143,7 @@ namespace Cliente
                     //nform = Convert.ToInt32(trozos[0]);
                     //mensaje = trozos[1];
                     //string usuario = trozos[2].Split('\0')[0];
+                    string mensaje = mensaje = trozos[1].Split('\0')[0];
                     string usuarioEnvia = trozos[2].Split('\0')[0];
                     mensaje = usuarioEnvia + " : " + mensaje;
                     int id = Convert.ToInt32(trozos[3].Split('\0')[0]);
@@ -129,9 +154,20 @@ namespace Cliente
                         Escribirmensaje(mensaje);
                     }
                 }
+                if (codigo == 11) 
+                {
+                    pregunta_db = trozos[1].Split('\0')[0];
+                    respuesta_correcta = trozos[2].Split('\0')[0];
+                    resp_inc_1 = trozos[3].Split('\0')[0];
+                    resp_inc_2 = trozos[4].Split('\0')[0];
+                    resp_inc_3 = trozos[5].Split('\0')[0];
+
+
+                    
+                }
             }
         }
-
+        
         public void Escribirmensaje(string mensaje)
         {
             if (Chat.InvokeRequired)
@@ -197,6 +233,14 @@ namespace Cliente
         private void Partida_Load(object sender, EventArgs e)
         {
             numForm.Text = nForm.ToString();
+
+            string mensaje = "11/" + identificador.ToString();
+            // Enviamos al servidor el mensaje que ha escrito un cliente
+            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+            server.Send(msg);
+
+
+           // Pregunta1.Text = pregunta_db;
         }
 
         private void panelRespuesta2_Paint(object sender, PaintEventArgs e)
@@ -224,6 +268,19 @@ namespace Cliente
         {
            
         }
+
+        private void primera_preg_Click(object sender, EventArgs e)
+        {
+            ////string mensaje = "11/" + numero_random_primera_preg + identificador.ToString();
+            //string mensaje = "11/" + identificador.ToString();
+            //// Enviamos al servidor el mensaje que ha escrito un cliente
+            //byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+            //server.Send(msg);
+
+            Pregunta1.Text = pregunta_db;
+        }
+
+       
     }
    
 }

@@ -257,7 +257,7 @@ namespace Cliente
         {
             if (button1.Text=="CONECTAR")
             {
-                int puerto = 50023;
+                int puerto = 50022;
                 IPAddress direc = IPAddress.Parse("192.168.56.102");
                 IPEndPoint ipep = new IPEndPoint(direc, puerto);
 

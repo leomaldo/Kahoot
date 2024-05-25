@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <mysql/mysql.h>
 #include <pthread.h>
+#include <time.h>
 //-----------------------------------
 /*#include <my_global.h>*/
 /*#include <cstdio>*/
@@ -380,6 +381,80 @@ void enviarchat(char mensaje[125], int id)
 	else
 	   printf("no encontrado");
 }
+int pregunta_bd (MYSQL *conn, int id_partida)
+{
+	MYSQL_RES *resultado;
+	MYSQL_ROW row;
+	int err;
+	char query[100];
+	//char resultado[100];
+	char respuesta[200];
+	// Inicializar el generador de nÃºmeros aleatorios
+	srand(time(0));
+	
+	// Generar un nÃºmero aleatorio entre 0 y 11
+	int randomNumber = rand() % 12;
+	int numero = 5; // por si el random no va
+	sprintf(query, "SELECT pregunta,respuesta_correcta,respuesta_incorrecta_1,respuesta_incorrecta_2,respuesta_incorrecta_3 FROM preguntas WHERE ID_pregunta = %d", /*numero*/ randomNumber); //iria randomNumber pero nose pk no va
+	
+	 err=mysql_query (conn, query);
+	if (err!=0)
+	{
+		printf ("Error al consultar datos de la base %u %s\n",
+				mysql_errno(conn), mysql_error(conn));
+		return -1;
+	}
+	
+	
+	resultado = mysql_store_result (conn);
+	row = mysql_fetch_row (resultado);
+	if (row == NULL)
+		printf ("No se han obtenido datos en la consulta\n");
+	else
+	{
+			sprintf(respuesta, "11/%s/%s/%s/%s/%s", row[0],row[1],row[2],row[3],row[4]);
+			
+	}
+	
+	printf("%s\n", respuesta);
+	
+	int i=0;
+	int encontrado=0;
+	while(encontrado==0 && i<listapartidas.num)		
+	{
+		printf("%d",listapartidas.partida[i].id);
+		printf("%d",id_partida);
+		if(listapartidas.partida[i].id==id_partida)
+		{
+			encontrado=1;
+		}
+		else{
+			i++;
+		}
+	}
+	if(encontrado==1)
+	{
+		char jugadores_copia[strlen(listapartidas.partida[i].jugadores) + 1];
+		strcpy(jugadores_copia, listapartidas.partida[i].jugadores);
+		char *nombre = strtok(jugadores_copia, "&");
+		while (nombre != NULL) {
+			// Obtener el socket del usuario
+			int socket = DameSocketConectado(nombre);
+			if (socket != NULL) {
+				// enviar mensaje
+				write(socket, respuesta, strlen(respuesta));
+				
+				printf("Mensaje enviado a %s\n", nombre);
+			} else {
+				printf("No se pudo obtener el socket para %s\n", nombre);
+			}
+			// Obtener el siguiente nombre
+			nombre = strtok(NULL, "&");
+		}
+	}
+	else
+	   printf("no encontrado");
+}
 //Funcion principal del programa donde determinamos que es lo que ha pedido el cliente
 void *handleClientRequest (void *arg) {
 	
@@ -415,7 +490,7 @@ void *handleClientRequest (void *arg) {
 			.servidor = "localhost", //"localhost","shiva2.upc.es"
 				.usuario = "root",
 				.contrasena = "mysql",
-				.base_datos ="Kahoot"/* "MG5_Kahoot"*/
+				.base_datos ="MG5_Kahoot"/* "MG5_Kahoot"*/
 		};
 		
 		MYSQL *conn = conectarBD(&conexion);
@@ -464,12 +539,14 @@ void *handleClientRequest (void *arg) {
 			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
 			
 		}else if (code == 5) {// registrarse
-
+			
+			char response5[512];
+			
 			char *usuario = strtok(NULL, "/");
 			strcpy(nombre,usuario);
 			char *contrasena = strtok(NULL, "/");
 			registro(conn, usuario, contrasena);
-			sprintf(response, "5/%s", usuario);
+			sprintf(response5, "5/%s", usuario);
 						
 			pthread_mutex_lock(&mutex); 
 			int respuesta = AnadiraLista( &usuario, clientSocket);
@@ -477,12 +554,14 @@ void *handleClientRequest (void *arg) {
 			NotificarNuevaListaConectados();
 			pthread_mutex_unlock(&mutex);
 			
-			write(miLista.conectados[posicion - 1].socket,response, strlen(response));
+			write(miLista.conectados[posicion - 1].socket,response5, strlen(response5));
+			printf ("Respuesta5: %s\n", response5);
 		}
 		
 		else if (code ==  6) {
 			//Mensaje en peticion: 6/invitado1*invitado2*...
 			//Return en respuesta: 7/0 (Todo OK) ; 7/invitado_no_disponible1/... (si hay invitados que se han desconectado)
+			char response6[512];
 			char *p = strtok(NULL, "/");
 			//char p = strtok(NULL, "/");
 			char invitado[100];
@@ -501,6 +580,8 @@ void *handleClientRequest (void *arg) {
 				else{
 					strcpy(response,"6/0");					 
 				}
+			write(miLista.conectados[posicion - 1].socket,response6, strlen(response6));
+				printf ("Respuesta6: %s\n", response6);
 		//significa que todo ha ido bien
 				//Codigo 7 --> Respuesta a una invitacion de partida
 		}
@@ -558,6 +639,16 @@ void *handleClientRequest (void *arg) {
 			
 			enviarchat(respuesta,atoi(id));
 		}
+		else if(code == 11) //aqui nos pasaran el id de la pregunta que quieren que pongamos en el kahoot
+		{
+/*			char *p1 = strtok(NULL, "/");*/
+/*			int id_preg = atoi(p1);*/
+			char *p1 = strtok(NULL, "/");
+			int id_partida = atoi(p1);
+			int resultado_query = pregunta_bd(conn, id_partida);
+			
+			
+		}
 		else if (code == 0){
 			int j = 0;
 			printf("socket para eliminar: %d \n", clientSocket);
@@ -586,7 +677,7 @@ void *handleClientRequest (void *arg) {
 			
 			
 		}
-		if (code !=0 && code != 5 && code != 4 && code != 7 && code != 10 && code !=8)
+		if (code !=0 && code != 5 && code != 4 && code != 7 && code != 10 && code !=8 && code != 6 && code != 11)
 		{
 			printf ("Respuesta: %s\n", response);
 			//Enviamos respuesta
@@ -609,7 +700,7 @@ int main() {
 		.servidor ="localhost", //"localhost","shiva2.upc.es"
 			.usuario = "root",
 			.contrasena = "mysql",
-			.base_datos ="Kahoot"/* "MG5_Kahoot"*/
+			.base_datos ="MG5_Kahoot"/* "MG5_Kahoot"*/
 	};
 	
 	// Conectar a la base de datos utilizando la estructura de conexión
@@ -621,7 +712,7 @@ int main() {
 	
 	printf("Conexión a la base de datos establecida correctamente.\n");		
 	int serverSocket;
-	int puerto = 50023; //50023;
+	int puerto = 50021; //50023;
 	struct sockaddr_in serverAddr, clientAddr;
 	socklen_t addrLen = sizeof(struct sockaddr_in);
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);

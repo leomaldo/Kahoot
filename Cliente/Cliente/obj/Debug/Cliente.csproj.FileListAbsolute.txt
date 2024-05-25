@@ -325,3 +325,49 @@ C:\2B\SO\v6\Cliente\Cliente\obj\Debug\Cliente.pdb
 C:\2B\SO\v6\Cliente\Cliente\bin\Debug\Cliente.exe.config
 C:\2B\SO\v6\Cliente\Cliente\bin\Debug\Cliente.exe
 C:\2B\SO\v6\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Jugadores.resources
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\telecos\proyecto SO\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\telecos\proyecto_25_5\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\telecos\proyecto_25_5\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\telecos\proyecto_25_5\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Jugadores.resources
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\telecos\proyecto_25_5\Cliente\Cliente\obj\Debug\Cliente.pdb
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\bin\Debug\Cliente.exe
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\bin\Debug\Cliente.pdb
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.Form1.resources
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.Invitacion.resources
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.Jugadores.resources
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.Partida.resources
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.Peticion.resources
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.Properties.Resources.resources
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.Registrarse.resources
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.csproj.GenerateResource.cache
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.exe
+C:\Users\leoma\Downloads\proyecto_so_25_5_15_42\proyecto_so_25_5_15_42\Cliente\Cliente\obj\Debug\Cliente.pdb
