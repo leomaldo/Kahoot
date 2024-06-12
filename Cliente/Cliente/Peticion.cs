@@ -15,18 +15,23 @@ namespace Cliente
     {
         int nForm;
         Socket server;
+        string usuario;
+        string fecha1;
+        string fecha2;
         
         
-        public Peticion(int nForm,Socket server)
+        public Peticion(int nForm,Socket server, string usuario)
         {
             InitializeComponent();
             this.BackColor = Color.FromArgb(180, 255, 220);
             this.nForm = nForm;
             this.server = server;
+            this.usuario = usuario;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            MessageBox.Show( usuario);
             if (MaxPuntuacion.Checked)
             {
 
@@ -55,7 +60,29 @@ namespace Cliente
                 server.Send(msg);
                
             }
-           
+            else if(preg_4.Checked)
+            {
+                string mensaje = "15/" + usuario.ToString() + "/" + nForm.ToString();
+                // Enviamos al servidor el nombre tecleado
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+            }
+            else if (preg_5.Checked)
+            {
+                string mensaje = "16/" + usuario.ToString() + "/" +  textBox1.Text + "/" + nForm.ToString();
+                // Enviamos al servidor el nombre tecleado
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+            }
+            else if (preg_6.Checked)
+            {
+                string mensaje = "17/" + usuario.ToString() + "/" + fecha1 + "/" + fecha2 + "/" + nForm.ToString();
+                // Enviamos al servidor el nombre tecleado
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+            }
+
+
         }
 
         public void TomaRespuesta1(string mensaje)
@@ -74,6 +101,26 @@ namespace Cliente
         private void Peticion_Load(object sender, EventArgs e)
         {
             numForm.Text = nForm.ToString();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            DateTime fecha_1 = dateTimePicker1.Value;
+
+            // MessageBox.Show("fecha: " + fecha.ToString("yyyy-mm-dd"));
+            //version  12/6--que me ha pasado el moha
+            //LOGUARDO
+
+            fecha1 = fecha_1.ToString("yyyy-MM-dd");
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            DateTime fecha_2 = dateTimePicker2.Value;
+
+            // MessageBox.Show("fecha: " + fecha.ToString("yyyy-mm-dd"));
+
+            fecha2 = fecha_2.ToString("yyyy-MM-dd");
         }
     }
 }

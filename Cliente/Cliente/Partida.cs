@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Globalization;
+using System.Reflection.Emit;
 
 namespace Cliente
 {
@@ -25,19 +26,35 @@ namespace Cliente
         Thread atender;
         List<Partida> partidas=new List<Partida>();
         string jugadores;
-
+        string puntosForms=null;
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         int tiempoRestante = 30;
-
+        int puntos = 0;
         // declaramos las preguntas y respuestas como variables globales.
         string pregunta_db;
         string respuesta_correcta ;
         string resp_inc_1;
         string resp_inc_2;
         string resp_inc_3;
-
+        bool podercontestar = true;
+        bool host = false;
+        bool seguirpartida = true;
         // Crear una instancia de la clase Random
         Random random = new Random();
+
+
+        //int variable global para asignar el valor de random para ver si se selecciona la respuesta correcta
+        int rectificador;
+
+
+
+
+        System.Windows.Forms.Label labelRespuesta1 = new System.Windows.Forms.Label { Text = "", AutoSize = false, TextAlign = ContentAlignment.MiddleCenter };
+        System.Windows.Forms.Label labelRespuesta2 = new System.Windows.Forms.Label { Text = "", AutoSize = false, TextAlign = ContentAlignment.MiddleCenter };
+        System.Windows.Forms.Label labelRespuesta3 = new System.Windows.Forms.Label { Text = "", AutoSize = false, TextAlign = ContentAlignment.MiddleCenter };
+        System.Windows.Forms.Label labelRespuesta4 = new System.Windows.Forms.Label { Text = "", AutoSize = false, TextAlign = ContentAlignment.MiddleCenter };
+        System.Windows.Forms.Label labelPregunta = new System.Windows.Forms.Label { Text = "", AutoSize = false, TextAlign = ContentAlignment.MiddleCenter };
+
 
 
         public int GetId()
@@ -54,30 +71,33 @@ namespace Cliente
             this.nForm = nForm;
             this.server = server;
         }
-        public Partida(int identificador, Socket server, string usuario,ThreadStart ts, string jugadores, int nForm)
+        public Partida(int identificador, string usuario, string jugadores, Socket server, string Host)
         {
             this.jugadores= jugadores;
             InitializeComponent();
             this.identificador = identificador;
-            Jugadores FormJugadores=new Jugadores(jugadores);
+            Jugadores FormJugadores=new Jugadores(this.identificador,jugadores,this.puntosForms,seguirpartida);
             FormJugadores.ShowDialog();
             this.BackColor = Color.FromArgb(220, 255, 220);
-        
+            if (Host==usuario)
+            {
+                this.host=true;
+            }
+           
           
             timer.Interval = 1000; // 1000 ms = 1 segundo
             timer.Tick += Timer_Tick;
             timer.Start(); // Iniciar el temporizador
             ConfigurarOpcionesDeRespuesta();
             //this.server = server;
-            this.server = server;
+          
             this.usuario = usuario;
-            this.nForm = nForm;
-
-            ts = delegate { AtenderServidor(); };
-            atender = new Thread(ts);
-            atender.Start();
+            this.server= server;
+            Chat.Height = 200;
+          
 
             labelTiempoRestante.ForeColor = Color.Purple;
+
 
 
             //aqui queremos preguntar por una pregunta cualquiera a la base de datos
@@ -98,17 +118,37 @@ namespace Cliente
             {
                 // Detener el temporizador
                 timer.Stop();
-
+                string mensaje13 = "13/"+ identificador.ToString(); ;
+                // Enviamos al servidor el mensaje que ha escrito un cliente
+                byte[] msg13 = Encoding.ASCII.GetBytes(mensaje13);
                 // Abrir el formulario de jugadores nuevamente
-                Jugadores formJugadores = new Jugadores(this.jugadores);
+                Jugadores formJugadores = new Jugadores(this.identificador,this.jugadores, this.puntosForms,seguirpartida);
                 formJugadores.Show();
-
-                formJugadores.FormClosed += (s, args) =>
-                {
-                    // Volver a iniciar el temporizador cuando se cierre el formulario de jugadores
-                    tiempoRestante = 30;
-                    timer.Start();
-                };
+                    formJugadores.FormClosed += (s, args) =>
+                    {
+                        if (seguirpartida==true)
+                        {
+                            podercontestar=true;
+                            //labelPregunta=null;
+                            //labelRespuesta1 = null;
+                            //labelRespuesta2 = null;
+                            //labelRespuesta3 = null;
+                            //labelRespuesta4 = null;
+                            //labelTiempoRestante=null;
+                            if (host==true)
+                            {
+                                string mensaje11 = "11/" + identificador.ToString();
+                                // Enviamos al servidor el mensaje que ha escrito un cliente
+                                byte[] msg11 = Encoding.ASCII.GetBytes(mensaje11);
+                                server.Send(msg11);
+                            }
+                            // Volver a iniciar el temporizador cuando se cierre el formulario de jugadores
+                            tiempoRestante = 30;
+                            timer.Start();
+                        }
+                        else
+                            this.Close();
+                    };
             }
             else
             {
@@ -118,54 +158,63 @@ namespace Cliente
             }
         }
         
-        public void AtenderServidor()
+        public void recibirmensaje(int codigo,string[] trozos)
         {
-
-            while (true)
-            {
-
-                //Recibimos mensaje del servidor
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
-                int codigo = Convert.ToInt32(trozos[0]);
-               // string mensaje = mensaje = trozos[1].Split('\0')[0];
-                // int nform;
-
-                // MessageBox.Show("El valor de usuario es: " + usuario);
-
-                //Peticion peticion = new Peticion(server);
 
                 if (codigo == 10)
                 {
-
-                    //trozos = mensaje.Split('/');
-                    //nform = Convert.ToInt32(trozos[0]);
-                    //mensaje = trozos[1];
-                    //string usuario = trozos[2].Split('\0')[0];
                     string mensaje = mensaje = trozos[1].Split('\0')[0];
                     string usuarioEnvia = trozos[2].Split('\0')[0];
                     mensaje = usuarioEnvia + " : " + mensaje;
                     int id = Convert.ToInt32(trozos[3].Split('\0')[0]);
                     bool encontrado = false;
                     int i = 0;
-                    if (id == this.identificador)
-                    {
-                        Escribirmensaje(mensaje);
-                    }
+                   
+                    Escribirmensaje(mensaje);
+                   
                 }
                 if (codigo == 11) 
                 {
-                    pregunta_db = trozos[1].Split('\0')[0];
-                    respuesta_correcta = trozos[2].Split('\0')[0];
-                    resp_inc_1 = trozos[3].Split('\0')[0];
-                    resp_inc_2 = trozos[4].Split('\0')[0];
-                    resp_inc_3 = trozos[5].Split('\0')[0];
+                    //pregunta_db = trozos[1].Split('\0')[0];
+                  
+                    pregunta_db= trozos[2].Split('\0')[0];
+                    respuesta_correcta = trozos[3].Split('\0')[0];
+                    resp_inc_1 = trozos[4].Split('\0')[0];
+                    resp_inc_2 = trozos[5].Split('\0')[0];
+                    resp_inc_3 = trozos[6].Split('\0')[0];
 
-
-                    
+                    ConfigurarOpcionesDeRespuesta();
+                  
                 }
-            }
+                if(codigo==12)
+                {
+                    string puntosRecibidos = trozos[2].Split('\0')[0];
+                    this.puntosForms=this.puntosForms+"&"+puntosRecibidos;
+                }
+                if(codigo==13)
+                {
+                    tiempoRestante=0;
+                }
+                if(codigo==19)
+                {
+                if (host==false)
+                {
+                    MessageBox.Show("El Host ha terminado la partida");
+                    string mensaje = "20/" + usuario + "*" + puntos.ToString() + "/" + identificador.ToString();
+                    byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                    server.Send(msg);
+                }
+                }
+                if(codigo==20)
+                {
+                  seguirpartida=false;
+                  tiempoRestante=0;
+                }
+                if (codigo == 0)
+                {
+
+                }
+            
         }
         
         public void Escribirmensaje(string mensaje)
@@ -181,75 +230,139 @@ namespace Cliente
                 Chat.Items.Add(mensaje);
             }
         }
-
         private void ConfigurarOpcionesDeRespuesta()
         {
-            Chat.Height = 200;
-            // Configura cada panel como una opción de respuesta
-            panelRespuesta1.Click += OpcionDeRespuesta_Click;
-            panelRespuesta2.Click += OpcionDeRespuesta_Click;
-            panelRespuesta3.Click += OpcionDeRespuesta_Click;
-            panelRespuesta4.Click += OpcionDeRespuesta_Click;
-
-            // Asigna un color diferente a cada panel
             // Asigna un color diferente a cada panel
             panelRespuesta1.BackColor = Color.Blue;
             panelRespuesta2.BackColor = Color.Green;
             panelRespuesta3.BackColor = Color.Red;
             panelRespuesta4.BackColor = Color.Purple;
 
-            // Asigna texto a cada panel para representar la respuesta
-            Label labelRespuesta1 = new Label { Text = "Respuesta 1", AutoSize = false, TextAlign = ContentAlignment.MiddleCenter, Font = new Font(Font.FontFamily, 10, FontStyle.Bold) };
-            labelRespuesta1.Size = panelRespuesta1.Size;
+
+            // Asigna la pregunta
+            if (labelPregunta.InvokeRequired)
+            {
+                labelPregunta.Invoke(new Action(() => ConfigurarLabelPregunta()));
+            }
+            else
+            {
+                ConfigurarLabelPregunta();
+            }
+            // Configura y agrega los labels a los panels
+            labelRespuesta1.AutoSize = false;
+            labelRespuesta1.TextAlign = ContentAlignment.MiddleCenter;
+            labelRespuesta1.Font = new Font(Font.FontFamily, 10, FontStyle.Bold);
+            labelRespuesta1.Size = panelRespuesta1.Size; // Ajustar según el panel correspondiente
             labelRespuesta1.Dock = DockStyle.Fill;
-            panelRespuesta1.Controls.Add(labelRespuesta1);
+            labelRespuesta1.Click += new EventHandler(panelRespuesta1_Click);
+            ConfigurarLabelRespuesta(labelRespuesta1, respuesta_correcta, panelRespuesta1);
 
-            Label labelRespuesta2 = new Label { Text = "Respuesta 2", AutoSize = false, TextAlign = ContentAlignment.MiddleCenter, Font = new Font(Font.FontFamily, 10, FontStyle.Bold) };
-            labelRespuesta2.Size = panelRespuesta2.Size;
+            labelRespuesta2.AutoSize = false;
+            labelRespuesta2.TextAlign = ContentAlignment.MiddleCenter;
+            labelRespuesta2.Font = new Font(Font.FontFamily, 10, FontStyle.Bold);
+            labelRespuesta2.Size = panelRespuesta2.Size; // Ajustar según el panel correspondiente
             labelRespuesta2.Dock = DockStyle.Fill;
-            panelRespuesta2.Controls.Add(labelRespuesta2);
+            labelRespuesta2.Click += new EventHandler(panelRespuesta2_Click);
+            ConfigurarLabelRespuesta(labelRespuesta2, resp_inc_1, panelRespuesta2);
 
-            Label labelRespuesta3 = new Label { Text = "Respuesta 3", AutoSize = false, TextAlign = ContentAlignment.MiddleCenter, Font = new Font(Font.FontFamily, 10, FontStyle.Bold) };
-            labelRespuesta3.Size = panelRespuesta3.Size;
+            labelRespuesta3.AutoSize = false;
+            labelRespuesta3.TextAlign = ContentAlignment.MiddleCenter;
+            labelRespuesta3.Font = new Font(Font.FontFamily, 10, FontStyle.Bold);
+            labelRespuesta3.Size = panelRespuesta3.Size; // Ajustar según el panel correspondiente
             labelRespuesta3.Dock = DockStyle.Fill;
-            panelRespuesta3.Controls.Add(labelRespuesta3);
+            labelRespuesta3.Click += new EventHandler(panelRespuesta3_Click);
+            ConfigurarLabelRespuesta(labelRespuesta3, resp_inc_2, panelRespuesta3);
 
-            Label labelRespuesta4 = new Label { Text = "Respuesta 4", AutoSize = false, TextAlign = ContentAlignment.MiddleCenter, Font = new Font(Font.FontFamily, 10, FontStyle.Bold) };
-            labelRespuesta4.Size = panelRespuesta4.Size;
+            labelRespuesta4.AutoSize = false;
+            labelRespuesta4.TextAlign = ContentAlignment.MiddleCenter;
+            labelRespuesta4.Font = new Font(Font.FontFamily, 10, FontStyle.Bold);
+            labelRespuesta4.Size = panelRespuesta4.Size; // Ajustar según el panel correspondiente
             labelRespuesta4.Dock = DockStyle.Fill;
-            panelRespuesta4.Controls.Add(labelRespuesta4);
-        }
+            labelRespuesta4.Click += new EventHandler(panelRespuesta4_Click);
+            ConfigurarLabelRespuesta(labelRespuesta4, resp_inc_3, panelRespuesta4);
 
-        private void OpcionDeRespuesta_Click(object sender, EventArgs e)
+            // Asigna texto a cada panel para representar la respuesta
+             int randomNumber = random.Next(1, 5);
+            rectificador = randomNumber;
+            
+             
+
+            if (randomNumber == 1)
+            {
+                // Respuesta correcta en primer panel
+                ConfigurarLabelRespuesta(labelRespuesta1, respuesta_correcta, panelRespuesta1);
+                ConfigurarLabelRespuesta(labelRespuesta2, resp_inc_1, panelRespuesta2);
+                ConfigurarLabelRespuesta(labelRespuesta3, resp_inc_2, panelRespuesta3);
+                ConfigurarLabelRespuesta(labelRespuesta4, resp_inc_3, panelRespuesta4);
+            }
+            else if (randomNumber == 2)
+            {
+                // Respuesta correcta en segundo panel
+                ConfigurarLabelRespuesta(labelRespuesta1, resp_inc_1, panelRespuesta1);
+                ConfigurarLabelRespuesta(labelRespuesta2, respuesta_correcta, panelRespuesta2);
+                ConfigurarLabelRespuesta(labelRespuesta3, resp_inc_2, panelRespuesta3);
+                ConfigurarLabelRespuesta(labelRespuesta4, resp_inc_3, panelRespuesta4);
+            }
+            else if (randomNumber == 3)
+            {
+                // Respuesta correcta en tercer panel
+                ConfigurarLabelRespuesta(labelRespuesta1, resp_inc_1, panelRespuesta1);
+                ConfigurarLabelRespuesta(labelRespuesta2, resp_inc_2, panelRespuesta2);
+                ConfigurarLabelRespuesta(labelRespuesta3, respuesta_correcta, panelRespuesta3);
+                ConfigurarLabelRespuesta(labelRespuesta4, resp_inc_3, panelRespuesta4);
+            }
+            else if (randomNumber == 4)
+            {
+                // Respuesta correcta en cuarto panel
+                ConfigurarLabelRespuesta(labelRespuesta1, resp_inc_1, panelRespuesta1);
+                ConfigurarLabelRespuesta(labelRespuesta2, resp_inc_2, panelRespuesta2);
+                ConfigurarLabelRespuesta(labelRespuesta3, resp_inc_3, panelRespuesta3);
+                ConfigurarLabelRespuesta(labelRespuesta4, respuesta_correcta, panelRespuesta4);
+            }
+
+        }
+        private void ConfigurarLabelPregunta()
         {
-            // Cuando se hace clic en un panel, determina cuál fue la respuesta seleccionada
-            Panel panelClicado = sender as Panel;
-            string respuestaSeleccionada = panelClicado?.Controls[0]?.Text;
-
-            // Aquí puedes hacer lo que necesites con la respuesta seleccionada
-            MessageBox.Show($"Seleccionaste: {respuestaSeleccionada}");
+            labelPregunta.AutoSize = false;
+            labelPregunta.TextAlign = ContentAlignment.MiddleCenter;
+            labelPregunta.Font = new Font(Font.FontFamily, 10, FontStyle.Bold);
+            labelPregunta.Size = new Size(panelPregunta.Width, panelPregunta.Height);
+            labelRespuesta1.Dock = DockStyle.Fill;
+            labelPregunta.Text = pregunta_db;
+            panelPregunta.Controls.Add(labelPregunta);
         }
+        private void ConfigurarLabelRespuesta(System.Windows.Forms.Label label, string respuesta, Panel panel)
+        {
+            if (label.InvokeRequired)
+            {
+                label.Invoke(new Action(() =>
+                {
+                    label.Text = respuesta;
+                    panel.Controls.Add(label);
+                }));
+            }
+            else
+            {
+                label.Text = respuesta;
+                panel.Controls.Add(label);
+            }
+        }
+
+
+
 
         private void Partida_Load(object sender, EventArgs e)
         {
-            numForm.Text = nForm.ToString();
+            numForm.Text = identificador.ToString();
+            if (host==true)
+            {
+                string mensaje = "11/" + identificador.ToString();
+                // Enviamos al servidor el mensaje que ha escrito un cliente
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+            }
+            //button1.SendToBack();
 
-            string mensaje = "11/" + identificador.ToString();
-            // Enviamos al servidor el mensaje que ha escrito un cliente
-            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-            server.Send(msg);
-
-
-           // Pregunta1.Text = pregunta_db;
-        }
-
-        private void panelRespuesta2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panelRespuesta1_Paint(object sender, PaintEventArgs e)
-        {
 
         }
 
@@ -269,18 +382,210 @@ namespace Cliente
            
         }
 
-        private void primera_preg_Click(object sender, EventArgs e)
+        private void panelRespuesta1_Click(object sender, EventArgs e)
         {
-            ////string mensaje = "11/" + numero_random_primera_preg + identificador.ToString();
-            //string mensaje = "11/" + identificador.ToString();
-            //// Enviamos al servidor el mensaje que ha escrito un cliente
-            //byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-            //server.Send(msg);
+           
+            if (podercontestar==true)
+            {
+                panelRespuesta1.BackColor = Color.Blue;
+                panelRespuesta2.BackColor = Color.Gray;
+                panelRespuesta3.BackColor = Color.Gray;
+                panelRespuesta4.BackColor = Color.Gray;              
+                if (rectificador == 1)
+                {
+                    puntos =puntos +100 * tiempoRestante;
+                }
 
-            Pregunta1.Text = pregunta_db;
+                //enviamos al servidor el identificador de la partida y los puntos
+                string mensaje = "12/" + usuario + "*" + puntos.ToString() + "/" + identificador.ToString();              
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+
+                podercontestar = false;
+
+            }
         }
 
-       
+        private void panelRespuesta2_Click(object sender, EventArgs e)
+        {
+            if (podercontestar==true)
+            {
+                panelRespuesta1.BackColor = Color.Gray;
+                panelRespuesta2.BackColor = Color.Green;
+                panelRespuesta3.BackColor = Color.Gray;
+                panelRespuesta4.BackColor = Color.Gray;
+                if (rectificador == 2)
+                {
+                    puntos = puntos+100 * tiempoRestante;
+                }
+                //enviamos al servidor el identificador de la partida y los puntos
+                string mensaje = "12/" + usuario + "*" + puntos.ToString() + "/" + identificador.ToString();
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+
+                podercontestar = false;
+
+                
+
+            }
+        }
+
+        private void panelRespuesta3_Click(object sender, EventArgs e)
+        {
+            if (podercontestar==true)
+            {
+                panelRespuesta1.BackColor = Color.Gray;
+                panelRespuesta2.BackColor = Color.Gray;
+                panelRespuesta3.BackColor = Color.Red;
+                panelRespuesta4.BackColor = Color.Gray;
+                if (rectificador == 3)
+                {
+                    puntos = puntos+ 100 * tiempoRestante;
+                }
+                //enviamos al servidor el identificador de la partida y los puntos
+                string mensaje = "12/" + usuario + "*" + puntos.ToString() + "/" + identificador.ToString();
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+
+                podercontestar = false;
+
+               
+
+            }
+        }
+
+        private void panelRespuesta4_Click(object sender, EventArgs e)
+        {
+            if (podercontestar==true)
+            {
+                panelRespuesta1.BackColor = Color.Gray;
+                panelRespuesta2.BackColor = Color.Gray;
+                panelRespuesta3.BackColor = Color.Gray;
+                panelRespuesta4.BackColor = Color.Purple;
+                if (rectificador == 4)
+                {
+                    puntos = puntos +100 * tiempoRestante;
+                }
+                //enviamos al servidor el identificador de la partida y los puntos
+                string mensaje = "12/" + usuario + "*" + puntos.ToString() + "/" + identificador.ToString();
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+
+                podercontestar = false;
+
+                
+
+            }
+        }
+
+        private void panelRespuesta1_DoubleClick(object sender, EventArgs e)
+        {
+            if (podercontestar == true)
+            {
+                panelRespuesta1.BackColor = Color.Blue;
+                panelRespuesta2.BackColor = Color.Gray;
+                panelRespuesta3.BackColor = Color.Gray;
+                panelRespuesta4.BackColor = Color.Gray;
+                if (rectificador == 1)
+                {
+                    puntos = 100 * tiempoRestante;
+                }
+                podercontestar = false;
+
+               
+
+            }
+        }
+
+        private void panelRespuesta2_DoubleClick(object sender, EventArgs e)
+        {
+            if (podercontestar == true)
+            {
+                panelRespuesta1.BackColor = Color.Gray;
+                panelRespuesta2.BackColor = Color.Green;
+                panelRespuesta3.BackColor = Color.Gray;
+                panelRespuesta4.BackColor = Color.Gray;
+                if (rectificador == 1)
+                {
+                    puntos = 100 * tiempoRestante;
+                }
+                podercontestar = false;
+
+
+            }
+        }
+
+        private void panelRespuesta3_DoubleClick(object sender, EventArgs e)
+        {
+            if (podercontestar == true)
+            {
+                panelRespuesta1.BackColor = Color.Gray;
+                panelRespuesta2.BackColor = Color.Gray;
+                panelRespuesta3.BackColor = Color.Red;
+                panelRespuesta4.BackColor = Color.Gray;
+                if (rectificador == 1)
+                {
+                    puntos = 100 * tiempoRestante;
+                }
+                podercontestar = false;
+
+
+            }
+        }
+
+        private void panelRespuesta4_DoubleClick(object sender, EventArgs e)
+        {
+            if (podercontestar == true)
+            {
+                panelRespuesta1.BackColor = Color.Gray;
+                panelRespuesta2.BackColor = Color.Gray;
+                panelRespuesta3.BackColor = Color.Gray;
+                panelRespuesta4.BackColor = Color.Purple;
+                if (rectificador == 1)
+                {
+                    puntos = 100 * tiempoRestante;
+                }
+                podercontestar = false;
+
+
+            }
+        }
+
+        private void panelRespuesta1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void numForm_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void terminar_Click(object sender, EventArgs e)
+        {
+            if (host==true)
+            {
+                DialogResult resultado = MessageBox.Show("Quieres terminar la partida?", "Terminar", MessageBoxButtons.YesNo);
+                if (resultado == DialogResult.Yes)
+                {
+                    string mensaje = "19/"+ this.identificador.ToString();
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+                    server.Send(msg);
+                    string mensaje2 = "20/" + usuario + "*" + puntos.ToString() + "/" + identificador.ToString();
+                    byte[] msg2 = Encoding.ASCII.GetBytes(mensaje2);
+                    server.Send(msg2);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("No eres el Host de la partida, la partida terminará solo para ti");
+                string mensaje = "20/" + usuario + "*" + puntos.ToString() + "/" + identificador.ToString();
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+                this.Close();
+            }
+        }
     }
-   
+
 }

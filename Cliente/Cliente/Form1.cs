@@ -32,6 +32,7 @@ namespace Cliente
         private int minSize = 40;
         private int step = 1; // Reducir la velocidad de la animación
         private bool atendercliente = true;
+        bool enpartida = false;
         //private Thread atender;
         
         //string usuario;
@@ -64,7 +65,9 @@ namespace Cliente
                     int codigo = Convert.ToInt32(trozos[0]);
                     string mensaje = mensaje = trozos[1].Split('\0')[0];
                     int nform;
-
+                    int id;
+                    bool encontrado = false;
+                    int i = 0;
                 // Peticion peticion = new Peticion(nform,server);
 
                 switch (codigo)
@@ -78,7 +81,6 @@ namespace Cliente
                         break;
                     case 0:
                         // Actualizar el Label de la lista de conectados
-
 
                         MessageBox.Show("Te has desconectado");
 
@@ -112,7 +114,6 @@ namespace Cliente
                         break;
                     case 4:
                         // Mostrar el resultado del inicio de sesión
-
 
                         mensaje = trozos[1].Split('\0')[0];
 
@@ -183,11 +184,120 @@ namespace Cliente
                         nform = Convert.ToInt32(trozos[1]);
                         mensaje = trozos[2].Split('\0')[0];
                         string jugadores = trozos[3].Split('\0')[0];
-                        Partida f2 = new Partida(Convert.ToInt32(mensaje), server, usuario, ts, jugadores, nform);
-                        formularios2.Add(f2);
-                        f2.ShowDialog();
+                        string host = trozos[4].Split('\0')[0];
+                        enpartida=true;
+                        ThreadStart ts = delegate { PonerEnMarchaPartida(Convert.ToInt32(mensaje),usuario,jugadores,host); };
+                        Thread T = new Thread(ts);
+                        T.Start();
                         break;
-                
+                    case 10:
+                        id = Convert.ToInt32(trozos[3].Split('\0')[0]);
+                        encontrado = false;
+                        i = 0;
+                        while(encontrado==false)
+                        {
+                            if (formularios2[i].GetId() == id)
+                            {
+                                formularios2[i].recibirmensaje(codigo, trozos);
+                                encontrado = true;
+                            }
+                            else
+                            { i++; }
+                        }
+                        break;
+                        case 11:
+                            id = Convert.ToInt32(trozos[1].Split('\0')[0]);
+                            encontrado = false;
+                            i = 0;
+                            while ((encontrado==false)&& i<formularios2.Count)
+                            {
+                            if (formularios2[i].GetId() == id)
+                            {
+                                formularios2[i].recibirmensaje(codigo, trozos);
+                                encontrado = true;
+                            }
+                            else
+                            { i++; }
+                            }
+
+                        break; 
+                    case 12:
+                        id = Convert.ToInt32(trozos[1].Split('\0')[0]);
+                        encontrado = false;
+                        i = 0;
+                        while ((encontrado==false)&& i<formularios2.Count)
+                        {
+                            if (formularios2[i].GetId() == id)
+                            {
+                                formularios2[i].recibirmensaje(codigo, trozos);
+                                encontrado = true;
+                            }
+                            else
+                            { i++; }
+                        }
+                        break; 
+                    case 13:
+                        id = Convert.ToInt32(trozos[1].Split('\0')[0]);
+                        encontrado = false;
+                        i = 0;
+                        while ((encontrado==false)&& i<formularios2.Count)
+                        {
+                            if (formularios2[i].GetId() == id)
+                            {
+                                formularios2[i].recibirmensaje(codigo, trozos);
+                                encontrado = true;
+                            }
+                            else
+                            { i++; }
+                        }
+                        break;
+                    case 14:
+                        string nombre = trozos[1].Split('\0')[0];
+                        MessageBox.Show("Jugador :"+ nombre + " ha sido dado de baja correctamente");
+                        break;
+                    case 15: // ES LA 4TA PETICION, DICE LOS NOMBRES DE LOS JUGADORES CON LOS QUE HAS JUGADO
+                        MessageBox.Show("estos son los nombres de los jugadores que habian en las partidas que has jugado:" + trozos[1] );
+                        break;
+                    case 16: // ES LA 5TA PETICION, resultado de las partidas que he jugado con una persona
+                        MessageBox.Show("los resultados de las partidas que has jugado que es persona son:" + trozos[1]);
+                        break;
+                    case 17: // ES LA 6TA PETICION, partidas jugadads entre estas fechas
+                        MessageBox.Show("se han jugador en estas fechas estas partidas:" + trozos[1]);
+                        break;
+                    case 19:
+                        id = Convert.ToInt32(trozos[1].Split('\0')[0]);
+                        encontrado = false;
+                        i = 0;
+                        while ((encontrado==false)&& i<formularios2.Count)
+                        {
+                            if (formularios2[i].GetId() == id)
+                            {
+                                formularios2[i].recibirmensaje(codigo, trozos);
+                                encontrado = true;
+                            }
+                            else
+                            { i++; }
+                        }
+                        enpartida=false;
+                        break;
+                        case 20:
+                        id = Convert.ToInt32(trozos[1].Split('\0')[0]);
+                        encontrado = false;
+                        i = 0;
+                        while ((encontrado==false)&& i<formularios2.Count)
+                        {
+                            if (formularios2[i].GetId() == id)
+                            {
+                                formularios2[i].recibirmensaje(codigo, trozos);
+                                encontrado = true;
+                            }
+                            else
+                            { i++; }
+                        }
+                        enpartida=false;
+                        break; 
+
+
                 }
             }
         }
@@ -255,51 +365,66 @@ namespace Cliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (button1.Text=="CONECTAR")
+            if (enpartida==false)
             {
-                int puerto = 50022;
-                IPAddress direc = IPAddress.Parse("192.168.56.102");
-                IPEndPoint ipep = new IPEndPoint(direc, puerto);
+                if (button1.Text=="CONECTAR")
+                {
+                    int puerto = 50022;
+                    IPAddress direc = IPAddress.Parse("192.168.56.102");
+                    IPEndPoint ipep = new IPEndPoint(direc, puerto);
 
-                //Creamos el socket 
-                server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                try
-                {
-                    server.Connect(ipep);//Intentamos conectar el socket
-                    MessageBox.Show("Conexión establecida correctamente");
-                    this.BackColor = Color.FromArgb(220, 255, 220);
-                    ts = delegate { AtenderServidor(); };
-                    atender = new Thread(ts);
-                    atender.Start();
+                    //Creamos el socket 
+                    server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    try
+                    {
+                        server.Connect(ipep);//Intentamos conectar el socket
+                        MessageBox.Show("Conexión establecida correctamente");
+                        this.BackColor = Color.FromArgb(220, 255, 220);
+                        ts = delegate { AtenderServidor(); };
+                        atender = new Thread(ts);
+                        atender.Start();
+                    }
+                    catch (SocketException ex)
+                    {
+                        //Si hay excepcion imprimimos error y salimos del programa con return 
+                        MessageBox.Show("No se ha podido conectar con el servidor");
+                        return;
+                    }
+                    Registrarse registrarse = new Registrarse(server);
+                    registrarse.ShowDialog();
+                    button1.Text="Cambiar de cuenta";
                 }
-                catch (SocketException ex)
-                {
-                    //Si hay excepcion imprimimos error y salimos del programa con return 
-                    MessageBox.Show("No se ha podido conectar con el servidor");
-                    return;
-                }
-                Registrarse registrarse = new Registrarse(server);
-                registrarse.ShowDialog();
-                button1.Text="Cambiar de cuenta";
+                else
+                    MessageBox.Show("Debes desconectarte para poder cambiar de cuenta");
             }
             else
-                MessageBox.Show("Debes desconectarte para poder cambiar de cuenta");
+            {
+                MessageBox.Show("Cuando termine la partida podrás realizarlo");
+            }
+           
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //Mensaje de desconexión
-            string mensaje = "0/";
+            if (enpartida==false)
+            {
+                //Mensaje de desconexión
+                string mensaje = "0/";
 
-            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-            server.Send(msg);
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
 
-            // Nos desconectamos
-            atender.Abort();
-            this.BackColor = Color.Gray;
-            server.Shutdown(SocketShutdown.Both);
-            server.Close();
-            button1.Text="CONECTAR";
+                // Nos desconectamos
+                atender.Abort();
+                this.BackColor = Color.Gray;
+                server.Shutdown(SocketShutdown.Both);
+                server.Close();
+                button1.Text="CONECTAR";
+            }
+            else
+            {
+                MessageBox.Show("Cuando termine la partida podrás realizarlo");
+            }
         }
 
         private void rEGISTRARMEINICIARSESIÓNToolStripMenuItem_Click(object sender, EventArgs e)
@@ -310,18 +435,32 @@ namespace Cliente
 
         private void pETICIÓNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ThreadStart ts = delegate { PonerEnMarchaFormulario(); };
-            Thread T = new Thread(ts);
-            T.Start();
+            if (enpartida==false)
+            {
+                ThreadStart ts = delegate { PonerEnMarchaFormulario(); };
+                Thread T = new Thread(ts);
+                T.Start();
+            }
+            else
+            {
+                MessageBox.Show("Cuando termine la partida podrás realizarlo");
+            }
         }
+
         private void PonerEnMarchaFormulario()
         {
             int cont = formularios.Count;
-            Peticion f = new Peticion(cont, server);
+            Peticion f = new Peticion(cont, server, usuario);
             formularios.Add(f);
             f.ShowDialog();
         }
-        
+        private void PonerEnMarchaPartida(int identificador,string usuario,string jugadores,string host)
+        {
+            Partida f2 = new Partida(identificador,usuario, jugadores, server,host);
+            formularios2.Add(f2);
+            f2.ShowDialog();
+
+        }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Mensaje de desconexión
@@ -455,10 +594,28 @@ namespace Cliente
                         mensaje=mensaje+"&"+invitados[i].ToString();
                         i++;
                     }
+                    mensaje=mensaje+"/"+usuario.ToString();
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                     server.Send(msg);
+
                 }
             }
+            invitados.Clear();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+            if (enpartida==false)
+            {
+                Baja baja = new Baja(server);
+                baja.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Cuando termine la partida podrás realizarlo");
+            }
+         
         }
     }
 }

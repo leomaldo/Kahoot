@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.33, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
 --
--- Host: localhost    Database: Kahoot
+-- Host: localhost    Database: MG5_Kahoot
 -- ------------------------------------------------------
--- Server version	5.7.33-0ubuntu0.16.04.1
+-- Server version	5.7.17-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,13 +18,6 @@
 --
 -- Table structure for table `jugadores`
 --
-
-
-DROP DATABASE IF EXISTS MG5_Kahoot;
-CREATE DATABASE MG5_Kahoot;
-
-USE MG5_Kahoot;
-
 
 DROP TABLE IF EXISTS `jugadores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -62,9 +55,8 @@ CREATE TABLE `partida` (
   `puntos` int(11) DEFAULT '0',
   `numero_preguntas_correctas` int(11) DEFAULT '0',
   `numero_preguntas_incorrectas` int(11) DEFAULT '0',
-  `tematica` text NOT NULL,
   PRIMARY KEY (`ID_partida`),
-  KEY `ID_usuario` (`ID_usuario`), 
+  KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `partida_ibfk_1` FOREIGN KEY (`ID_usuario`) REFERENCES `jugadores` (`ID_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -75,8 +67,34 @@ CREATE TABLE `partida` (
 
 LOCK TABLES `partida` WRITE;
 /*!40000 ALTER TABLE `partida` DISABLE KEYS */;
-/*INSERT INTO `partida` VALUES (1,1,1,100,5,0),(2,2,2,50,2,3),(3,3,3,25,1,4);
+INSERT INTO `partida` VALUES (1,1,1,100,5,0),(2,2,2,50,2,3),(3,3,3,25,1,4);
 /*!40000 ALTER TABLE `partida` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `partida_jugada`
+--
+
+DROP TABLE IF EXISTS `partida_jugada`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `partida_jugada` (
+  `Id_partida` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_jugadores` varchar(100) DEFAULT NULL,
+  `puntos` varchar(100) DEFAULT NULL,
+  `fecha` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id_partida`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `partida_jugada`
+--
+
+LOCK TABLES `partida_jugada` WRITE;
+/*!40000 ALTER TABLE `partida_jugada` DISABLE KEYS */;
+INSERT INTO `partida_jugada` VALUES (1,'v&victor&leo&mo','1000&2000&1500&3000',NULL),(2,'rafa&victor','2000&1500',NULL),(3,'rafa&v&leo','100&2000&3000','2024-06-08 00:00:00'),(4,'rafa&v&moha','100&200&3000','2024-06-06 00:00:00'),(5,'rafa&v&moha','100&200&3000','2024-06-09 00:00:00');
+/*!40000 ALTER TABLE `partida_jugada` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -93,9 +111,8 @@ CREATE TABLE `preguntas` (
   `respuesta_incorrecta_1` text NOT NULL,
   `respuesta_incorrecta_2` text NOT NULL,
   `respuesta_incorrecta_3` text NOT NULL,
-  `tematica` text NOT NULL,
   PRIMARY KEY (`ID_pregunta`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,16 +121,7 @@ CREATE TABLE `preguntas` (
 
 LOCK TABLES `preguntas` WRITE;
 /*!40000 ALTER TABLE `preguntas` DISABLE KEYS */;
-INSERT INTO `preguntas` VALUES (1,'¿Cuál es la capital de Francia?','París','Berlín','Marsella','Lyon','Cultura'),(2,'¿Cuánto es 2 + 2?','4','5','3','8','Ciencias'),(3,'¿En qué continente está Ecuador?','América','Europa','Asia','África','Cultura'),
-(4,'¿Quién descubrió América?','Colón','FelipeII','Juan Carlos','Victor','Cultura'),(5,'¿Cuál es múltiplo de 21?','3','5','8','2','Ciencia'),(6,'¿Dónde desemboca el Ebro?','Tarragona','Valencia','Murcia','Girona','Cultura'),
-(7,'¿Dónde desemboca el Guadalquivir?','Cádiz','Castelldefels','Murcia','Tarragona','Cultura'),(8,'¿Dónde desemboca el Tajo?','Lisboa','Valencia','Alicante','Barcelona','Cultura'),(9,'¿Cuántas CCAA hay en España?','17','19','15','20','Cultura'),
-(10,'¿Cuántos países hay en el mundo?','194','190','200','198','Cultura'),(11,'¿Quién escribió "Cien años de soledad"?','Gabriel García Márquez','Mario Vargas Llosa','Jorge Luis Borges','Isabel Allende','Cultura'),(12,'¿ ¿Cuál es el río más largo del mundo??','Amazona','Nilo','Yangsté','Misisipi','Cultura'),
-(13,'¿Cuál es el océano más grande del mundo?','Océano Pacífico','Océano Atlántico','Océano Índico','Océano Ártico','Cultura'),(14,'¿Quién pintó la Mona Lisa?','Leonardo da Vinci','Vincent van Gogh','Pablo Picasso','Claude Monet','Cultura'),(15,'¿Cuál es la capital de Japón?','Tokio','Osaka','Kioto','Hiroshima','Cultura'),
-(16,'¿Cuál es la moneda oficial de Japón?','Yen','Won','Yuan','Peso','Cultura'),(17,'¿En qué continente se encuentra Egipto?','África','Asia','Europa','América','Cultura'),(18,'¿En qué país se originaron los Juegos Olímpicos?','Grecia','Italia','China','Egipto','Cultura'),(19,'¿Quién escribió Hamlet?','William Shakespeare',' Charles Dickens','Oscar Wilde','Mark Twain','Cultura'),
-(20,'¿Cuál es la fórmula química del agua?','H2O','CO2','H2O2','O2','Ciencia'),(21,'¿Qué tipo de animal es un tiburón?','Pez',' Mamífero','Reptil','Anfibio','Ciencia'),(22,'','','','','','Ciencia'),
-(23,'¿Qué gas es esencial para la fotosíntesis?','Dióxido de carbono','Oxígeno','Nitrógeno','Helio','Ciencia'),(24,'¿Qué tipo de célula no tiene núcleo?','Procariota','Eucariota','Neurona','Glóbulo rojo','Ciencia'),(25,'¿Cuál es la distancia media de la Tierra al sol?','150 millones de kilómetros','93 millones de kilómetros','400 millones de kilómetros','250 millones de kilómetros','Ciencia'),
-(26,'¿Qué órgano del cuerpo humano produce insulina?','Páncreas','Hígado','Riñón','Corazón','Ciencia'),(27,'¿Qué unidad se utiliza para medir la intensidad de corriente eléctrica?','Amperio','Voltio','Ohmio','Vatio','Ciencia'),(28,'¿Qué tipo de onda es la luz?','Electromagnética','Mecánica','Sonoro','Gravitacional','Ciencia'),
-(29,'¿Cuál es el órgano más grande del cuerpo humano?','Piel','Hígado','Riñón','Corazón','Ciencia'), (30,'¿Qué proceso celular produce dos células hijas idénticas?','Mitosis','Meiosis','Fusión','Fotosíntesis','Ciencia');
+INSERT INTO `preguntas` VALUES (1,'¿Cuál es la capital de Francia?','París','Berlín','Marsella','Lyon'),(2,'¿Cuánto es 2 + 2?','4','5','3','8'),(3,'¿En qué continente está Ecuador?','América','Europa','Asia','África'),(4,'¿Cuales el pais mas poblado del mundo?','China','India','Rusia','Estados Unidos'),(5,'¿Cuantas patas tiene una araña?','8','6','4','10'),(6,'¿Cada cuantos años tenemos un año bisiesto?','4','2','1','5'),(7,'¿Cuantas silabas tiene la palabra abecedario?','5','4','6','3'),(8,'¿Cual es el planeta que esta mas cerca del sol?','Mercurio','Venus','Saturno','Marte'),(9,'¿Por donde se pone el sol?','Oeste','Este','Norte','Sud'),(10,'¿Que selección de fútbol ha ganado mas mundiales?','Brasil','España','Argentina','Alemania'),(11,'¿Cuantas Champions League tiene el Atletico de Madrid?','0','1','2','5'),(12,'¿Quién descubrió América?','Colón','FelipeII','Juan Carlos','Victor'),(13,'¿Cuál es múltiplo de 21?','3','5','8','2'),(14,'¿Dónde desemboca el Ebro?','Tarragona','Valencia','Murcia','Girona'),(15,'¿Dónde desemboca el Guadalquivir?','Cádiz','Castelldefels','Murcia','Tarragona'),(16,'¿Dónde desemboca el Tajo?','Lisboa','Valencia','Alicante','Barcelona'),(17,'¿Cuántas CCAA hay en España?','17','19','15','20'),(18,'¿Cuántos países hay en el mundo?','194','190','200','198'),(19,'¿Quién escribió \"Cien años de soledad\"?','Gabriel García Márquez','Mario Vargas Llosa','Jorge Luis Borges','Isabel Allende'),(20,'¿ ¿Cuál es el río más largo del mundo??','Amazona','Nilo','Yangsté','Misisipi'),(21,'¿Cuál es el océano más grande del mundo?','Océano Pacífico','Océano Atlántico','Océano Índico','Océano Ártico'),(22,'¿Quién pintó la Mona Lisa?','Leonardo da Vinci','Vincent van Gogh','Pablo Picasso','Claude Monet'),(23,'¿Cuál es la capital de Japón?','Tokio','Osaka','Kioto','Hiroshima'),(24,'¿Cuál es la moneda oficial de Japón?','Yen','Won','Yuan','Peso'),(25,'¿En qué continente se encuentra Egipto?','África','Asia','Europa','América'),(26,'¿En qué país se originaron los Juegos Olímpicos?','Grecia','Italia','China','Egipto'),(27,'¿Quién escribió Hamlet?','William Shakespeare',' Charles Dickens','Oscar Wilde','Mark Twain'),(28,'¿Cuál es la fórmula química del agua?','H2O','CO2','H2O2','O2'),(29,'¿Qué tipo de animal es un tiburón?','Pez',' Mamífero','Reptil','Anfibio'),(30,'¿Qué gas es esencial para la fotosíntesis?','Dióxido de carbono','Oxígeno','Nitrógeno','Helio'),(31,'¿Cuál es la distancia media de la Tierra al sol?','150 millones de kilómetros','93 millones de kilómetros','400 millones de kilómetros','250 millones de kilómetros'),(32,'¿Qué órgano del cuerpo humano produce insulina?','Páncreas','Hígado','Riñón','Corazón'),(33,'¿Qué unidad se utiliza para medir la intensidad de corriente eléctrica?','Amperio','Voltio','Ohmio','Vatio'),(34,'¿Qué tipo de onda es la luz?','Electromagnética','Mecánica','Sonoro','Gravitacional'),(35,'¿Cuál es el órgano más grande del cuerpo humano?','Piel','Hígado','Riñón','Corazón'),(36,'¿Qué proceso celular produce dos células hijas idénticas?','Mitosis','Meiosis','Fusión','Fotosíntesis'),(37,'¿Qué tipo de célula no tiene núcleo?','Procariota','Eucariota','Neurona','Glóbulo rojo');
 /*!40000 ALTER TABLE `preguntas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +154,7 @@ CREATE TABLE `ronda` (
 
 LOCK TABLES `ronda` WRITE;
 /*!40000 ALTER TABLE `ronda` DISABLE KEYS */;
-/*INSERT INTO `ronda` VALUES (1,1,1,10,1),(2,1,2,20,1),(3,2,1,0,2),(4,2,3,50,2),(5,3,2,25,3);
+INSERT INTO `ronda` VALUES (1,1,1,10,1),(2,1,2,20,1),(3,2,1,0,2),(4,2,3,50,2),(5,3,2,25,3);
 /*!40000 ALTER TABLE `ronda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +179,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'MOHA','MOHA'),(2,'LEO','LEO'),(3,'VICTOR','VICTOR');
+INSERT INTO `usuarios` VALUES (1,'MOHA','MOHA'),(2,'MO','MO');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -184,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-09 21:22:51
+-- Dump completed on 2024-06-10 11:22:29

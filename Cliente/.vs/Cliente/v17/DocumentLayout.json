@@ -1,45 +1,48 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\telecos\\proyecto_25_5\\Cliente\\",
+  "WorkspaceRootPath": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|c:\\telecos\\proyecto_25_5\\cliente\\cliente\\partida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\partida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\telecos\\proyecto_25_5\\Cliente\\cliente\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|c:\\users\\rafae\\downloads\\n\\n\\n\\v___8_6\\v___8_6\\cliente\\cliente\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\telecos\\proyecto_25_5\\Cliente\\cliente\\partida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\partida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\telecos\\proyecto_25_5\\Cliente\\cliente\\peticion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\peticion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\telecos\\proyecto_25_5\\Cliente\\cliente\\registrarse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\registrarse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\telecos\\proyecto_25_5\\Cliente\\cliente\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\telecos\\proyecto_25_5\\Cliente\\cliente\\peticion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\cliente\\peticion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\peticion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\telecos\\proyecto_25_5\\Cliente\\cliente\\registrarse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\cliente\\peticion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\peticion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\cliente\\partida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\partida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\cliente\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\telecos\\carpeta_para_guardar_proyecto_SO\\proyecto_so_26_5 (2)\\proyecto_so_26_5\\proyecto_so_26_5\\Cliente\\Cliente\\Partida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\cliente\\partida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\partida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\cliente\\registrarse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\registrarse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\cliente\\registrarse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\registrarse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\telecos\\proyecto_25_5\\Cliente\\cliente\\invitacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\cliente\\invitacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\invitacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\telecos\\proyecto_25_5\\Cliente\\cliente\\invitacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\cliente\\invitacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{BB1F896F-91C0-4B81-872B-702242D4420B}|Cliente\\Cliente.csproj|solutionrelative:cliente\\invitacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -50,7 +53,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,85 +77,58 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Partida.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Partida.cs",
-              "RelativeDocumentMoniker": "Cliente\\Partida.cs",
-              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Partida.cs [Dise\u00F1o]",
-              "RelativeToolTip": "Cliente\\Partida.cs [Dise\u00F1o]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T20:26:32.378Z",
-              "EditorCaption": " [Dise\u00F1o]"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Partida.cs",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Partida.cs",
-              "RelativeDocumentMoniker": "Cliente\\Partida.cs",
-              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Partida.cs",
-              "RelativeToolTip": "Cliente\\Partida.cs",
-              "ViewState": "AQIAAG4AAAAAAAAAAADwv4AAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-05T13:35:33.468Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Form1.cs",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Form1.cs",
               "RelativeDocumentMoniker": "Cliente\\Form1.cs",
-              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Form1.cs",
+              "ToolTip": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Form1.cs",
               "RelativeToolTip": "Cliente\\Form1.cs",
-              "ViewState": "AQIAAO4AAAAAAAAAAAAwwAMBAAAiAAAA",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAiwEAAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-04T20:26:32.23Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "Form1.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Form1.cs",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Form1.cs",
               "RelativeDocumentMoniker": "Cliente\\Form1.cs",
-              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Form1.cs [Dise\u00F1o]",
+              "ToolTip": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Form1.cs [Dise\u00F1o]",
               "RelativeToolTip": "Cliente\\Form1.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T20:26:32.247Z",
-              "EditorCaption": " [Dise\u00F1o]"
+              "WhenOpened": "2024-05-04T20:26:32.247Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Registrarse.cs",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Registrarse.cs",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Registrarse.cs",
               "RelativeDocumentMoniker": "Cliente\\Registrarse.cs",
-              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Registrarse.cs",
+              "ToolTip": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Registrarse.cs",
               "RelativeToolTip": "Cliente\\Registrarse.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAAB4AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T20:26:32.296Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T20:26:32.296Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Invitacion.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Invitacion.cs",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Invitacion.cs",
               "RelativeDocumentMoniker": "Cliente\\Invitacion.cs",
               "ToolTip": "C:\\telecos\\proyecto SO\\proyecto_25_5\\Cliente\\Cliente\\Invitacion.cs [Dise\u00F1o]",
-              "RelativeToolTip": "..\\..\\proyecto SO\\proyecto_25_5\\Cliente\\Cliente\\Invitacion.cs [Dise\u00F1o]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\..\\..\\telecos\\proyecto SO\\proyecto_25_5\\Cliente\\Cliente\\Invitacion.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-04T20:26:32.373Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Invitacion.cs",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Invitacion.cs",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Invitacion.cs",
               "RelativeDocumentMoniker": "Cliente\\Invitacion.cs",
-              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Invitacion.cs",
+              "ToolTip": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Invitacion.cs",
               "RelativeToolTip": "Cliente\\Invitacion.cs",
               "ViewState": "AQIAAAIAAAAAAAAAAAAtwBMAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -160,40 +136,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Registrarse.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Registrarse.cs",
-              "RelativeDocumentMoniker": "Cliente\\Registrarse.cs",
-              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Registrarse.cs [Dise\u00F1o]",
-              "RelativeToolTip": "Cliente\\Registrarse.cs [Dise\u00F1o]",
+              "DocumentIndex": 2,
+              "Title": "Peticion.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Peticion.cs",
+              "RelativeDocumentMoniker": "Cliente\\Peticion.cs",
+              "ToolTip": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Peticion.cs [Dise\u00F1o]",
+              "RelativeToolTip": "Cliente\\Peticion.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T20:26:32.376Z",
-              "EditorCaption": " [Dise\u00F1o]"
+              "WhenOpened": "2024-05-04T20:26:32.377Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Peticion.cs",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Peticion.cs",
+              "RelativeDocumentMoniker": "Cliente\\Peticion.cs",
+              "ToolTip": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Peticion.cs",
+              "RelativeToolTip": "Cliente\\Peticion.cs",
+              "ViewState": "AQIAAFwAAAAAAAAAAADgv3kAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-04T20:26:32.376Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Peticion.cs",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Peticion.cs",
-              "RelativeDocumentMoniker": "Cliente\\Peticion.cs",
-              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Peticion.cs",
-              "RelativeToolTip": "Cliente\\Peticion.cs",
-              "ViewState": "AQIAAAEAAAAAAAAAAAAUwCIAAAAQAAAA",
+              "Title": "Partida.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Partida.cs",
+              "RelativeDocumentMoniker": "Cliente\\Partida.cs",
+              "ToolTip": "C:\\Users\\rafae\\Downloads\\v6 leo2\\v6 leo2\\Cliente\\Cliente\\Partida.cs [Dise\u00F1o]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\v6 leo2\\v6 leo2\\Cliente\\Cliente\\Partida.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T20:26:32.376Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T20:26:32.378Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Partida.cs",
+              "DocumentMoniker": "C:\\telecos\\carpeta_para_guardar_proyecto_SO\\proyecto_so_26_5 (2)\\proyecto_so_26_5\\proyecto_so_26_5\\Cliente\\Cliente\\Partida.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\..\\..\\telecos\\carpeta_para_guardar_proyecto_SO\\proyecto_so_26_5 (2)\\proyecto_so_26_5\\proyecto_so_26_5\\Cliente\\Cliente\\Partida.cs",
+              "ToolTip": "C:\\telecos\\carpeta_para_guardar_proyecto_SO\\proyecto_so_26_5 (2)\\proyecto_so_26_5\\proyecto_so_26_5\\Cliente\\Cliente\\Partida.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\..\\..\\telecos\\carpeta_para_guardar_proyecto_SO\\proyecto_so_26_5 (2)\\proyecto_so_26_5\\proyecto_so_26_5\\Cliente\\Cliente\\Partida.cs",
+              "ViewState": "AQIAAG4BAAAAAAAAAAAAAFcAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-27T07:24:59.199Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Peticion.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Peticion.cs",
-              "RelativeDocumentMoniker": "Cliente\\Peticion.cs",
-              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Peticion.cs [Dise\u00F1o]",
-              "RelativeToolTip": "Cliente\\Peticion.cs [Dise\u00F1o]",
+              "Title": "Partida.cs",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Partida.cs",
+              "RelativeDocumentMoniker": "Cliente\\Partida.cs",
+              "ToolTip": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Partida.cs",
+              "RelativeToolTip": "Cliente\\Partida.cs",
+              "ViewState": "AQIAAIsAAAAAAAAAAAAqwJ0AAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T20:26:32.377Z",
-              "EditorCaption": " [Dise\u00F1o]"
+              "WhenOpened": "2024-05-05T13:35:33.468Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Registrarse.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\rafae\\Downloads\\N\\N\\N\\v___8_6\\v___8_6\\Cliente\\Cliente\\Registrarse.cs",
+              "RelativeDocumentMoniker": "Cliente\\Registrarse.cs",
+              "ToolTip": "C:\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Registrarse.cs [Dise\u00F1o]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\..\\..\\telecos\\proyecto_25_5\\Cliente\\Cliente\\Registrarse.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-04T20:26:32.376Z"
             }
           ]
         }

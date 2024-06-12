@@ -37,6 +37,7 @@ namespace Cliente
         private void button1_Click(object sender, EventArgs e)
         {
             this.respuesta = 1;
+            MessageBox.Show("Ahora debes esperar a que "+ UsuEnv +" empiece la partida");
             this.Close();
         }
 
